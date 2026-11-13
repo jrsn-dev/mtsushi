@@ -308,7 +308,7 @@ main[data-cinematic] .gallery-window { overflow-x: clip; scroll-snap-type: none;
 }
 
 @media (max-width: 680px) {
-  .site .section:not(.testimonials) { margin-block: clamp(3.25rem, 12vw, 5rem); }
+  .site .section:not(.testimonials) { margin-block: 1.5rem; }
   .site .nav {
     max-height: calc(100dvh - var(--header) - 1rem);
     overflow-y: auto;
@@ -352,7 +352,7 @@ main[data-cinematic="mobile"] .hero-image { inset: 0 0 auto; height: 64svh; max-
 main[data-cinematic="mobile"] .hero-image img { object-fit: cover; object-position: 50% 50%; }
 main[data-cinematic="mobile"] .hero-ring { left: 50%; top: 32svh; width: min(76vw, 65svh); }
 main[data-cinematic="mobile"] .gallery-scene {
-  height: 100svh; min-height: 0; display: flex; flex-direction: column; justify-content: center;
+  height: auto; min-height: 0; display: flex; flex-direction: column; justify-content: flex-start;
   padding-block: calc(var(--header) + .75rem) 1rem;
 }
 main[data-cinematic="mobile"] .gallery-scene .section-heading { flex: none; margin-bottom: 1rem; }
@@ -375,3 +375,12 @@ main[data-cinematic="mobile"] .macro { position: relative; z-index: 1; }
 
 main[data-cinematic="mobile"] .macro-image { inset: var(--header) 0 auto; height: 64svh; max-height: 100%; }
 main[data-cinematic="mobile"] .macro-image img { object-position: 60% 50%; }
+
+/* Keep mobile sections close together while retaining each scroll scene. */
+main[data-cinematic="mobile"] .gallery-section { position: relative; z-index: 2; background: var(--bg); }
+@media (max-width: 899px) {
+  .site .section:not(.testimonials) { margin-block: 1.5rem; }
+  .site .testimonials { min-height: 0; padding-block: 2rem; }
+  .site .reservations { padding-top: 2rem; }
+  .site .footer-line { margin-top: 1.5rem; }
+}

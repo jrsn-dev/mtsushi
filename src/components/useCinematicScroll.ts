@@ -48,7 +48,7 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
         .to(".hero-ring, .hero-copy", { opacity: 0, duration: .1 }, .92);
 
       const macro = gsap.timeline({
-        scrollTrigger: { trigger: ".macro", start: "top top", end: desktop ? "+=130%" : "+=100%", pin: pinScene(".macro-scene"), scrub: .65, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: ".macro", start: "top top", end: desktop ? "+=130%" : "+=65%", pin: pinScene(".macro-scene"), pinSpacing: desktop, scrub: desktop ? .65 : .45, invalidateOnRefresh: true },
       });
       macro.fromTo(".macro-image img", { scale: desktop ? 1.05 : 1 }, { scale: desktop ? 1.28 : 1.08, xPercent: desktop ? -4 : 0, duration: 1, ease: "none" }, 0)
         .from(".callout-line", { scaleX: 0, stagger: .13, duration: .15, ease: "power3.out" }, .12)
