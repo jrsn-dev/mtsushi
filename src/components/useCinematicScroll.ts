@@ -56,15 +56,36 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
 
       const track = page.querySelector<HTMLElement>(".gallery-track");
       const windowElement = page.querySelector<HTMLElement>(".gallery-window");
-      if (track && windowElement) {
+      const gallerySection = page.querySelector<HTMLElement>(".gallery-section");
+      const galleryScene = page.querySelector<HTMLElement>(".gallery-scene");
+      let restoreGallerySpacing: (() => void) | undefined;
+      if (track && windowElement && gallerySection && galleryScene) {
         const travel = () => Math.max(0, track.scrollWidth - windowElement.clientWidth);
-        // The photo track is wide; mobile should not need several screens of
-        // vertical scrolling before the following section becomes available.
-        const scrollDistance = () => desktop ? travel()
-          : Math.max(1, Math.min(travel() * .5, window.innerHeight));
+        const secondImageProgress = () => {
+          const figures = track.querySelectorAll<HTMLElement>("figure");
+          if (figures.length < 2 || !travel()) return 0;
+          return Math.min(.85, (figures[1].offsetLeft - figures[0].offsetLeft) / travel());
+        };
+        // Release the next section when image two reaches image one's starting
+        // position. The gallery finishes by the time the incoming section covers it.
+        const scrollDistance = () => {
+          const original = desktop ? travel() : Math.min(travel() * .5, window.innerHeight);
+          return Math.max(1, Math.min(original, window.innerHeight / (1 - secondImageProgress())));
+        };
+        const originalPadding = gallerySection.style.paddingBottom;
+        const updateGallerySpacing = () => {
+          const entry = scrollDistance() * secondImageProgress();
+          gallerySection.style.paddingBottom = `${Math.max(0, window.innerHeight + entry - galleryScene.offsetHeight)}px`;
+        };
+        updateGallerySpacing();
+        restoreGallerySpacing = () => { gallerySection.style.paddingBottom = originalPadding; };
         gsap.to(track, {
           x: () => -travel(), ease: "none",
-          scrollTrigger: { trigger: ".gallery-section", start: "top top", end: () => `+=${scrollDistance()}`, pin: ".gallery-scene", scrub: desktop ? .65 : .35, invalidateOnRefresh: true },
+          scrollTrigger: {
+            trigger: gallerySection, start: "top top", end: () => `+=${scrollDistance()}`,
+            pin: galleryScene, pinSpacing: false, scrub: desktop ? .65 : .35,
+            invalidateOnRefresh: true, onRefreshInit: updateGallerySpacing,
+          },
         });
       }
 
@@ -108,6 +129,7 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
 
       return () => {
         delete page.dataset.cinematic;
+        restoreGallerySpacing?.();
         title.revert();
         if (lenis) {
           gsap.ticker.remove(tick);
