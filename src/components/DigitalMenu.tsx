@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ArrowLeft, Check, Plus } from "lucide-react";
 import { categories, categoryAliases, formatPrice, menuNotes } from "./cardapio.js";
+import { BusinessHours } from "./BusinessHours";
 import { SushiCart } from "./SushiCart";
 
 const storageKey = "mt-sushi-cart";
@@ -56,12 +57,13 @@ export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp
     <main className="catalog-page shell" id="catalogo">
       <header className="catalog-top">
         <Link className="text-link" href="/#cardapio"><ArrowLeft aria-hidden="true" /> Voltar ao site</Link>
-        <Link className="brand" href="/" aria-label="MT Sushi Arte"><img src="/images/mt-sushi-logo.svg" alt="" width="279" height="89" /></Link>
+        <Link className="brand" href="/" aria-label="MT Sushi Arte"><img src="/images/mt-sushi-logo.svg" alt="" width="1575" height="401" /></Link>
         <SushiCart cart={cart} change={change} whatsapp={whatsapp} direct="https://ig.me/m/mtsushiarte" />
       </header>
       <div className="catalog-intro">
         <h1>Cardápio digital</h1>
         <p>Delivery em Jacarezinho, PR. Escolha os itens e revise seu pedido antes de enviar à loja.</p>
+        <BusinessHours />
       </div>
       <nav className="catalog-categories" aria-label="Categorias do cardápio">
         {categories.map(({ slug, name }) => (

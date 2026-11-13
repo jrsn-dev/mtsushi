@@ -1,4 +1,5 @@
 import { ArrowRight, Bike, ChevronRight, ConciergeBell, House, List, MapPin, Package, ShoppingCart, Store } from "lucide-react";
+import { BusinessHours } from "./BusinessHours";
 import type { OrderLink } from "./SushiMenu";
 
 const benefits = [
@@ -13,6 +14,7 @@ export function SushiDelivery({ order }: { order: OrderLink }) {
       <div className="delivery-copy">
         <h2 id="delivery-title">Peça no<br />nosso delivery<span>.</span></h2>
         <p>Sabor, praticidade e rapidez diretamente<br className="delivery-break" /> na sua casa.</p>
+        <BusinessHours />
         <ul className="delivery-benefits">
           {benefits.map(([Icon, label]) => (
             <li key={label}><Icon aria-hidden="true" />{label}</li>

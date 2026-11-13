@@ -3,6 +3,7 @@
 import { useRef, useState, type CSSProperties } from "react";
 import { ArrowDown, ArrowUpRight, Facebook, Instagram, Menu, MessageCircle, X } from "lucide-react";
 import { motion, useScroll, useMotionValueEvent, useReducedMotion } from "motion/react";
+import { BusinessHours } from "./BusinessHours";
 import { useCinematicScroll } from "./useCinematicScroll";
 import { ChefSpecial } from "./SushiExperiments";
 import { SushiDelivery } from "./SushiDelivery";
@@ -53,7 +54,7 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
         }}>
         <div className="shell header-inner">
           <a className="brand" href="#inicio" onClick={() => setMenuOpen(false)} aria-label="MT Sushi Arte">
-            <img src="/images/mt-sushi-logo.svg" alt="" width="279" height="89" />
+            <img src="/images/mt-sushi-logo.svg" alt="" width="1575" height="401" />
           </a>
           <nav id="navigation" aria-label="Navegação principal" className={menuOpen ? "nav is-open" : "nav"}>
             {nav.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
@@ -78,6 +79,7 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
               <div className="hero-title-wrap"><h1 id="hero-title">Sushi que se vê,<br />se sente,<br />se lembra.</h1></div>
               <div className="hero-support">
                 <p>Sushis, temakis e combinados preparados à mão.</p>
+                <BusinessHours />
                 <a className="button button-red" href="/cardapio">Ver cardápio <ArrowDown aria-hidden="true" /></a>
               </div>
             </div>
@@ -125,7 +127,7 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
         <SushiDelivery order={order} />
         <div className="shell footer-line">
           <a className="brand" href="#inicio" aria-label="Voltar ao início">
-            <img src="/images/mt-sushi-logo.svg" alt="MT Sushi Arte" width="279" height="89" />
+            <img src="/images/mt-sushi-logo.svg" alt="MT Sushi Arte" width="1575" height="401" />
           </a>
           <div className="footer-socials" role="group" aria-label="Redes sociais">
             <a href={instagram} target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram aria-hidden="true" /></a>
