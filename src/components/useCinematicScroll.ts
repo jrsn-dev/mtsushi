@@ -1,45 +1,89 @@
 import { useLayoutEffect, type RefObject } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+import Lenis from "lenis";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
   useLayoutEffect(() => {
     const page = scope.current;
     if (!page) return;
-
     const media = gsap.matchMedia();
-    media.add("(prefers-reduced-motion: no-preference)", () => {
-      const hero = page.querySelector(".hero");
-      const heroPhoto = hero?.querySelector("[data-camera]");
-      if (hero && heroPhoto) {
-        gsap.to(heroPhoto, {
-          scale: 1.24,
-          yPercent: 4,
-          ease: "none",
-          scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 0.55 },
+
+    media.add("(min-width: 900px) and (min-height: 650px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)", () => {
+      const lenis = new Lenis({ anchors: true, smoothWheel: true });
+      const tick = (seconds: number) => lenis.raf(seconds * 1000);
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(tick);
+      gsap.ticker.lagSmoothing(0);
+
+      const title = SplitText.create("#hero-title", { type: "lines,chars" });
+      gsap.from(title.lines, { y: 24, opacity: 0, duration: .8, stagger: .105, ease: "power3.out" });
+      const exit = gsap.timeline({
+        scrollTrigger: { trigger: ".hero", start: "top top", end: "+=90%", pin: ".hero-scene", scrub: true },
+      });
+      exit.to(".hero-support, .eyebrow", { opacity: 0, filter: "blur(12px)", duration: .3 }, 0)
+        .to(title.chars, { opacity: 0, filter: "blur(10px)", y: -12, duration: .32, stagger: { amount: .22, from: "random" } }, .16)
+        .fromTo(".hero-ring", { scale: 1.55, opacity: 0 }, { scale: 1, opacity: 1, duration: .19 }, .28)
+        .to(".hero-ring", { scale: .01, duration: .55, ease: "expo.inOut" }, .47)
+        .to(".hero-image img", { scale: 1.15, duration: .75, ease: "power3.out" }, .24)
+        .to(".hero-image", { clipPath: "circle(0% at 68% 50%)", duration: .55, ease: "expo.inOut" }, .47)
+        .to(".hero-ring, .hero-copy", { opacity: 0, duration: .1 }, .92);
+
+      const macro = gsap.timeline({
+        scrollTrigger: { trigger: ".macro", start: "top top", end: "+=130%", pin: ".macro-scene", scrub: true },
+      });
+      macro.fromTo(".macro-image img", { scale: 1.05 }, { scale: 1.52, xPercent: -8, duration: 1, ease: "none" }, 0)
+        .from(".callout-line", { scaleX: 0, stagger: .13, duration: .15, ease: "power3.out" }, .12)
+        .from(".callouts li > span:last-child", { opacity: 0, y: 8, stagger: .13, duration: .15 }, .17);
+
+      const track = page.querySelector<HTMLElement>(".gallery-track");
+      const windowElement = page.querySelector<HTMLElement>(".gallery-window");
+      if (track && windowElement) {
+        const travel = () => Math.max(0, track.scrollWidth - windowElement.clientWidth);
+        gsap.to(track, {
+          x: () => -travel(), ease: "none",
+          scrollTrigger: { trigger: ".gallery-section", start: "top top", end: () => `+=${travel()}`, pin: ".gallery-scene", scrub: true, invalidateOnRefresh: true },
         });
       }
 
-      page.querySelectorAll<HTMLElement>("[data-frame]").forEach((frame) => {
-        const photo = frame.querySelector("[data-camera]");
-        if (!photo || photo === heroPhoto) return;
-
-        gsap.timeline({
-          scrollTrigger: { trigger: frame, start: "top 97%", end: "top 38%", scrub: 0.45 },
+      const menu = page.querySelector<HTMLElement>(".menu-overview");
+      if (menu) {
+        const heading = menu.querySelector<HTMLElement>(".section-heading")!;
+        const grid = menu.querySelector<HTMLElement>(".menu-grid")!;
+        const chips = menu.querySelector<HTMLElement>(".menu-chips")!;
+        const cards = grid.querySelectorAll(".menu-card");
+        const stagger = () => Math.min(72, window.innerHeight * .08);
+        const headerHeight = () => document.querySelector(".header")?.getBoundingClientRect().height ?? 0;
+        const centeredTop = () => {
+          const height = heading.offsetHeight + parseFloat(getComputedStyle(heading).marginBottom)
+            + grid.offsetHeight + parseFloat(getComputedStyle(chips).marginTop) + chips.offsetHeight;
+          return Math.max(headerHeight() + 12, (window.innerHeight + headerHeight() - height) / 2);
+        };
+        const align = gsap.timeline({
           defaults: { ease: "none" },
-        })
-          .fromTo(frame, { clipPath: "inset(8% 0 16% 0)", opacity: 0.35 },
-            { clipPath: "inset(0% 0 0% 0)", opacity: 1, duration: 0.62 }, 0)
-          .fromTo(photo, { scale: 1, yPercent: 0 }, { scale: 1.16, yPercent: -2, duration: 1 }, 0);
-      });
+          scrollTrigger: {
+            trigger: menu,
+            start: () => `top ${centeredTop()}px`,
+            end: () => `+=${stagger() * 2}`,
+            pin: true,
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+        align.fromTo(cards, { y: (index) => index * stagger() }, { y: 0, duration: 1 }, 0)
+          .fromTo(chips, { y: () => stagger() * 2 }, { y: 0, duration: 1 }, 0);
+      }
 
-      const observer = new ResizeObserver(() => ScrollTrigger.refresh());
-      observer.observe(page);
-      return () => observer.disconnect();
+      return () => {
+        title.revert();
+        gsap.ticker.remove(tick);
+        gsap.ticker.lagSmoothing(500, 33);
+        lenis.destroy();
+      };
     }, page);
-
     return () => media.revert();
   }, [scope]);
 }
