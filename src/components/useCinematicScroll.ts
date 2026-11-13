@@ -58,6 +58,13 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       const windowElement = page.querySelector<HTMLElement>(".gallery-window");
       const gallerySection = page.querySelector<HTMLElement>(".gallery-section");
       const galleryScene = page.querySelector<HTMLElement>(".gallery-scene");
+      const menuSection = page.querySelector<HTMLElement>(".menu-section");
+      const menuHoldTop = () => {
+        const header = document.querySelector(".header")?.getBoundingClientRect().height ?? 0;
+        return Math.max(header + 12, Math.min(galleryScene?.offsetHeight ?? 0,
+          window.innerHeight - Math.min(180, window.innerHeight * .25)));
+      };
+      let galleryScroll: ScrollTrigger | undefined;
       let restoreGallerySpacing: (() => void) | undefined;
       if (track && windowElement && gallerySection && galleryScene) {
         const travel = () => Math.max(0, track.scrollWidth - windowElement.clientWidth);
@@ -66,11 +73,13 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
           if (figures.length < 2 || !travel()) return 0;
           return Math.min(.85, (figures[1].offsetLeft - figures[0].offsetLeft) / travel());
         };
-        // Release the next section when image two reaches image one's starting
-        // position. The gallery finishes by the time the incoming section covers it.
+        // Bring the next section in at image two, then hold it below the photos
+        // until the gallery's final horizontal frame.
         const scrollDistance = () => {
           const original = desktop ? travel() : Math.min(travel() * .5, window.innerHeight);
-          return Math.max(1, Math.min(original, window.innerHeight / (1 - secondImageProgress())));
+          const progress = secondImageProgress();
+          const minimumHold = (window.innerHeight - menuHoldTop() + 120) / (1 - progress);
+          return Math.max(1, minimumHold, Math.min(original, window.innerHeight / (1 - progress)));
         };
         const originalPadding = gallerySection.style.paddingBottom;
         const updateGallerySpacing = () => {
@@ -79,38 +88,39 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
         };
         updateGallerySpacing();
         restoreGallerySpacing = () => { gallerySection.style.paddingBottom = originalPadding; };
-        gsap.to(track, {
+        const galleryAnimation = gsap.to(track, {
           x: () => -travel(), ease: "none",
           scrollTrigger: {
             trigger: gallerySection, start: "top top", end: () => `+=${scrollDistance()}`,
             pin: galleryScene, pinSpacing: false, scrub: desktop ? .65 : .35,
             invalidateOnRefresh: true, onRefreshInit: updateGallerySpacing,
+            onLeave: (self) => { self.animation?.progress(1); },
           },
+        });
+        galleryScroll = galleryAnimation.scrollTrigger;
+      }
+
+      if (menuSection && galleryScroll) {
+        const horizontalScroll = galleryScroll;
+        ScrollTrigger.create({
+          trigger: menuSection, start: () => `top ${menuHoldTop()}px`,
+          end: () => horizontalScroll.end,
+          pin: true, pinSpacing: true, anticipatePin: 1, invalidateOnRefresh: true,
         });
       }
 
       const menu = page.querySelector<HTMLElement>(".menu-overview");
       if (menu && desktop) {
-        const heading = menu.querySelector<HTMLElement>(".section-heading")!;
         const grid = menu.querySelector<HTMLElement>(".menu-grid")!;
         const chips = menu.querySelector<HTMLElement>(".menu-chips")!;
         const cards = grid.querySelectorAll(".menu-card");
-        const stagger = () => Math.min(72, window.innerHeight * .08);
-        const headerHeight = () => document.querySelector(".header")?.getBoundingClientRect().height ?? 0;
-        const centeredTop = () => {
-          const height = heading.offsetHeight + parseFloat(getComputedStyle(heading).marginBottom)
-            + grid.offsetHeight + parseFloat(getComputedStyle(chips).marginTop) + chips.offsetHeight;
-          return Math.max(headerHeight() + 12, (window.innerHeight + headerHeight() - height) / 2);
-        };
+        const stagger = () => Math.min(48, window.innerHeight * .06);
         const align = gsap.timeline({
           defaults: { ease: "none" },
           scrollTrigger: {
-            trigger: menu,
-            start: () => `top ${centeredTop()}px`,
-            end: () => `+=${stagger() * 2}`,
-            pin: true,
-            scrub: .65,
-            invalidateOnRefresh: true,
+            trigger: menuSection ?? menu,
+            start: "top 95%", end: () => `top ${menuHoldTop()}px`,
+            scrub: .65, invalidateOnRefresh: true,
           },
         });
         align.fromTo(cards, { y: (index) => index * stagger() }, { y: 0, duration: 1 }, 0)
@@ -122,7 +132,7 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
         menu.querySelectorAll(".menu-card").forEach((card) => {
           gsap.fromTo(card, { y: 32, opacity: .8 }, {
             y: 0, opacity: 1, ease: "none",
-            scrollTrigger: { trigger: card, start: "top 94%", end: "top 60%", scrub: .65, invalidateOnRefresh: true },
+            scrollTrigger: { trigger: card, pinnedContainer: menuSection ?? undefined, start: "top 94%", end: "top 60%", scrub: .65, invalidateOnRefresh: true },
           });
         });
       }

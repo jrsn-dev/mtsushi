@@ -392,10 +392,10 @@ main[data-cinematic="mobile"] .gallery-track { padding-bottom: .25rem; }
 }
 
 /* The cardápio rises over the gallery from its second image onward. */
-main[data-cinematic] .gallery-section + .menu-section {
+.site main[data-cinematic] .menu-section {
   position: relative; z-index: 3; isolation: isolate; margin-top: 0; background: var(--bg);
 }
-main[data-cinematic] .gallery-section + .menu-section::before {
+.site main[data-cinematic] .menu-section::before {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: var(--bg); box-shadow: 0 0 0 100vmax var(--bg); clip-path: inset(0 -100vmax);
 }
