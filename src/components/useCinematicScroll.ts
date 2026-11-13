@@ -15,62 +15,40 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
     media.add({
       desktop: "(min-width: 900px) and (min-height: 650px) and (hover: hover) and (pointer: fine)",
       motion: "(prefers-reduced-motion: no-preference)",
+      portrait: "(orientation: portrait)",
     }, (context) => {
       if (!context.conditions?.motion) return;
 
-      if (!context.conditions.desktop) {
-        // Touch scrolling stays native. Small transforms run without pins,
-        // clipping, blur filters or a second horizontal scroll controller.
-        // Numeric scrub interpolates each gesture rather than jumping between frames.
-        gsap.fromTo("#hero-title", { y: 10, opacity: .85 },
-          { y: 0, opacity: 1, duration: .65, ease: "power2.out" });
-        gsap.fromTo(".hero-image img", { scale: 1 }, {
-          scale: 1.08, ease: "none",
-          scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: .65, invalidateOnRefresh: true },
-        });
-        gsap.fromTo(".macro-image img", { scale: 1 }, {
-          scale: 1.12, ease: "none",
-          scrollTrigger: { trigger: ".macro", start: "top bottom", end: "bottom top", scrub: .65, invalidateOnRefresh: true },
-        });
-        gsap.fromTo(".callout-line", { scaleX: .65 }, {
-          scaleX: 1, duration: .6, stagger: .08, ease: "none",
-          scrollTrigger: { trigger: ".callouts", start: "top 90%", end: "top 62%", scrub: .5, invalidateOnRefresh: true },
-        });
-        gsap.fromTo(".callouts li > span:last-child", { y: 8, opacity: .75 }, {
-          y: 0, opacity: 1, duration: .5, stagger: .08, ease: "none",
-          scrollTrigger: { trigger: ".callouts", start: "top 90%", end: "top 62%", scrub: .5, invalidateOnRefresh: true },
-        });
-        page.querySelectorAll(".menu-card, .chef-panel, .gallery-window").forEach((element) => {
-          gsap.fromTo(element, { y: 20, opacity: .82 }, {
-            y: 0, opacity: 1, ease: "none",
-            scrollTrigger: { trigger: element, start: "top 94%", end: "top 65%", scrub: .55, invalidateOnRefresh: true },
-          });
-        });
-        return;
+      const desktop = Boolean(context.conditions.desktop);
+      page.dataset.cinematic = desktop ? "desktop" : "mobile";
+      // Touch uses native scrolling; both devices share the same scene timelines.
+      const lenis = desktop ? new Lenis({ anchors: true, smoothWheel: true, lerp: .085, wheelMultiplier: .85 }) : null;
+      const tick = (seconds: number) => lenis?.raf(seconds * 1000);
+      if (lenis) {
+        lenis.on("scroll", ScrollTrigger.update);
+        gsap.ticker.add(tick);
+        gsap.ticker.lagSmoothing(0);
       }
-
-      page.dataset.cinematic = "desktop";
-      const lenis = new Lenis({ anchors: true, smoothWheel: true, lerp: .085, wheelMultiplier: .85 });
-      const tick = (seconds: number) => lenis.raf(seconds * 1000);
-      lenis.on("scroll", ScrollTrigger.update);
-      gsap.ticker.add(tick);
-      gsap.ticker.lagSmoothing(0);
+      const pinScene = (selector: string) => {
+        const scene = page.querySelector<HTMLElement>(selector);
+        return desktop || (scene && scene.offsetHeight <= window.innerHeight + 1) ? selector : false;
+      };
 
       const title = SplitText.create("#hero-title", { type: "lines,chars" });
       gsap.from(title.lines, { y: 24, opacity: 0, duration: .8, stagger: .105, ease: "power3.out" });
       const exit = gsap.timeline({
-        scrollTrigger: { trigger: ".hero", start: "top top", end: "+=110%", pin: ".hero-scene", scrub: .65, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: ".hero", start: "top top", end: desktop ? "+=110%" : "+=90%", pin: pinScene(".hero-scene"), scrub: .65, invalidateOnRefresh: true },
       });
       exit.to(".hero-support, .eyebrow", { opacity: 0, duration: .3 }, 0)
         .to(title.chars, { opacity: 0, y: -12, duration: .32, stagger: { amount: .14, from: "start" } }, .16)
         .fromTo(".hero-ring", { scale: 1.55, opacity: 0 }, { scale: 1, opacity: 1, duration: .19 }, .28)
         .to(".hero-ring", { scale: .01, duration: .55, ease: "sine.inOut" }, .47)
         .to(".hero-image img", { scale: 1.1, duration: .75, ease: "sine.inOut" }, .24)
-        .to(".hero-image", { clipPath: "circle(0% at 68% 50%)", duration: .55, ease: "sine.inOut" }, .47)
+        .to(".hero-image", { clipPath: desktop ? "circle(0% at 68% 50%)" : "circle(0% at 50% 50%)", duration: .55, ease: "sine.inOut" }, .47)
         .to(".hero-ring, .hero-copy", { opacity: 0, duration: .1 }, .92);
 
       const macro = gsap.timeline({
-        scrollTrigger: { trigger: ".macro", start: "top top", end: "+=130%", pin: ".macro-scene", scrub: .65, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: ".macro", start: "top top", end: desktop ? "+=130%" : "+=100%", pin: pinScene(".macro-scene"), scrub: .65, invalidateOnRefresh: true },
       });
       macro.fromTo(".macro-image img", { scale: 1.05 }, { scale: 1.28, xPercent: -4, duration: 1, ease: "none" }, 0)
         .from(".callout-line", { scaleX: 0, stagger: .13, duration: .15, ease: "power3.out" }, .12)
@@ -87,7 +65,7 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       }
 
       const menu = page.querySelector<HTMLElement>(".menu-overview");
-      if (menu) {
+      if (menu && desktop) {
         const heading = menu.querySelector<HTMLElement>(".section-heading")!;
         const grid = menu.querySelector<HTMLElement>(".menu-grid")!;
         const chips = menu.querySelector<HTMLElement>(".menu-chips")!;
@@ -114,12 +92,24 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
           .fromTo(chips, { y: () => stagger() * 2 }, { y: 0, duration: 1 }, 0);
       }
 
+      if (menu && !desktop) {
+        // Stacked mobile cards cannot fit in the desktop's single pinned viewport.
+        menu.querySelectorAll(".menu-card").forEach((card) => {
+          gsap.fromTo(card, { y: 32, opacity: .8 }, {
+            y: 0, opacity: 1, ease: "none",
+            scrollTrigger: { trigger: card, start: "top 94%", end: "top 60%", scrub: .65, invalidateOnRefresh: true },
+          });
+        });
+      }
+
       return () => {
         delete page.dataset.cinematic;
         title.revert();
-        gsap.ticker.remove(tick);
-        gsap.ticker.lagSmoothing(500, 33);
-        lenis.destroy();
+        if (lenis) {
+          gsap.ticker.remove(tick);
+          gsap.ticker.lagSmoothing(500, 33);
+          lenis.destroy();
+        }
       };
     }, page);
     return () => media.revert();
