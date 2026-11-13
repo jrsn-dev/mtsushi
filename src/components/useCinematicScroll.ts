@@ -43,7 +43,7 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
         .to(title.chars, { opacity: 0, y: -12, duration: .32, stagger: { amount: .14, from: "start" } }, .16)
         .fromTo(".hero-ring", { scale: 1.55, opacity: 0 }, { scale: 1, opacity: 1, duration: .19 }, .28)
         .to(".hero-ring", { scale: .01, duration: .55, ease: "sine.inOut" }, .47)
-        .to(".hero-image img", { scale: 1.1, duration: .75, ease: "sine.inOut" }, .24)
+        .fromTo(".hero-image img", { scale: desktop ? 1 : .94 }, { scale: desktop ? 1.1 : 1.03, duration: .75, ease: "sine.inOut" }, .24)
         .to(".hero-image", { clipPath: desktop ? "circle(0% at 68% 50%)" : "circle(0% at 50% 50%)", duration: .55, ease: "sine.inOut" }, .47)
         .to(".hero-ring, .hero-copy", { opacity: 0, duration: .1 }, .92);
 

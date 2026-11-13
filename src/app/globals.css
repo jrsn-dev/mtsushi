@@ -129,6 +129,7 @@ main[data-cinematic] .gallery-window { overflow-x: clip; scroll-snap-type: none;
 @media (max-width: 899px) {
   .hero-scene { min-height: min(790px, max(610px, 95svh)); }
   .hero-image { inset: 0; }
+  .hero-image img { object-fit: contain; object-position: 50% 50%; transform: scale(.94); }
   .hero-shade { background: linear-gradient(90deg, #080809ea, #08080942), linear-gradient(0deg, #080809e8, transparent 65%); }
   .hero h1 { font-size: clamp(3rem, 9.6vw, 6rem); }
   .macro-scene { min-height: 620px; }
@@ -149,7 +150,7 @@ main[data-cinematic] .gallery-window { overflow-x: clip; scroll-snap-type: none;
   .nav { display: none; position: absolute; inset: 100% var(--space) auto; padding: .75rem 1rem; background: var(--panel); border: 1px solid var(--edge); }
   .nav.is-open { display: grid; gap: 0; }
   .hero-scene { min-height: max(580px, 91svh); align-items: end; }
-  .hero-image img { object-position: 56% 50%; }
+  .hero-image img { object-position: 50% 50%; }
   .hero-shade { background: linear-gradient(0deg, #080809 2%, #080809ed 22%, #08080965 67%, #08080923); }
   .hero h1 { font-size: clamp(2rem, 9.7vw, 4rem); }
   .section-heading { flex-wrap: wrap; align-items: flex-start; }
@@ -346,7 +347,8 @@ main[data-cinematic] .gallery-window { overflow-x: clip; scroll-snap-type: none;
 /* Use the same circular camera transition and pinned gallery on touch screens. */
 main[data-cinematic="mobile"] .hero-scene,
 main[data-cinematic="mobile"] .macro-scene { min-height: 100svh; }
-main[data-cinematic="mobile"] .hero-image { clip-path: circle(150% at 50% 50%); }
+main[data-cinematic="mobile"] .hero-image { inset: 0; clip-path: circle(150% at 50% 50%); }
+main[data-cinematic="mobile"] .hero-image img { object-fit: contain; object-position: 50% 50%; transform: scale(.94); }
 main[data-cinematic="mobile"] .hero-ring { left: 50%; top: 50%; width: min(76vw, 65svh); }
 main[data-cinematic="mobile"] .gallery-scene {
   height: 100svh; min-height: 0; display: flex; flex-direction: column; justify-content: center;
