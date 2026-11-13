@@ -133,7 +133,8 @@ main[data-cinematic] .gallery-window { overflow-x: clip; scroll-snap-type: none;
   .hero-shade { background: linear-gradient(90deg, #080809ea, #08080942), linear-gradient(0deg, #080809e8, transparent 65%); }
   .hero h1 { font-size: clamp(3rem, 9.6vw, 6rem); }
   .macro-scene { min-height: 620px; }
-  .macro-image { inset: 0; }
+  .macro-image { inset: var(--header) 0 auto; height: 64svh; max-height: 100%; }
+  .macro-image img { object-position: 60% 50%; }
   .macro-scene::before { background: linear-gradient(90deg, #080809ec, #0808091a); }
   .gallery-scene { min-height: auto; padding-top: 3.5rem; }
   .gallery-track figure, .gallery-track figure:nth-child(n) { width: min(76vw, 430px); transform: none; }
@@ -371,3 +372,6 @@ main[data-cinematic="mobile"] .gallery-track figure:nth-child(n) .photo {
 /* The next scene enters while the mobile hero closes, without extra pin spacing. */
 main[data-cinematic="mobile"] .hero { position: relative; z-index: 0; }
 main[data-cinematic="mobile"] .macro { position: relative; z-index: 1; }
+
+main[data-cinematic="mobile"] .macro-image { inset: var(--header) 0 auto; height: 64svh; max-height: 100%; }
+main[data-cinematic="mobile"] .macro-image img { object-position: 60% 50%; }
