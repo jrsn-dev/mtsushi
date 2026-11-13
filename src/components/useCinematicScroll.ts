@@ -35,16 +35,6 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
           .fromTo(photo, { scale: 1, yPercent: 0 }, { scale: 1.16, yPercent: -2, duration: 1 }, 0);
       });
 
-      page.querySelectorAll<HTMLElement>("[data-reveal]").forEach((copy) => {
-        gsap.fromTo(copy, { y: 20, opacity: 0.55 }, {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: "power2.out",
-          scrollTrigger: { trigger: copy, start: "top 94%", once: true },
-        });
-      });
-
       const observer = new ResizeObserver(() => ScrollTrigger.refresh());
       observer.observe(page);
       return () => observer.disconnect();

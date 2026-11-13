@@ -1,15 +1,16 @@
+"use client";
+
 import { useRef, useState } from "react";
 import { ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight, Instagram, Menu, X } from "lucide-react";
 import { useCinematicScroll } from "./useCinematicScroll";
+import AnimatedContent from "./react-bits/AnimatedContent";
 
 const instagram = "https://www.instagram.com/mtsushiarte/";
 const instagramDirect = "https://ig.me/m/mtsushiarte";
-const whatsapp = import.meta.env.VITE_WHATSAPP?.trim() ?? "";
-const hasWhatsApp = /^55\d{10,11}$/.test(whatsapp);
 
-function contactLink(subject: string) {
+function orderLink(whatsapp: string, subject: string) {
   const message = encodeURIComponent(`Olá! Gostaria de ${subject} na MT Sushi Arte.`);
-  return hasWhatsApp ? `https://wa.me/${whatsapp}?text=${message}` : instagramDirect;
+  return whatsapp ? `https://wa.me/${whatsapp}?text=${message}` : instagramDirect;
 }
 
 const navigation = [
@@ -53,7 +54,8 @@ function Photo({ image, alt, priority = false, className = "" }: {
   );
 }
 
-export default function App() {
+export default function SushiLanding({ whatsapp }: { whatsapp: string }) {
+  const contactLink = (subject: string) => orderLink(whatsapp, subject);
   const [menuOpen, setMenuOpen] = useState(false);
   const [category, setCategory] = useState<(typeof categories)[number] | null>(null);
   const main = useRef<HTMLElement>(null);
@@ -82,7 +84,7 @@ export default function App() {
             Fazer pedido <ArrowUpRight aria-hidden="true" />
           </a>
           <button ref={toggle} type="button" className="menu-toggle" aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-            aria-expanded={menuOpen} aria-controls="navigation" onClick={() => setMenuOpen(!menuOpen)}>
+            aria-expanded={menuOpen} aria-controls="navigation" onClick={() => setMenuOpen((open) => !open)}>
             {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
         </div>
@@ -92,7 +94,9 @@ export default function App() {
         <section className="shell hero" id="inicio" aria-labelledby="hero-title">
           <div className="hero-copy">
             <span className="eyebrow"><span className="red-mark" /> Jacarezinho, PR</span>
-            <h1 id="hero-title">Sushi <span>artesanal.</span></h1>
+            <AnimatedContent trigger="mount" distance={12} initialOpacity={0.82} duration={0.65}>
+              <h1 id="hero-title">Sushi <span>artesanal.</span></h1>
+            </AnimatedContent>
             <p>Temakis, sushis e combos preparados à mão.</p>
             <a className="button button-red" href="#cardapio">
               Ver cardápio <ArrowDownRight aria-hidden="true" />
@@ -101,17 +105,16 @@ export default function App() {
           </div>
           <figure className="hero-shot">
             <Photo image="hero-temaki" alt="Close de um temaki recheado com salmão e cebolinha" priority />
-            <figcaption>Temaki de salmão</figcaption>
           </figure>
         </section>
 
         <section className="shell section" id="cardapio" aria-labelledby="menu-title">
-          <div className="section-heading" data-reveal>
+          <AnimatedContent className="section-heading" distance={18} initialOpacity={0.6} duration={0.7}>
             <h2 id="menu-title">Cardápio</h2>
             <a className="text-link" href={contactLink("consultar o cardápio")} target="_blank" rel="noreferrer">
               Consultar opções <ArrowUpRight aria-hidden="true" />
             </a>
-          </div>
+          </AnimatedContent>
           <div className="menu-grid">
             {categories.slice(0, 3).map((item) => (
               <button className="menu-card" type="button" key={item.name}
@@ -145,22 +148,22 @@ export default function App() {
         <section className="shell section combo" id="combos" aria-labelledby="combo-title">
           <Photo image="combos" alt="Combinado com sushis e sashimis de salmão" className="combo-photo" />
           <div className="combo-copy">
-            <div data-reveal>
+            <AnimatedContent distance={18} initialOpacity={0.6} duration={0.7}>
               <h2 id="combo-title">Combos para<br />compartilhar.</h2>
               <a className="button button-red" href={contactLink("conhecer os combos")} target="_blank" rel="noreferrer">
                 Consultar combos <ArrowUpRight aria-hidden="true" />
               </a>
-            </div>
+            </AnimatedContent>
           </div>
         </section>
 
         <section className="shell section" id="instagram" aria-labelledby="instagram-title">
-          <div className="section-heading" data-reveal>
+          <AnimatedContent className="section-heading" distance={18} initialOpacity={0.6} duration={0.7}>
             <h2 id="instagram-title">Instagram</h2>
             <a className="text-link" href={instagram} target="_blank" rel="noreferrer">
               <Instagram aria-hidden="true" /> @mtsushiarte <ArrowUpRight aria-hidden="true" />
             </a>
-          </div>
+          </AnimatedContent>
           <div className="gallery">
             {gallery.map((item) => (
               <a key={item.image} href={instagram} target="_blank" rel="noreferrer" aria-label={`${item.alt} no Instagram`}>
@@ -172,12 +175,12 @@ export default function App() {
 
         <section className="contact section" id="contato" aria-labelledby="contact-title">
           <div className="shell contact-inner">
-            <div data-reveal>
+            <AnimatedContent distance={18} initialOpacity={0.6} duration={0.7}>
               <h2 id="contact-title">Faça seu pedido.</h2>
               <p>Delivery em Jacarezinho, PR</p>
-            </div>
+            </AnimatedContent>
             <a className="button button-red" href={contactLink("fazer um pedido")} target="_blank" rel="noreferrer">
-              {hasWhatsApp ? "Pedir no WhatsApp" : "Pedir pelo Instagram"} <ArrowUpRight aria-hidden="true" />
+              {whatsapp ? "Pedir no WhatsApp" : "Pedir pelo Instagram"} <ArrowUpRight aria-hidden="true" />
             </a>
           </div>
         </section>

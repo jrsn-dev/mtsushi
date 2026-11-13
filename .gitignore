@@ -3,3 +3,8 @@ dist/
 .env
 .env.local
 .DS_Store
+.next/
+out/
+.vercel/
+next-env.d.ts
+*.tsbuildinfo
