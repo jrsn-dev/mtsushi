@@ -367,3 +367,7 @@ main[data-cinematic="mobile"] .gallery-track figure:nth-child(n) .photo {
   main[data-cinematic="mobile"] .gallery-track figure .photo,
   main[data-cinematic="mobile"] .gallery-track figure:nth-child(n) .photo { height: 36svh; }
 }
+
+/* The next scene enters while the mobile hero closes, without extra pin spacing. */
+main[data-cinematic="mobile"] .hero { position: relative; z-index: 0; }
+main[data-cinematic="mobile"] .macro { position: relative; z-index: 1; }
