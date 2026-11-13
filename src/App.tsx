@@ -1,24 +1,192 @@
-import {useState} from "react";
-import {Award,Bike,CheckCircle2,ChevronRight,Clock3,CupSoda,ExternalLink,Instagram,Leaf,MapPin,Menu,MessageCircle,Package,ScrollText,Soup,Star,X} from "lucide-react";
-const WHATSAPP=""; // Informe o numero verificado no formato 5543999999999
-const INSTAGRAM="https://www.instagram.com/mtsushiarte/";
-const img="/images/";
-const order=(msg="fazer um pedido")=>WHATSAPP?`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Olá! Gostaria de "+msg+".")}`:`https://api.whatsapp.com/send?text=${encodeURIComponent("Olá! Gostaria de "+msg+" na MT Sushi Arte.")}`;
-const nav=[["Início","#inicio"],["Cardápio","#cardapio"],["Combos","#combos"],["Avaliações","#avaliacoes"],["Instagram","#instagram"],["Contato","#contato"]];
-const cats=[{name:"Sushis",icon:ScrollText,description:"Sushis artesanais preparados na hora."},{name:"Temakis",icon:Leaf,description:"Temakis fresquinhos e saborosos."},{name:"Combos",icon:Package,description:"Combinações especiais para compartilhar."},{name:"Porções",icon:Soup,description:"Acompanhamentos para o seu pedido."},{name:"Bebidas",icon:CupSoda,description:"Bebidas para completar a experiência."}];
-const reviews=[{name:"Juliana Mendes",image:"portrait-1.png",message:"Sushi incrível, sempre fresco e muito bem preparado. O delivery é rápido e o atendimento excelente!"},{name:"Rafael Oliveira",image:"portrait-2.png",message:"O melhor sushi da cidade! Qualidade, sabor e apresentação impecáveis. Recomendo demais!"},{name:"Camila Santos",image:"portrait-3.png",message:"Ambiente, atendimento e comida nota 10! Sempre peço os combos e nunca me decepciono."}];
-const posts=["Uramaki de salmão","Combinado de sushi","Temaki de salmão","Sushi com molho especial","Bandeja de sushi","Nigiri de salmão"];
-function Order({children="Faça seu pedido agora",className=""}:{children?:React.ReactNode;className?:string}){return <a className={"order "+className} href={order()} target="_blank" rel="noopener noreferrer"><MessageCircle size={23}/>{children}</a>}
-function Heading({children}:{children:React.ReactNode}){return <h2 className="section-heading"><span/>{children}<span/></h2>}
-export default function App(){const[mobile,setMobile]=useState(false);const[active,setActive]=useState<string|null>(null);return <>
-<header className="header"><div className="container header-inner"><a className="logo" href="#inicio"><img src={img+"logo-transparent.png"} alt="MT Sushi Arte"/><span className="logo-fallback"><b>MT</b><small>SUSHI ARTE</small></span></a><nav className={mobile?"nav open":"nav"}>{nav.map(([name,href],i)=><a key={href} className={i===0?"current":""} onClick={()=>setMobile(false)} href={href}>{name}</a>)}</nav><Order className="header-order">Peça no WhatsApp</Order><button className="mobile-menu" aria-label={mobile?"Fechar menu":"Abrir menu"} onClick={()=>setMobile(!mobile)}>{mobile?<X/>:<Menu/>}</button></div></header>
-<main>
-<section className="hero" id="inicio"><div className="container hero-inner"><div className="hero-copy"><span className="eyebrow">SUSHI ARTESANAL</span><h1>Sabor, qualidade<br/>e <em>arte japonesa</em></h1><p>Sushis, temakis, combos e muito mais,<br/>preparados com ingredientes selecionados.</p><Order/><div className="hero-benefits"><div><Award/><span>Qualidade<br/>garantida</span></div><div><Leaf/><span>Ingredientes<br/>frescos</span></div><div><Bike/><span>Delivery<br/>rápido</span></div></div></div><div className="hero-art"><img src={img+"sushi-hero-transparent.png"} alt="Sushi artesanal de salmão"/><div className="red-arc"/></div></div></section>
-<section className="menu-section" id="cardapio"><div className="container"><Heading>Nosso Cardápio</Heading><p className="subtitle">Explore nossas opções e escolha o seu favorito.</p><div className="category-grid">{cats.map(c=><button key={c.name} className={"category "+(active===c.name?"selected":"")} aria-pressed={active===c.name} onClick={()=>setActive(active===c.name?null:c.name)}><c.icon/><b>{c.name}</b></button>)}</div>{active&&<div className="selection"><b>{active}</b> {cats.find(c=>c.name===active)?.description} <a href={order("conhecer as opções de "+active)} target="_blank" rel="noreferrer">Consultar <ChevronRight size={16}/></a></div>}</div></section>
-<section className="combo-section" id="combos"><div className="container"><div className="combo"><div className="combo-text"><h2>Combos<br/>Especiais</h2><p>Mais variedade e economia<br/>para você.</p><a href={order("conhecer os combos")} target="_blank" rel="noreferrer">Ver Combos <ChevronRight size={19}/></a></div><img src={img+"combo-transparent.png"} alt="Combo especial de sushi"/></div></div></section>
-<section className="benefits" id="contato"><div className="container benefits-grid"><div className="reasons"><h2>Por que escolher a<br/>MT Sushi Arte?</h2>{["Preparo artesanal","Sabores autênticos","Ingredientes de alta qualidade","Atendimento rápido e atencioso"].map(x=><p key={x}><CheckCircle2/>{x}</p>)}</div><div className="details"><p><MapPin/><b>Jacarezinho - PR</b></p><p><Clock3/><span><b>Seg a Dom</b><br/>Das 18h às 23h</span></p><p><Bike/><span><b>Delivery na região</b><br/>Peça pelo WhatsApp</span></p></div></div></section>
-<section className="reviews" id="avaliacoes"><div className="container"><Heading>O que nossos clientes dizem</Heading><p className="subtitle">Avaliações de quem já experimentou o MT Sushi Arte.</p><div className="reviews-grid">{reviews.map(r=><article className="review" key={r.name}><div className="quote">”</div><div className="review-author"><img src={img+r.image} alt="Avatar ilustrativo"/><div><b>{r.name}</b><div className="stars">{Array.from({length:5},(_,i)=><Star key={i} size={18} fill="currentColor"/>)}</div></div></div><p>“{r.message}”</p></article>)}</div><p className="disclaimer">Depoimentos ilustrativos — substitua por avaliações reais verificadas antes de publicar.</p></div></section>
-<section className="instagram" id="instagram"><div className="container"><div className="instagram-head"><div><Instagram className="instagram-icon"/><div><h2>Siga no Instagram</h2><p>Acompanhe nossas novidades, promoções e muito mais!</p></div></div><a className="instagram-cta" href={INSTAGRAM} target="_blank" rel="noreferrer">@mtsushiarte <ExternalLink size={18}/></a></div><div className="gallery">{posts.map((p,i)=><a key={p} href={INSTAGRAM} target="_blank" rel="noreferrer"><img src={img+`insta-${i+1}.png`} alt={p} loading="lazy"/><Instagram className="post-icon"/></a>)}</div></div></section>
-<section className="last-cta"><h2>Viva a experiência MT Sushi Arte</h2><Order/></section>
-</main><footer>© {new Date().getFullYear()} MT Sushi Arte · Jacarezinho, PR</footer>
-</>}
+import { useRef, useState } from "react";
+import { ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight, Instagram, Menu, X } from "lucide-react";
+import { useCinematicScroll } from "./useCinematicScroll";
+
+const instagram = "https://www.instagram.com/mtsushiarte/";
+const instagramDirect = "https://ig.me/m/mtsushiarte";
+const whatsapp = import.meta.env.VITE_WHATSAPP?.trim() ?? "";
+const hasWhatsApp = /^55\d{10,11}$/.test(whatsapp);
+
+function contactLink(subject: string) {
+  const message = encodeURIComponent(`Olá! Gostaria de ${subject} na MT Sushi Arte.`);
+  return hasWhatsApp ? `https://wa.me/${whatsapp}?text=${message}` : instagramDirect;
+}
+
+const navigation = [
+  ["Cardápio", "#cardapio"],
+  ["Combos", "#combos"],
+  ["Instagram", "#instagram"],
+  ["Contato", "#contato"],
+];
+
+const categories = [
+  { name: "Sushis", description: "Sushis artesanais preparados na hora.", image: "sushis", alt: "Uramakis de salmão" },
+  { name: "Temakis", description: "Temakis enrolados à mão.", image: "temakis", alt: "Temakis em uma travessa vermelha" },
+  { name: "Combos", description: "Seleções de sushi para compartilhar.", image: "combos", alt: "Combinado de sushis e sashimis" },
+  { name: "Porções", description: "Acompanhamentos para o seu pedido." },
+  { name: "Bebidas", description: "Bebidas para acompanhar o sushi." },
+];
+
+const gallery = [
+  { image: "bastidores", alt: "Mesa servida pela MT Sushi Arte" },
+  { image: "nigiri", alt: "Nigiri de salmão com hashis" },
+  { image: "temakis", alt: "Temakis preparados pela MT Sushi Arte" },
+];
+
+function Photo({ image, alt, priority = false, className = "" }: {
+  image: string;
+  alt: string;
+  priority?: boolean;
+  className?: string;
+}) {
+  return (
+    <span className={`photo ${className}`} data-frame>
+      <img
+        src={`/images/${image}.webp`}
+        alt={alt}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
+        decoding="async"
+        data-camera
+      />
+    </span>
+  );
+}
+
+export default function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [category, setCategory] = useState<(typeof categories)[number] | null>(null);
+  const main = useRef<HTMLElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
+  useCinematicScroll(main);
+
+  return (
+    <>
+      <a className="skip-link" href="#inicio">Pular para o conteúdo</a>
+      <header className="header" onKeyDown={(event) => {
+        if (event.key === "Escape" && menuOpen) {
+          setMenuOpen(false);
+          toggle.current?.focus();
+        }
+      }}>
+        <div className="shell header-inner">
+          <a className="brand" href="#inicio" onClick={() => setMenuOpen(false)}>
+            <img src="/images/logo.png" alt="MT Sushi Arte" width="279" height="89" />
+          </a>
+          <nav id="navigation" aria-label="Navegação principal" className={menuOpen ? "nav is-open" : "nav"}>
+            {navigation.map(([label, href]) => (
+              <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>
+            ))}
+          </nav>
+          <a className="button header-order" href={contactLink("fazer um pedido")} target="_blank" rel="noreferrer">
+            Fazer pedido <ArrowUpRight aria-hidden="true" />
+          </a>
+          <button ref={toggle} type="button" className="menu-toggle" aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={menuOpen} aria-controls="navigation" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+          </button>
+        </div>
+      </header>
+
+      <main ref={main}>
+        <section className="shell hero" id="inicio" aria-labelledby="hero-title">
+          <div className="hero-copy">
+            <span className="eyebrow"><span className="red-mark" /> Jacarezinho, PR</span>
+            <h1 id="hero-title">Sushi <span>artesanal.</span></h1>
+            <p>Temakis, sushis e combos preparados à mão.</p>
+            <a className="button button-red" href="#cardapio">
+              Ver cardápio <ArrowDownRight aria-hidden="true" />
+            </a>
+            <a className="scroll-link" href="#cardapio" aria-label="Rolar até o cardápio"><ArrowDown aria-hidden="true" /></a>
+          </div>
+          <figure className="hero-shot">
+            <Photo image="hero-temaki" alt="Close de um temaki recheado com salmão e cebolinha" priority />
+            <figcaption>Temaki de salmão</figcaption>
+          </figure>
+        </section>
+
+        <section className="shell section" id="cardapio" aria-labelledby="menu-title">
+          <div className="section-heading" data-reveal>
+            <h2 id="menu-title">Cardápio</h2>
+            <a className="text-link" href={contactLink("consultar o cardápio")} target="_blank" rel="noreferrer">
+              Consultar opções <ArrowUpRight aria-hidden="true" />
+            </a>
+          </div>
+          <div className="menu-grid">
+            {categories.slice(0, 3).map((item) => (
+              <button className="menu-card" type="button" key={item.name}
+                aria-pressed={category === item} aria-controls="category-details"
+                onClick={() => setCategory(category === item ? null : item)}>
+                <Photo image={item.image!} alt="" className={`menu-photo menu-photo-${item.image}`} />
+                <span className="menu-label">{item.name} <ArrowUpRight aria-hidden="true" /></span>
+              </button>
+            ))}
+          </div>
+          <div className="menu-extras">
+            {categories.slice(3).map((item) => (
+              <button type="button" className="button" key={item.name}
+                aria-pressed={category === item} aria-controls="category-details"
+                onClick={() => setCategory(category === item ? null : item)}>
+                {item.name} <ArrowRight aria-hidden="true" />
+              </button>
+            ))}
+          </div>
+          <div id="category-details" aria-live="polite">
+            {category && (
+              <div className="category-details">
+                <p><strong>{category.name}</strong> {category.description}</p>
+                <a className="text-link" href={contactLink(`conhecer as opções de ${category.name.toLowerCase()}`)}
+                  target="_blank" rel="noreferrer">Consultar {category.name.toLowerCase()} <ArrowUpRight aria-hidden="true" /></a>
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section className="shell section combo" id="combos" aria-labelledby="combo-title">
+          <Photo image="combos" alt="Combinado com sushis e sashimis de salmão" className="combo-photo" />
+          <div className="combo-copy">
+            <div data-reveal>
+              <h2 id="combo-title">Combos para<br />compartilhar.</h2>
+              <a className="button button-red" href={contactLink("conhecer os combos")} target="_blank" rel="noreferrer">
+                Consultar combos <ArrowUpRight aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="shell section" id="instagram" aria-labelledby="instagram-title">
+          <div className="section-heading" data-reveal>
+            <h2 id="instagram-title">Instagram</h2>
+            <a className="text-link" href={instagram} target="_blank" rel="noreferrer">
+              <Instagram aria-hidden="true" /> @mtsushiarte <ArrowUpRight aria-hidden="true" />
+            </a>
+          </div>
+          <div className="gallery">
+            {gallery.map((item) => (
+              <a key={item.image} href={instagram} target="_blank" rel="noreferrer" aria-label={`${item.alt} no Instagram`}>
+                <Photo image={item.image} alt={item.alt} />
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="contact section" id="contato" aria-labelledby="contact-title">
+          <div className="shell contact-inner">
+            <div data-reveal>
+              <h2 id="contact-title">Faça seu pedido.</h2>
+              <p>Delivery em Jacarezinho, PR</p>
+            </div>
+            <a className="button button-red" href={contactLink("fazer um pedido")} target="_blank" rel="noreferrer">
+              {hasWhatsApp ? "Pedir no WhatsApp" : "Pedir pelo Instagram"} <ArrowUpRight aria-hidden="true" />
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <footer className="shell footer">
+        <a className="brand" href="#inicio"><img src="/images/logo.png" alt="MT Sushi Arte" width="279" height="89" /></a>
+        <a className="text-link" href={instagram} target="_blank" rel="noreferrer"><Instagram aria-hidden="true" /> @mtsushiarte</a>
+      </footer>
+    </>
+  );
+}
