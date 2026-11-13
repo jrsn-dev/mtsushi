@@ -106,7 +106,7 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
 
         <section className="gallery-section" aria-labelledby="gallery-title">
           <div className="gallery-scene">
-            <div className="shell section-heading"><div><h2 id="gallery-title">À mesa.</h2></div>
+            <div className="shell section-heading"><div><h2 id="gallery-title">Arte em cada peça.</h2></div>
             </div>
             <div className="gallery-window" tabIndex={0} aria-label="Galeria de pratos">
               <div className="gallery-track">
