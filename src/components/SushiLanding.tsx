@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight, Instagram, Menu, X } from "lucide-react";
+import { ArrowDown, ArrowDownRight, ArrowUpRight, Instagram, Menu, X } from "lucide-react";
 import { useCinematicScroll } from "./useCinematicScroll";
 import AnimatedContent from "./react-bits/AnimatedContent";
 
@@ -24,8 +24,8 @@ const categories = [
   { name: "Sushis", description: "Sushis artesanais preparados na hora.", image: "sushis", alt: "Uramakis de salmão" },
   { name: "Temakis", description: "Temakis enrolados à mão.", image: "temakis", alt: "Temakis em uma travessa vermelha" },
   { name: "Combos", description: "Seleções de sushi para compartilhar.", image: "combos", alt: "Combinado de sushis e sashimis" },
-  { name: "Porções", description: "Acompanhamentos para o seu pedido." },
-  { name: "Bebidas", description: "Bebidas para acompanhar o sushi." },
+  { name: "Porções", description: "Acompanhamentos para o seu pedido.", image: "porcoes", alt: "Foto ilustrativa de uma porção de guiozas douradas" },
+  { name: "Bebidas", description: "Bebidas para acompanhar o sushi.", image: "bebidas", alt: "Foto ilustrativa de chá gelado em um copo com gelo" },
 ];
 
 const gallery = [
@@ -116,24 +116,16 @@ export default function SushiLanding({ whatsapp }: { whatsapp: string }) {
             </a>
           </AnimatedContent>
           <div className="menu-grid">
-            {categories.slice(0, 3).map((item) => (
+            {categories.map((item) => (
               <button className="menu-card" type="button" key={item.name}
                 aria-pressed={category === item} aria-controls="category-details"
                 onClick={() => setCategory(category === item ? null : item)}>
-                <Photo image={item.image!} alt="" className={`menu-photo menu-photo-${item.image}`} />
+                <Photo image={item.image} alt={item.alt} className={`menu-photo menu-photo-${item.image}`} />
                 <span className="menu-label">{item.name} <ArrowUpRight aria-hidden="true" /></span>
               </button>
             ))}
           </div>
-          <div className="menu-extras">
-            {categories.slice(3).map((item) => (
-              <button type="button" className="button" key={item.name}
-                aria-pressed={category === item} aria-controls="category-details"
-                onClick={() => setCategory(category === item ? null : item)}>
-                {item.name} <ArrowRight aria-hidden="true" />
-              </button>
-            ))}
-          </div>
+          <p className="menu-note">Imagens ilustrativas. Consulte as opções disponíveis.</p>
           <div id="category-details" aria-live="polite">
             {category && (
               <div className="category-details">
