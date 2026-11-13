@@ -58,9 +58,13 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       const windowElement = page.querySelector<HTMLElement>(".gallery-window");
       if (track && windowElement) {
         const travel = () => Math.max(0, track.scrollWidth - windowElement.clientWidth);
+        // The photo track is wide; mobile should not need several screens of
+        // vertical scrolling before the following section becomes available.
+        const scrollDistance = () => desktop ? travel()
+          : Math.max(1, Math.min(travel() * .5, window.innerHeight));
         gsap.to(track, {
           x: () => -travel(), ease: "none",
-          scrollTrigger: { trigger: ".gallery-section", start: "top top", end: () => `+=${travel()}`, pin: ".gallery-scene", scrub: .65, invalidateOnRefresh: true },
+          scrollTrigger: { trigger: ".gallery-section", start: "top top", end: () => `+=${scrollDistance()}`, pin: ".gallery-scene", scrub: desktop ? .65 : .35, invalidateOnRefresh: true },
         });
       }
 

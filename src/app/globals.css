@@ -384,3 +384,9 @@ main[data-cinematic="mobile"] .gallery-section { position: relative; z-index: 2;
   .site .reservations { padding-top: 2rem; }
   .site .footer-line { margin-top: 1.5rem; }
 }
+
+main[data-cinematic="mobile"] .gallery-scene { padding-bottom: .25rem; }
+main[data-cinematic="mobile"] .gallery-track { padding-bottom: .25rem; }
+@media (max-width: 899px) {
+  .site .gallery-section + .section { margin-top: .75rem; }
+}
