@@ -61,14 +61,15 @@ img { display: block; max-width: 100%; }
 .text-link { font-size: .87rem; color: var(--muted); }
 .menu-grid, .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.65rem, 1.55vw, 1.25rem); }
 .menu-card { position: relative; display: block; width: 100%; padding: 0; border: 0; background: var(--surface); color: var(--paper); text-align: left; cursor: pointer; }
+.menu-photo { aspect-ratio: 4 / 3; }
 .menu-photo img, .gallery img { filter: brightness(.77) saturate(.85); transition: filter .25s ease; }
 .menu-card:hover img, .menu-card[aria-pressed="true"] img, .gallery a:hover img { filter: brightness(.95) saturate(.98); }
-.menu-label { position: absolute; bottom: 0; left: 0; right: 0; background: #090909; display: flex; justify-content: space-between; align-items: center; gap: .3rem; padding: clamp(.5rem, 1.2vw, 1rem); font-family: var(--display); text-transform: uppercase; font-weight: 700; font-size: clamp(1.15rem, 3vw, 2.5rem); }
+.menu-label { background: #090909; display: flex; justify-content: space-between; align-items: center; gap: .3rem; padding: clamp(.5rem, 1.2vw, 1rem); font-family: var(--display); text-transform: uppercase; font-weight: 700; font-size: clamp(1.15rem, 3vw, 2.5rem); }
 .menu-label svg { width: clamp(.8rem, 2.5vw, 1.25rem); height: auto; flex: none; color: var(--accent); }
 .menu-card[aria-pressed="true"] .menu-label { background: var(--red); }
 .menu-card[aria-pressed="true"] .menu-label svg { color: white; }
 .menu-photo-combos img, .combo-photo img { object-fit: contain; }
-.menu-extras { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .85rem; }
+.menu-note { margin-top: .85rem; color: var(--muted); font-size: .75rem; line-height: 1.5; }
 .category-details { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .8rem; margin-top: .85rem; padding: 1rem; background: var(--surface); color: var(--muted); }
 .category-details strong { color: var(--paper); margin-right: .45rem; }
 .combo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); background: var(--surface); }
@@ -92,6 +93,8 @@ img { display: block; max-width: 100%; }
   .nav { display: none; position: absolute; inset: 100% var(--space) auto; background: #101010; padding: 1rem; align-items: stretch; }
   .nav.is-open { display: grid; gap: .2rem; }
   .nav a { padding: .8rem .5rem; }
+  .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .menu-label { font-size: clamp(1.5rem, 5vw, 2.25rem); padding: .75rem; }
   .hero { grid-template-columns: 1fr; gap: 1.5rem; }
   .hero-copy { padding: 1.75rem 0 0; }
   .hero h1 { font-size: clamp(3rem, 15.9vw, 7.5rem); margin-block: 1rem; }

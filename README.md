@@ -15,3 +15,5 @@ Importe o repositório `jrsn-dev/mtsushi` e selecione o preset **Next.js**. Use 
 ## Créditos
 
 A animação de entrada dos títulos usa [AnimatedContent do React Bits](https://github.com/DavidHDev/react-bits/blob/9d9c687dc4f55b23539aa5417b703078047efa74/src/ts-default/Animations/AnimatedContent/AnimatedContent.tsx), com a licença incluída junto ao componente.
+
+As fotos ilustrativas de [porções](https://unsplash.com/photos/klTf2RN37Ts) e [bebidas](https://unsplash.com/photos/8fS1ByfREpw) são de Mikey Frost e Vin Jack, respectivamente, no Unsplash. Os arquivos WebP ficam em `public/images`, sem dependência de imagens remotas durante a navegação.
