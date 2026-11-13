@@ -13,41 +13,65 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
     const media = gsap.matchMedia();
 
     media.add({
-      motion: "(prefers-reduced-motion: no-preference)",
       desktop: "(min-width: 900px) and (min-height: 650px) and (hover: hover) and (pointer: fine)",
-      portrait: "(orientation: portrait)",
+      motion: "(prefers-reduced-motion: no-preference)",
     }, (context) => {
       if (!context.conditions?.motion) return;
-      const desktop = Boolean(context.conditions.desktop);
-      page.dataset.cinematic = "true";
-      // Keep native touch scrolling; only wheel input uses smooth scrolling.
-      const lenis = desktop ? new Lenis({ anchors: true, smoothWheel: true }) : null;
-      const tick = (seconds: number) => lenis?.raf(seconds * 1000);
-      if (lenis) {
-        lenis.on("scroll", ScrollTrigger.update);
-        gsap.ticker.add(tick);
-        gsap.ticker.lagSmoothing(0);
+
+      if (!context.conditions.desktop) {
+        // Touch scrolling stays native. Small transforms run without pins,
+        // clipping, blur filters or a second horizontal scroll controller.
+        gsap.fromTo("#hero-title", { y: 10, opacity: .85 },
+          { y: 0, opacity: 1, duration: .65, ease: "power2.out" });
+        gsap.fromTo(".hero-image img", { scale: 1 }, {
+          scale: 1.08, ease: "none",
+          scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
+        });
+        gsap.fromTo(".macro-image img", { scale: 1 }, {
+          scale: 1.12, ease: "none",
+          scrollTrigger: { trigger: ".macro", start: "top bottom", end: "bottom top", scrub: true },
+        });
+        gsap.fromTo(".callout-line", { scaleX: .65 }, {
+          scaleX: 1, duration: .6, stagger: .08, ease: "power2.out",
+          scrollTrigger: { trigger: ".callouts", start: "top 85%", once: true },
+        });
+        gsap.fromTo(".callouts li > span:last-child", { y: 8, opacity: .75 }, {
+          y: 0, opacity: 1, duration: .5, stagger: .08, ease: "power2.out",
+          scrollTrigger: { trigger: ".callouts", start: "top 85%", once: true },
+        });
+        page.querySelectorAll(".menu-card, .chef-panel, .gallery-window").forEach((element) => {
+          gsap.fromTo(element, { y: 16, opacity: .85 }, {
+            y: 0, opacity: 1, duration: .55, ease: "power2.out",
+            scrollTrigger: { trigger: element, start: "top 92%", once: true },
+          });
+        });
+        return;
       }
-      const fitsViewport = (selector: string) =>
-        (page.querySelector<HTMLElement>(selector)?.offsetHeight ?? 0) <= window.innerHeight + 1;
+
+      page.dataset.cinematic = "desktop";
+      const lenis = new Lenis({ anchors: true, smoothWheel: true });
+      const tick = (seconds: number) => lenis.raf(seconds * 1000);
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(tick);
+      gsap.ticker.lagSmoothing(0);
 
       const title = SplitText.create("#hero-title", { type: "lines,chars" });
       gsap.from(title.lines, { y: 24, opacity: 0, duration: .8, stagger: .105, ease: "power3.out" });
       const exit = gsap.timeline({
-        scrollTrigger: { trigger: ".hero", start: "top top", end: desktop ? "+=90%" : "+=65%", pin: desktop || fitsViewport(".hero-scene") ? ".hero-scene" : false, scrub: true, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: ".hero", start: "top top", end: "+=90%", pin: ".hero-scene", scrub: true },
       });
-      exit.to(".hero-support, .eyebrow", { opacity: 0, filter: desktop ? "blur(12px)" : "blur(4px)", duration: .3 }, 0)
-        .to(title.chars, { opacity: 0, filter: desktop ? "blur(10px)" : "blur(4px)", y: -12, duration: .32, stagger: { amount: .22, from: "random" } }, .16)
+      exit.to(".hero-support, .eyebrow", { opacity: 0, filter: "blur(12px)", duration: .3 }, 0)
+        .to(title.chars, { opacity: 0, filter: "blur(10px)", y: -12, duration: .32, stagger: { amount: .22, from: "random" } }, .16)
         .fromTo(".hero-ring", { scale: 1.55, opacity: 0 }, { scale: 1, opacity: 1, duration: .19 }, .28)
         .to(".hero-ring", { scale: .01, duration: .55, ease: "expo.inOut" }, .47)
         .to(".hero-image img", { scale: 1.15, duration: .75, ease: "power3.out" }, .24)
-        .to(".hero-image", { clipPath: desktop ? "circle(0% at 68% 50%)" : "circle(0% at 50% 50%)", duration: .55, ease: "expo.inOut" }, .47)
+        .to(".hero-image", { clipPath: "circle(0% at 68% 50%)", duration: .55, ease: "expo.inOut" }, .47)
         .to(".hero-ring, .hero-copy", { opacity: 0, duration: .1 }, .92);
 
       const macro = gsap.timeline({
-        scrollTrigger: { trigger: ".macro", start: "top top", end: desktop ? "+=130%" : "+=90%", pin: desktop || fitsViewport(".macro-scene") ? ".macro-scene" : false, scrub: true, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: ".macro", start: "top top", end: "+=130%", pin: ".macro-scene", scrub: true },
       });
-      macro.fromTo(".macro-image img", { scale: 1.05 }, { scale: desktop ? 1.52 : 1.3, xPercent: desktop ? -8 : -3, duration: 1, ease: "none" }, 0)
+      macro.fromTo(".macro-image img", { scale: 1.05 }, { scale: 1.52, xPercent: -8, duration: 1, ease: "none" }, 0)
         .from(".callout-line", { scaleX: 0, stagger: .13, duration: .15, ease: "power3.out" }, .12)
         .from(".callouts li > span:last-child", { opacity: 0, y: 8, stagger: .13, duration: .15 }, .17);
 
@@ -62,7 +86,7 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       }
 
       const menu = page.querySelector<HTMLElement>(".menu-overview");
-      if (menu && desktop) {
+      if (menu) {
         const heading = menu.querySelector<HTMLElement>(".section-heading")!;
         const grid = menu.querySelector<HTMLElement>(".menu-grid")!;
         const chips = menu.querySelector<HTMLElement>(".menu-chips")!;
@@ -89,26 +113,12 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
           .fromTo(chips, { y: () => stagger() * 2 }, { y: 0, duration: 1 }, 0);
       }
 
-      if (menu && !desktop) {
-        // The mobile menu is taller than the viewport: reveal each card in place.
-        menu.querySelectorAll(".menu-card").forEach((card) => {
-          gsap.fromTo(card, { y: 48, opacity: .35 }, { y: 0, opacity: 1, ease: "none",
-            scrollTrigger: { trigger: card, start: "top 92%", end: "top 60%", scrub: true, invalidateOnRefresh: true },
-          });
-        });
-        gsap.from(menu.querySelector(".menu-chips"), { y: 24, opacity: 0,
-          scrollTrigger: { trigger: ".menu-chips", start: "top 95%", end: "top 80%", scrub: true },
-        });
-      }
-
       return () => {
         delete page.dataset.cinematic;
         title.revert();
-        if (lenis) {
-          gsap.ticker.remove(tick);
-          gsap.ticker.lagSmoothing(500, 33);
-          lenis.destroy();
-        }
+        gsap.ticker.remove(tick);
+        gsap.ticker.lagSmoothing(500, 33);
+        lenis.destroy();
       };
     }, page);
     return () => media.revert();
