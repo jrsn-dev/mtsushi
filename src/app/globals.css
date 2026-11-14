@@ -403,11 +403,11 @@ main[data-cinematic="mobile"] .gallery-track { padding-bottom: .25rem; }
 
 /* The original brand sits behind the photo and appears as its circular mask closes. */
 .hero-logo-reveal {
-  position: absolute; z-index: -4; left: 50%; top: 50%; translate: -50% -50%;
+  position: absolute; z-index: -4; left: 50%; top: 47%; translate: -50% -50%;
   width: 70vw; opacity: 0; pointer-events: none;
 }
 .hero-logo-reveal img { display: block; width: 100%; height: auto; }
 @media (max-width: 899px) {
-  .hero-logo-reveal { top: 32svh; }
+  .hero-logo-reveal { top: 29svh; }
 }
-main[data-cinematic="mobile"] .hero-logo-reveal { top: 32svh; }
+main[data-cinematic="mobile"] .hero-logo-reveal { top: 29svh; }
