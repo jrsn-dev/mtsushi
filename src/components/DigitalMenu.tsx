@@ -97,23 +97,15 @@ export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp
         <Link className="catalog-brand" href="/" aria-label="MT Sushi Arte - página inicial">
           <img src="/images/mt-sushi-logo-stacked.svg" width="320" height="230" alt="MT Sushi Arte" />
         </Link>
-        <SushiCart cart={cart} change={change} whatsapp={whatsapp} direct="https://ig.me/m/mtsushiarte" />
+        <SushiCart cart={cart} change={change} whatsapp={whatsapp} />
       </header>
 
       <section className="catalog-hero" aria-labelledby="catalog-title">
-        <div className="catalog-hero-photo catalog-hero-photo-left" aria-hidden="true">
-          <Image src="/images/editorial-macro.webp" width={650} height={440}
-            sizes="(max-width: 620px) 48vw, (max-width: 1100px) 24vw, 330px" alt="" priority />
-        </div>
         <div className="catalog-intro">
           <span className="catalog-eyebrow">ESCOLHA SEUS FAVORITOS</span>
           <h1 id="catalog-title">Cardápio Digital</h1>
           <p>Escolha, adicione ao carrinho e finalize seu pedido!</p>
           <span className="catalog-accent" aria-hidden="true" />
-        </div>
-        <div className="catalog-hero-photo catalog-hero-photo-right" aria-hidden="true">
-          <Image src="/images/editorial-nigiri.webp" width={650} height={440}
-            sizes="(max-width: 620px) 48vw, (max-width: 1100px) 24vw, 330px" alt="" priority />
         </div>
       </section>
 

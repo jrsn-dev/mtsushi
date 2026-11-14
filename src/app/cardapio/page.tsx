@@ -15,5 +15,7 @@ export default async function CardapioPage({
   const { categoria } = await searchParams;
   const selected = typeof categoria === "string" ? categoria : "";
   const whatsapp = (process.env.NEXT_PUBLIC_WHATSAPP || process.env.VITE_WHATSAPP || "").trim();
-  return <DigitalMenu selected={selected} whatsapp={/^55\d{10,11}$/.test(whatsapp) ? whatsapp : ""} />;
+  // O mesmo número já utilizado como fallback no rodapé da página inicial.
+  const storeWhatsapp = /^55\d{10,11}$/.test(whatsapp) ? whatsapp : "5543999268358";
+  return <DigitalMenu selected={selected} whatsapp={storeWhatsapp} />;
 }

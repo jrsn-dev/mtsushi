@@ -10,7 +10,7 @@ Use Node.js 24 e rode `npm ci` e `npm run dev`. Acesse [localhost:3000](http://l
 
 ## Vercel
 
-Importe o repositório `jrsn-dev/mtsushi` e selecione o preset **Next.js**. Use a raiz do repositório, com o diretório de saída no padrão do framework. Para ativar pedidos pelo WhatsApp, adicione `NEXT_PUBLIC_WHATSAPP` às variáveis de ambiente e gere um novo deploy. O site usa o Direct da loja quando o número está ausente ou inválido. A antiga variável `VITE_WHATSAPP` também é aceita durante a migração.
+Importe o repositório `jrsn-dev/mtsushi` e selecione o preset **Next.js**. Use a raiz do repositório, com o diretório de saída no padrão do framework. Para ativar pedidos pelo WhatsApp, adicione `NEXT_PUBLIC_WHATSAPP` às variáveis de ambiente e gere um novo deploy. Se `NEXT_PUBLIC_WHATSAPP` estiver ausente ou inválido, o cardápio utiliza o número já presente no rodapé da página inicial (`5543999268358`), para abrir o pedido completo já preenchido no WhatsApp. O cliente confirma o envio dentro do próprio WhatsApp. A página inicial mantém seu fallback legado para contatos gerais. A antiga variável `VITE_WHATSAPP` também é aceita durante a migração.
 
 ## Créditos
 
@@ -27,3 +27,7 @@ Os itens usam imagens WebP locais, com o fundo original preservado e enquadramen
 - Ceviche: [Jose Ruales / Unsplash](https://unsplash.com/photos/ceviche-on-white-bowl-XVWtfPzjNpI).
 - Rolinho de sobremesa: [dion armadi / Unsplash](https://unsplash.com/photos/crispy-spring-rolls-served-with-fresh-strawberries-and-herbs-XjPpx084iPQ).
 - Porções e bebidas da versão anterior: [Mikey Frost](https://unsplash.com/photos/klTf2RN37Ts) e [Vin Jack](https://unsplash.com/photos/8fS1ByfREpw), no Unsplash.
+
+### Personalização do cardápio
+
+O topo de `/cardapio` usa apenas textos e a logo original (sem imagens decorativas). Os títulos e ações usam Roboto Variable; o corpo usa Noto Sans Variable e as descrições usam o corte itálico. O checkout gera uma mensagem completa com quantidades, preços unitários, subtotal, endereço, observações, pagamento e troco, preservando o fluxo de revisão antes de abrir o WhatsApp.

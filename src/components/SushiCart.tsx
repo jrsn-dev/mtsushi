@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { ArrowLeft, ArrowRight, Minus, Plus, ShoppingCart, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, MessageCircle, Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { formatPrice, prices } from "./cardapio.js";
 import "./SushiCart.css";
 
@@ -26,11 +26,10 @@ const deliveryFields = [
   { name: "city", label: "Cidade", autoComplete: "address-level2", maxLength: 80 },
 ] as const;
 
-export function SushiCart({ cart, change, whatsapp, direct }: {
+export function SushiCart({ cart, change, whatsapp }: {
   cart: Record<string, number>;
   change: (name: string, delta: number) => void;
   whatsapp: string;
-  direct: string;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -60,8 +59,12 @@ export function SushiCart({ cart, change, whatsapp, direct }: {
       setFeedback("Preencha todos os dados obrigatórios da entrega.");
       return;
     }
-    if (step === 2 && payment === "Dinheiro na entrega" && needsChange && !(Number(cash.replace(",", ".")) > 0)) {
-      setFeedback("Informe um valor válido para o troco.");
+    if (step === 2 && !payment) {
+      setFeedback("Selecione a forma de pagamento.");
+      return;
+    }
+    if (step === 2 && payment === "Dinheiro na entrega" && needsChange && !(Number(cash.replace(",", ".")) >= subtotal / 100)) {
+      setFeedback("O valor para troco deve ser igual ou maior que o subtotal do pedido.");
       return;
     }
     goTo(step + 1);
@@ -74,27 +77,31 @@ export function SushiCart({ cart, change, whatsapp, direct }: {
 
   const formattedCash = Number(cash.replace(",", ".")).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   const summary = [
-    "Olá! Gostaria de fazer um pedido para delivery na MT Sushi Arte.",
-    ...entries.map(([item, quantity]) => `• ${quantity} × ${item} — ${formatPrice((prices.get(item) ?? 0) * quantity)}`),
-    `Subtotal dos itens: ${formatPrice(subtotal)}`,
+    "*NOVO PEDIDO — MT SUSHI ARTE*",
     "",
-    `Nome: ${delivery.name.trim()}`,
-    `Entrega: ${delivery.address.trim()}, ${delivery.number.trim()} · ${delivery.district.trim()} · ${delivery.city.trim()}`,
-    ...(delivery.notes.trim() ? [`Complemento e observações: ${delivery.notes.trim()}`] : []),
-    `Pagamento preferido: ${payment}`,
-    ...(payment === "Dinheiro na entrega" ? [needsChange ? `Troco para: ${formattedCash}` : "Sem troco"] : []),
+    "*ITENS DO PEDIDO*",
+    ...entries.map(([item, quantity], index) =>
+      `${index + 1}. ${quantity}x ${item}\n   ${formatPrice(prices.get(item) ?? 0)} cada · ${formatPrice((prices.get(item) ?? 0) * quantity)}`
+    ),
     "",
-    "Podem confirmar a disponibilidade, o valor total, o frete e o prazo de entrega?",
+    `*Quantidade total:* ${count} ${count === 1 ? "item" : "itens"}`,
+    `*Subtotal dos produtos:* ${formatPrice(subtotal)}`,
+    "*Taxa de entrega:* a confirmar com a loja",
+    "",
+    "*DADOS DA ENTREGA*",
+    `*Nome:* ${delivery.name.trim()}`,
+    `*Endereço:* ${delivery.address.trim()}, ${delivery.number.trim()}`,
+    `*Bairro:* ${delivery.district.trim()}`,
+    `*Cidade:* ${delivery.city.trim()}`,
+    `*Observações:* ${delivery.notes.trim() || "Nenhuma"}`,
+    "",
+    "*PAGAMENTO*",
+    `*Forma:* ${payment}`,
+    ...(payment === "Dinheiro na entrega" ? [needsChange ? `*Troco para:* ${formattedCash}` : "*Troco:* não necessário"] : []),
+    "",
+    "Olá! Gostaria de confirmar este pedido. Por favor, informem a disponibilidade, o frete, o total final e o prazo de entrega. Obrigado!",
   ].join("\n");
-
-  async function copyOrder() {
-    try {
-      await navigator.clipboard.writeText(summary);
-      setFeedback("Pedido copiado. Cole a mensagem no Direct para enviá-la.");
-    } catch {
-      setFeedback("Selecione e copie o resumo para enviar pelo Direct.");
-    }
-  }
+  const whatsappUrl = `https://wa.me/${whatsapp}?text=${encodeURIComponent(summary)}`;
 
   return (
     <>
@@ -208,8 +215,8 @@ export function SushiCart({ cart, change, whatsapp, direct }: {
             )}
             {step === 3 && (
               <>
-                <label>Resumo do pedido<textarea readOnly value={summary} rows={9} /></label>
-                <p>Envie o resumo para a loja confirmar seu pedido.</p>
+                <label>Mensagem pronta para a MT Sushi Arte<textarea readOnly value={summary} rows={14} /></label>
+                <p>O WhatsApp abrirá com todos os itens, valores, endereço, observações e forma de pagamento preenchidos. Confira a mensagem e toque em Enviar.</p>
               </>
             )}
 
@@ -220,15 +227,11 @@ export function SushiCart({ cart, change, whatsapp, direct }: {
               {step < 3 && <button className="button button-red" type="submit">
                 {["Continuar para entrega", "Continuar para pagamento", "Revisar pedido"][step]} <ArrowRight aria-hidden="true" />
               </button>}
-              {step === 3 && (whatsapp ? (
-                <a className="button button-red" href={`https://wa.me/${whatsapp}?text=${encodeURIComponent(summary)}`}
-                  target="_blank" rel="noreferrer">Enviar pelo WhatsApp <ArrowRight aria-hidden="true" /></a>
-              ) : (
-                <>
-                  <button className="button button-outline" type="button" onClick={copyOrder}>Copiar pedido</button>
-                  <a className="button button-red" href={direct} target="_blank" rel="noreferrer">Abrir Direct <ArrowRight aria-hidden="true" /></a>
-                </>
-              ))}
+              {step === 3 && (
+                <a className="button button-red checkout-whatsapp" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle aria-hidden="true" /> Enviar pedido completo pelo WhatsApp <ArrowRight aria-hidden="true" />
+                </a>
+              )}
             </div>
             <p role="status" className="checkout-feedback">{feedback}</p>
           </form>
