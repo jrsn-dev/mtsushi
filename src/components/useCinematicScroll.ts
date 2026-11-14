@@ -20,6 +20,7 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
 
       const desktop = Boolean(context.conditions.desktop);
       page.dataset.cinematic = desktop ? "desktop" : "mobile";
+      if (desktop) gsap.set(".hero-logo-reveal", { opacity: 1 });
       // Keep scrolling native on desktop as well as touch. ScrollTrigger's scrub
       // already smooths the scenes; intercepting wheel input adds a second delay
       // and makes navigation depend on the animation ticker keeping up.
@@ -53,12 +54,17 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       exit.to(".hero-support, .eyebrow", { opacity: 0, duration: .3 }, 0)
         .to(title.chars, { opacity: 0, y: -12, duration: .32, stagger: { amount: .14, from: "start" } }, .16)
         .fromTo(".hero-image img", { scale: 1 }, { scale: desktop ? 1.1 : 1.03, duration: .6, ease: "sine.inOut" }, .16)
-        .fromTo(".hero-svg-cutout", { opacity: 0 }, { opacity: 1, duration: .08, ease: "none" }, .34)
         .to(".hero-image, .hero-shade", { opacity: 0, duration: .32, ease: "sine.inOut" }, .36)
-        .fromTo(".hero-logo-reveal", { opacity: 0 }, { opacity: 1, duration: .25, ease: "sine.out" }, .6)
-        .to(".hero-svg-cutout", { opacity: 0, duration: .25, ease: "sine.inOut" }, .68)
-        .to(".hero-copy", { opacity: 0, duration: .08 }, .68)
-        .to(".hero-logo-reveal", { opacity: 1, duration: .07 }, .93);
+        .to(".hero-copy", { opacity: 0, duration: .08 }, .68);
+      if (!desktop) {
+        exit.fromTo(".hero-svg-cutout", { opacity: 0 }, { opacity: 1, duration: .08, ease: "none" }, .34)
+          .fromTo(".hero-logo-reveal", { opacity: 0 }, { opacity: 1, duration: .25, ease: "sine.out" }, .6)
+          .to(".hero-svg-cutout", { opacity: 0, duration: .25, ease: "sine.inOut" }, .68)
+          .to(".hero-logo-reveal", { opacity: 1, duration: .07 }, .93);
+      } else {
+        // Preserve the hero's scroll timing without animating the desktop logo.
+        exit.to({}, { duration: .24 }, .76);
+      }
 
       const macro = gsap.timeline({
         scrollTrigger: { trigger: ".macro", start: "top top", end: desktop ? "+=130%" : "+=65%", pin: pinScene(".macro-scene"), pinSpacing: desktop, scrub: desktop ? .65 : .45, invalidateOnRefresh: true },
@@ -74,8 +80,14 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       const menuSection = page.querySelector<HTMLElement>(".menu-section");
       const menuHoldTop = () => {
         const header = document.querySelector(".header")?.getBoundingClientRect().height ?? 0;
-        return Math.max(header + 12, Math.min(galleryScene?.offsetHeight ?? 0,
+        const original = Math.max(header + 12, Math.min(galleryScene?.offsetHeight ?? 0,
           window.innerHeight - Math.min(180, window.innerHeight * .25)));
+        // Short desktop viewports must keep the menu below every caption,
+        // including the staggered and enlarged gallery cards.
+        const photosBottom = desktop && windowElement && galleryScene
+          ? windowElement.getBoundingClientRect().bottom - galleryScene.getBoundingClientRect().top
+          : 0;
+        return Math.max(original, photosBottom);
       };
       let galleryScroll: ScrollTrigger | undefined;
       let restoreGallerySpacing: (() => void) | undefined;
