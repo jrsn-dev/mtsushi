@@ -36,8 +36,10 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
 
       const title = SplitText.create("#hero-title", { type: "lines,chars" });
       gsap.from(title.lines, { y: 24, opacity: 0, duration: .8, stagger: .105, ease: "power3.out" });
+      // Reserve the hero's scroll space so the next section pushes the revealed
+      // logo upward in normal flow instead of overlaying it.
       const exit = gsap.timeline({
-        scrollTrigger: { trigger: ".hero", start: "top top", end: desktop ? "+=110%" : "+=65%", pin: pinScene(".hero-scene"), pinSpacing: desktop, scrub: desktop ? .65 : .45, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: ".hero", start: "top top", end: desktop ? "+=110%" : "+=65%", pin: pinScene(".hero-scene"), pinSpacing: true, scrub: desktop ? .65 : .45, invalidateOnRefresh: true },
       });
       exit.to(".hero-support, .eyebrow", { opacity: 0, duration: .3 }, 0)
         .to(title.chars, { opacity: 0, y: -12, duration: .32, stagger: { amount: .14, from: "start" } }, .16)
