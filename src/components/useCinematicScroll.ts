@@ -2,7 +2,6 @@ import { useLayoutEffect, type RefObject } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -21,14 +20,9 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
 
       const desktop = Boolean(context.conditions.desktop);
       page.dataset.cinematic = desktop ? "desktop" : "mobile";
-      // Touch uses native scrolling; both devices share the same scene timelines.
-      const lenis = desktop ? new Lenis({ anchors: true, smoothWheel: true, lerp: .085, wheelMultiplier: .85 }) : null;
-      const tick = (seconds: number) => lenis?.raf(seconds * 1000);
-      if (lenis) {
-        lenis.on("scroll", ScrollTrigger.update);
-        gsap.ticker.add(tick);
-        gsap.ticker.lagSmoothing(0);
-      }
+      // Keep scrolling native on desktop as well as touch. ScrollTrigger's scrub
+      // already smooths the scenes; intercepting wheel input adds a second delay
+      // and makes navigation depend on the animation ticker keeping up.
       const pinScene = (selector: string) => {
         const scene = page.querySelector<HTMLElement>(selector);
         return desktop || (scene && scene.offsetHeight <= window.innerHeight + 1) ? selector : false;
@@ -161,11 +155,6 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
         restoreGallerySpacing?.();
         if (nextScene) nextScene.style.marginTop = originalNextMargin;
         title.revert();
-        if (lenis) {
-          gsap.ticker.remove(tick);
-          gsap.ticker.lagSmoothing(500, 33);
-          lenis.destroy();
-        }
       };
     }, page);
     return () => media.revert();
