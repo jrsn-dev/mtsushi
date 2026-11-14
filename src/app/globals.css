@@ -407,6 +407,12 @@ main[data-cinematic="mobile"] .gallery-track { padding-bottom: .25rem; }
   width: 70vw; opacity: 0; pointer-events: none;
 }
 .hero-logo-reveal img { display: block; width: 100%; height: auto; }
+@media (min-width: 900px) and (min-height: 650px) and (hover: hover) and (pointer: fine) {
+  .hero-logo-reveal { width: calc(70vw / 3); }
+  .hero-svg-cutout { display: none; }
+  /* Allow for the vertical stagger and hover scale below the captions. */
+  .gallery-track { padding-bottom: 2.5rem; }
+}
 @media (max-width: 899px) {
   .hero-logo-reveal, .hero-svg-cutout { top: 29svh; }
 }
