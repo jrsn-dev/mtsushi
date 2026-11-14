@@ -424,3 +424,5 @@ main[data-cinematic="mobile"] :is(.hero-logo-reveal, .hero-svg-cutout) { top: 29
   -webkit-mask: url("/images/mt-sushi-logo-mask.svg") center / 100% 100% no-repeat;
   mask: url("/images/mt-sushi-logo-mask.svg") center / 100% 100% no-repeat;
 }
+
+.site :is(h1, h2, h3) { letter-spacing: 3px; }

@@ -162,6 +162,21 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
         });
       }
 
+      // Animate content inside the scenes, leaving pinned containers and their
+      // scroll-driven transforms under the existing timelines' control.
+      const site = page.closest(".site") ?? page;
+      site.querySelectorAll<HTMLElement>([
+        ".macro-title", ".gallery-scene .section-heading",
+        ".menu-overview .section-heading", ".chef-copy", ".chef-panel > .photo",
+        ".testimonials-heading", ".delivery-copy", ".delivery-map",
+      ].join(",")).forEach((content) => {
+        gsap.from(content, {
+          y: 24, opacity: 0, duration: .7, ease: "power2.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: { trigger: content, start: "top 94%", once: true },
+        });
+      });
+
       return () => {
         delete page.dataset.cinematic;
         restoreGallerySpacing?.();
