@@ -1,6 +1,6 @@
 # MT Sushi Arte
 
-Landing page em Next.js com App Router, TypeScript e animações GSAP ScrollTrigger. O cardápio digital em `/cardapio` apresenta produtos por categoria com fotos ilustrativas em PNG recortado, preços e carrinho persistente. O fechamento inclui sacola, entrega, pagamento e revisão, com envio do resumo para WhatsApp ou Direct.
+Landing page em Next.js com App Router, TypeScript e animações GSAP ScrollTrigger. O cardápio digital em `/cardapio` apresenta produtos por categoria com fotos ilustrativas sem transparência, preços e carrinho persistente. O fechamento inclui sacola, entrega, pagamento e revisão, com envio do resumo para WhatsApp ou Direct.
 
 ## Desenvolvimento
 
@@ -20,7 +20,7 @@ As fotos ilustrativas de [porções](https://unsplash.com/photos/klTf2RN37Ts) e 
 
 ### Fotos do cardápio
 
-Os itens usam fotos locais WebP como fonte. O comando `predev`/`prebuild` gera cópias PNG com transparência em `public/images/menu-cutouts`, ignoradas pelo Git. O recorte automático remove fundos escuros e suaviza as bordas; fotos com fundos complexos podem exigir substituição manual por um PNG profissional. Variações compartilham a mesma referência ilustrativa. Os nomes, preços, porções e ingredientes do catálogo original foram preservados.
+Os itens usam imagens WebP locais, com o fundo original preservado e enquadramento `object-fit: cover`. O topo do cardápio também usa imagens WebP em painéis integrados ao layout, sem degradês. Categorias e subcategorias continuam roláveis horizontalmente em telas menores, mas com as barras visuais ocultas. Variações compartilham a mesma referência ilustrativa. Os nomes, preços, porções e ingredientes do catálogo original foram preservados.
 
 - Salada de pepino: [Alex Bayev / Pexels](https://www.pexels.com/photo/asian-cucumber-salad-12077975/).
 - Hot roll: [Natan Machado / Pexels](https://www.pexels.com/photo/close-up-shot-of-hot-roll-sushis-11064614/).

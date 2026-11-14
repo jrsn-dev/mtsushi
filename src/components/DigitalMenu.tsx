@@ -82,10 +82,6 @@ export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp
 
   return (
     <main className="catalog-page shell" id="catalogo">
-      <div className="catalog-hero-art" aria-hidden="true">
-        <Image className="catalog-hero-art-left" src="/images/menu-cutouts/editorial-macro.png" alt="" width={430} height={300} unoptimized priority />
-        <Image className="catalog-hero-art-right" src="/images/menu-cutouts/editorial-nigiri.png" alt="" width={480} height={330} unoptimized priority />
-      </div>
       <header className="catalog-top">
         <details className="catalog-menu">
           <summary aria-label="Abrir menu"><MenuIcon aria-hidden="true" /></summary>
@@ -104,11 +100,22 @@ export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp
         <SushiCart cart={cart} change={change} whatsapp={whatsapp} direct="https://ig.me/m/mtsushiarte" />
       </header>
 
-      <div className="catalog-intro">
-        <h1>Cardápio Digital</h1>
-        <p>Escolha, adicione ao carrinho e finalize seu pedido!</p>
-        <span className="catalog-accent" aria-hidden="true" />
-      </div>
+      <section className="catalog-hero" aria-labelledby="catalog-title">
+        <div className="catalog-hero-photo catalog-hero-photo-left" aria-hidden="true">
+          <Image src="/images/editorial-macro.webp" width={650} height={440}
+            sizes="(max-width: 620px) 48vw, (max-width: 1100px) 24vw, 330px" alt="" priority />
+        </div>
+        <div className="catalog-intro">
+          <span className="catalog-eyebrow">ESCOLHA SEUS FAVORITOS</span>
+          <h1 id="catalog-title">Cardápio Digital</h1>
+          <p>Escolha, adicione ao carrinho e finalize seu pedido!</p>
+          <span className="catalog-accent" aria-hidden="true" />
+        </div>
+        <div className="catalog-hero-photo catalog-hero-photo-right" aria-hidden="true">
+          <Image src="/images/editorial-nigiri.webp" width={650} height={440}
+            sizes="(max-width: 620px) 48vw, (max-width: 1100px) 24vw, 330px" alt="" priority />
+        </div>
+      </section>
 
       <nav className="catalog-categories" aria-label="Categorias do cardápio">
         {groups.map(({ slug: groupSlug, name, icon: Icon }) => (
@@ -143,8 +150,8 @@ export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp
             return (
               <article className="catalog-item" key={item.name}>
                 <div className="catalog-item-photo">
-                  <Image src={"/images/menu-cutouts/" + item.image + ".png"} alt={"Ilustração do tipo de prato: " + item.name}
-                    width={500} height={350} sizes="(max-width: 520px) 120px, (max-width: 860px) 160px, 230px" unoptimized />
+                  <Image src={"/images/" + item.image + ".webp"} alt={"Foto ilustrativa do tipo de prato: " + item.name}
+                    width={500} height={350} sizes="(max-width: 520px) 120px, (max-width: 860px) 160px, 230px" />
                 </div>
                 <div className="catalog-item-copy">
                   <h3>{item.name}</h3>
