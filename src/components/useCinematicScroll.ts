@@ -34,12 +34,27 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
         return desktop || (scene && scene.offsetHeight <= window.innerHeight + 1) ? selector : false;
       };
 
+      const heroScene = page.querySelector<HTMLElement>(".hero-scene");
+      const revealedLogo = page.querySelector<HTMLElement>(".hero-logo-reveal");
+      const nextScene = page.querySelector<HTMLElement>(".macro");
+      const originalNextMargin = nextScene?.style.marginTop ?? "";
+      const updateHeroHandoff = () => {
+        if (desktop || !heroScene || !revealedLogo || !nextScene || !pinScene(".hero-scene")) return;
+        // Keep the next section below the logo, rather than below the entire
+        // empty viewport. Both then move upward together after the hero unpins.
+        const gap = Math.min(40, Math.max(24, window.innerHeight * .04));
+        const logoBottom = revealedLogo.offsetTop + revealedLogo.offsetHeight / 2;
+        const emptyTail = Math.max(0, heroScene.offsetHeight - logoBottom - gap);
+        nextScene.style.marginTop = `${-emptyTail}px`;
+      };
+      updateHeroHandoff();
+
       const title = SplitText.create("#hero-title", { type: "lines,chars" });
       gsap.from(title.lines, { y: 24, opacity: 0, duration: .8, stagger: .105, ease: "power3.out" });
       // Reserve the hero's scroll space so the next section pushes the revealed
       // logo upward in normal flow instead of overlaying it.
       const exit = gsap.timeline({
-        scrollTrigger: { trigger: ".hero", start: "top top", end: desktop ? "+=110%" : "+=65%", pin: pinScene(".hero-scene"), pinSpacing: true, scrub: desktop ? .65 : .45, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: ".hero", start: "top top", end: desktop ? "+=110%" : "+=65%", pin: pinScene(".hero-scene"), pinSpacing: true, scrub: desktop ? .65 : .45, invalidateOnRefresh: true, onRefreshInit: updateHeroHandoff },
       });
       exit.to(".hero-support, .eyebrow", { opacity: 0, duration: .3 }, 0)
         .to(title.chars, { opacity: 0, y: -12, duration: .32, stagger: { amount: .14, from: "start" } }, .16)
@@ -145,6 +160,7 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       return () => {
         delete page.dataset.cinematic;
         restoreGallerySpacing?.();
+        if (nextScene) nextScene.style.marginTop = originalNextMargin;
         title.revert();
         if (lenis) {
           gsap.ticker.remove(tick);
