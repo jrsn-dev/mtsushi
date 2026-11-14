@@ -64,10 +64,9 @@ p { line-height: 1.55; color: var(--muted); }
 .nav a:hover { color: var(--paper); }
 .menu-toggle { display: none; }
 .hero-scene { position: relative; min-height: max(680px, 100svh); display: grid; align-items: center; overflow: hidden; isolation: isolate; padding-block: calc(var(--header) + 2rem) 3rem; background: #080809; }
-.hero-image { position: absolute; z-index: -3; inset: 0 0 0 27%; aspect-ratio: auto; clip-path: circle(150% at 68% 50%); }
+.hero-image { position: absolute; z-index: -3; inset: 0 0 0 27%; aspect-ratio: auto; }
 .hero-image img { object-position: 54% 50%; }
 .hero-shade { position: absolute; z-index: -2; inset: 0; background: linear-gradient(90deg, #080809 6%, #080809f2 21%, #08080982 48%, #08080910 75%), linear-gradient(0deg, #080809dc, transparent 22%); }
-.hero-ring { position: absolute; pointer-events: none; z-index: -1; width: min(43vw, 70vh); aspect-ratio: 1; left: 76.6%; top: 50%; translate: -50% -50%; opacity: 0; background: radial-gradient(circle closest-side, transparent calc(100% - 2px), var(--red) calc(100% - 1px), transparent 100%); filter: drop-shadow(0 0 10px #ff2a3360); }
 .hero-copy { position: relative; min-width: 0; }
 .eyebrow { display: flex; align-items: center; flex-wrap: wrap; gap: .6rem; margin-bottom: 1.6rem; font-size: .68rem; letter-spacing: .07em; text-transform: uppercase; color: var(--paper); }
 .eyebrow span { width: .28rem; height: .28rem; background: var(--red); }
@@ -350,9 +349,8 @@ main[data-cinematic] .gallery-window { overflow-x: clip; scroll-snap-type: none;
 /* Use the same circular camera transition and pinned gallery on touch screens. */
 main[data-cinematic="mobile"] .hero-scene,
 main[data-cinematic="mobile"] .macro-scene { min-height: 100svh; }
-main[data-cinematic="mobile"] .hero-image { inset: 0 0 auto; height: 64svh; max-height: 100%; clip-path: circle(150% at 50% 50%); }
+main[data-cinematic="mobile"] .hero-image { inset: 0 0 auto; height: 64svh; max-height: 100%; }
 main[data-cinematic="mobile"] .hero-image img { object-fit: cover; object-position: 50% 50%; }
-main[data-cinematic="mobile"] .hero-ring { left: 50%; top: 32svh; width: min(76vw, 65svh); }
 main[data-cinematic="mobile"] .gallery-scene {
   height: auto; min-height: 0; display: flex; flex-direction: column; justify-content: flex-start;
   padding-block: calc(var(--header) + .75rem) 1rem;
@@ -403,13 +401,20 @@ main[data-cinematic="mobile"] .gallery-track { padding-bottom: .25rem; }
   background: var(--bg); box-shadow: 0 0 0 100vmax var(--bg); clip-path: inset(0 -100vmax);
 }
 
-/* The original brand sits behind the photo and appears as its circular mask closes. */
-.hero-logo-reveal {
+/* The photo transitions through the SVG silhouette before revealing the brand. */
+.hero-logo-reveal, .hero-svg-cutout {
   position: absolute; z-index: -4; left: 50%; top: 47%; translate: -50% -50%;
   width: 70vw; opacity: 0; pointer-events: none;
 }
 .hero-logo-reveal img { display: block; width: 100%; height: auto; }
 @media (max-width: 899px) {
-  .hero-logo-reveal { top: 29svh; }
+  .hero-logo-reveal, .hero-svg-cutout { top: 29svh; }
 }
-main[data-cinematic="mobile"] .hero-logo-reveal { top: 29svh; }
+main[data-cinematic="mobile"] :is(.hero-logo-reveal, .hero-svg-cutout) { top: 29svh; }
+
+.hero-svg-cutout {
+  z-index: -3; aspect-ratio: 1084.38 / 600.25;
+  background: url("/images/editorial-hero.webp") center / cover no-repeat;
+  -webkit-mask: url("/images/mt-sushi-logo-mask.svg") center / 100% 100% no-repeat;
+  mask: url("/images/mt-sushi-logo-mask.svg") center / 100% 100% no-repeat;
+}

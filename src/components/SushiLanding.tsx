@@ -75,6 +75,7 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
             <div className="hero-logo-reveal" aria-hidden="true">
               <img src="/images/mt-sushi-logo-stacked.svg" alt="" width="1084" height="600" />
             </div>
+            <div className="hero-svg-cutout" aria-hidden="true" />
             <Photo image="hero" alt="Uramaki de salmão com gergelim sobre prato preto" priority className="hero-image" />
             <div className="hero-shade" />
             <div className="shell hero-copy">
@@ -86,7 +87,6 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
                 <a className="button button-red" href="/cardapio">Ver cardápio <ArrowDown aria-hidden="true" /></a>
               </div>
             </div>
-            <span className="hero-ring" aria-hidden="true" />
           </div>
         </section>
 
