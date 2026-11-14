@@ -72,6 +72,9 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
       <main ref={main} id="inicio">
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-scene">
+            <div className="hero-logo-reveal" aria-hidden="true">
+              <img src="/images/mt-sushi-logo-stacked.svg" alt="" width="1084" height="600" />
+            </div>
             <Photo image="hero" alt="Uramaki de salmão com gergelim sobre prato preto" priority className="hero-image" />
             <div className="hero-shade" />
             <div className="shell hero-copy">

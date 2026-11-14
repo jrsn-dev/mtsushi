@@ -42,10 +42,13 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       exit.to(".hero-support, .eyebrow", { opacity: 0, duration: .3 }, 0)
         .to(title.chars, { opacity: 0, y: -12, duration: .32, stagger: { amount: .14, from: "start" } }, .16)
         .fromTo(".hero-ring", { scale: 1.55, opacity: 0 }, { scale: 1, opacity: 1, duration: .19 }, .28)
-        .to(".hero-ring", { scale: .01, duration: .55, ease: "sine.inOut" }, .47)
-        .fromTo(".hero-image img", { scale: 1 }, { scale: desktop ? 1.1 : 1.03, duration: .75, ease: "sine.inOut" }, .24)
-        .to(".hero-image", { clipPath: desktop ? "circle(0% at 68% 50%)" : "circle(0% at 50% 50%)", duration: .55, ease: "sine.inOut" }, .47)
-        .to(".hero-ring, .hero-copy", { opacity: 0, duration: .1 }, .92);
+        .to(".hero-ring", { scale: .01, duration: .4, ease: "sine.inOut" }, .4)
+        .fromTo(".hero-image img", { scale: 1 }, { scale: desktop ? 1.1 : 1.03, duration: .6, ease: "sine.inOut" }, .16)
+        .to(".hero-image", { clipPath: desktop ? "circle(0% at 68% 50%)" : "circle(0% at 50% 50%)", duration: .4, ease: "sine.inOut" }, .4)
+        .to(".hero-shade", { opacity: 0, duration: .4, ease: "none" }, .4)
+        .fromTo(".hero-logo-reveal", { opacity: 0, scale: .96 }, { opacity: 1, scale: 1, duration: .45, ease: "sine.out" }, .35)
+        .to(".hero-ring, .hero-copy", { opacity: 0, duration: .08 }, .76)
+        .to(".hero-logo-reveal", { opacity: 1, duration: .2 }, .8);
 
       const macro = gsap.timeline({
         scrollTrigger: { trigger: ".macro", start: "top top", end: desktop ? "+=130%" : "+=65%", pin: pinScene(".macro-scene"), pinSpacing: desktop, scrub: desktop ? .65 : .45, invalidateOnRefresh: true },
