@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { ArrowLeft, ArrowRight, Minus, Plus, ShoppingBag, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { formatPrice, prices } from "./cardapio.js";
 import "./SushiCart.css";
 
@@ -98,12 +98,23 @@ export function SushiCart({ cart, change, whatsapp, direct }: {
 
   return (
     <>
-      <button className="button button-red" type="button" aria-haspopup="dialog" onClick={() => {
+      <button className="catalog-cart-launch" type="button" aria-haspopup="dialog" aria-label={"Abrir carrinho com " + count + " itens"} onClick={() => {
         goTo(0);
         dialog.current?.showModal();
         heading.current?.focus();
       }}>
-        <ShoppingBag aria-hidden="true" /> Meu pedido ({count})
+        <ShoppingCart aria-hidden="true" />
+        <span className="catalog-cart-count">{count}</span>
+      </button>
+      <button className="catalog-cart-bar" type="button" aria-haspopup="dialog" onClick={() => {
+        goTo(0);
+        dialog.current?.showModal();
+        heading.current?.focus();
+      }}>
+        <span className="catalog-cart-bar-label"><ShoppingCart aria-hidden="true" /> Ver carrinho</span>
+        <span className="catalog-cart-bar-count">{count} {count === 1 ? "item" : "itens"}</span>
+        <strong>{formatPrice(subtotal)}</strong>
+        <ArrowRight aria-hidden="true" />
       </button>
       <dialog ref={dialog} className="checkout" aria-labelledby="order-title" data-lenis-prevent>
         <header className="checkout-heading">
