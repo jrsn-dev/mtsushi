@@ -22,17 +22,14 @@ export function SushiTestimonials({ href }: { href: string }) {
   const visible = useInView(carousel, { once: true, amount: .15 });
 
   useEffect(() => {
-    const compact = matchMedia("(max-width: 640px)");
     const medium = matchMedia("(max-width: 1050px)");
     const update = () => {
-      setPageSize(compact.matches ? 1 : medium.matches ? 2 : 4);
+      setPageSize(medium.matches ? 2 : 4);
       setPending(null);
     };
     update();
-    compact.addEventListener("change", update);
     medium.addEventListener("change", update);
     return () => {
-      compact.removeEventListener("change", update);
       medium.removeEventListener("change", update);
     };
   }, []);
