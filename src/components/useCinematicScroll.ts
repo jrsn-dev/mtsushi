@@ -35,11 +35,11 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       });
       // Objects fly into the frame from opposing sides and settle into the
       // actual layout. These are entrance tweens, not scroll blockers.
-      gsap.from(".hero-image img", {
+      gsap.from(".hero-image", {
         x: () => Math.min(240, window.innerWidth * .22), y: 90,
-        rotationY: -15, scale: .78, opacity: 0,
+        rotationY: -15, scale: .78,
         transformPerspective: 1200, duration: 1.4, delay: .08,
-        ease: "expo.out", clearProps: "transform,opacity",
+        ease: "expo.out", clearProps: "transform",
       });
       gsap.from(".eyebrow, .hero-support > *", {
         x: -90, y: 52, autoAlpha: 0, rotationY: 9,
