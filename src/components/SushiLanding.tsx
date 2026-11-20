@@ -106,7 +106,7 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
 
         <section className="macro" id="experiencia" aria-labelledby="macro-title">
           <div className="macro-scene">
-            <Photo image="uramakis" alt="Corte de um uramaki com salmão, arroz, nori e gergelim" className="macro-image" />
+            <Photo image="uramakis-hd" alt="Corte de um uramaki com salmão, arroz, nori e gergelim" className="macro-image" />
             <div className="shell macro-inner">
               <div className="macro-title"><h2 id="macro-title">De perto.</h2></div>
               <ul className="callouts">

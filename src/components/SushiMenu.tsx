@@ -12,15 +12,15 @@ export function Photo({ image, alt, priority = false, className = "" }: {
 }
 
 export const gallery = [
-  { image: "bandeja", name: "Seleção da casa" }, { image: "temakis", name: "Temaki salmão" },
+  { image: "bandeja", name: "Seleção da casa" }, { image: "temakis-hd", name: "Temaki salmão" },
   { image: "supremo", name: "Combinado supremo" }, { image: "jyo-salmao", name: "Jyo salmão" },
   { image: "hot-roll-salmao", name: "Hot roll salmão" }, { image: "pecas", name: "Peças da casa" },
-  { image: "uramakis", name: "Uramaki Filadélfia especial" }, { image: "sobremesas", name: "Hot roll morango c/ Nutella" },
+  { image: "uramakis-hd", name: "Uramaki Filadélfia especial" }, { image: "sobremesas-hd", name: "Hot roll morango c/ Nutella" },
 ];
 
 const featured = [
-  { slug: "uramakis", name: "Uramakis", image: "uramakis" },
-  { slug: "temakis", name: "Temakis", image: "temakis" },
+  { slug: "uramakis", name: "Uramakis", image: "uramakis-hd" },
+  { slug: "temakis", name: "Temakis", image: "temakis-hd" },
   { slug: "combos", name: "Combinados", image: "combinados-a" },
 ];
 const more = [

@@ -24,8 +24,8 @@
         "price": 4500,
         "detail": "Salmão em cubos, levemente apimentados marinado com limão, sal, pimentão e cebola roxa",
         "portion": "",
-        "image": "entradas",
-        "recreated": false
+        "image": "entradas-hd",
+        "recreated": true
       },
       {
         "name": "CEVICHE DE TILÁPIA",
@@ -78,8 +78,8 @@
         "price": 3000,
         "detail": "Salmão, Cream Cheese e salmão por cima",
         "portion": "10 peças",
-        "image": "uramakis",
-        "recreated": false
+        "image": "uramakis-hd",
+        "recreated": true
       },
       {
         "name": "URAMAKI SALMÃO GRELHADO",
@@ -172,8 +172,8 @@
         "price": 3500,
         "detail": "Camarão e Cream Cheese, coberto com salmão e camarão",
         "portion": "10 peças",
-        "image": "uramakis-premium",
-        "recreated": false
+        "image": "uramakis-premium-hd",
+        "recreated": true
       },
       {
         "name": "URAMAKI PEIXE FRITO",
@@ -234,8 +234,8 @@
         "price": 3000,
         "detail": "Salmão, Cream Cheese, cebolinha, coberto com salmão picado",
         "portion": "10 peças",
-        "image": "hot-rolls",
-        "recreated": false
+        "image": "hot-rolls-hd",
+        "recreated": true
       },
       {
         "name": "BIG HOT ROLL SALMÃO",
@@ -264,31 +264,31 @@
         "price": 2100,
         "detail": "",
         "portion": "",
-        "image": "hossomakis-1",
-        "recreated": false
+        "image": "hossomakis-1-hd",
+        "recreated": true
       },
       {
         "name": "HOSSOMAKI PEPINO",
         "price": 1600,
         "detail": "",
         "portion": "",
-        "image": "hossomakis-2",
-        "recreated": false
+        "image": "hossomakis-2-hd",
+        "recreated": true
       },
       {
         "name": "HOSSOMAKI KANI",
         "price": 1900,
         "detail": "",
         "portion": "",
-        "image": "hossomakis-3",
-        "recreated": false
+        "image": "hossomakis-3-hd",
+        "recreated": true
       },
       {
         "name": "HOSSOMAKI CALIFÓRNIA",
         "price": 2100,
         "detail": "Manga, pepino e Kani",
         "portion": "",
-        "image": "hossomakis-4",
+        "image": "hossomakis-4-hd",
         "recreated": true
       },
       {
@@ -310,8 +310,8 @@
         "price": 2900,
         "detail": "Salmão, Cream Cheese, cebolinha e gergelim",
         "portion": "",
-        "image": "temakis",
-        "recreated": false
+        "image": "temakis-hd",
+        "recreated": true
       },
       {
         "name": "TEMAKI SALMÃO GRELHADO",
@@ -520,8 +520,8 @@
         "price": 2800,
         "detail": "Morango, nutella e leite condensado",
         "portion": "10 peças",
-        "image": "sobremesas",
-        "recreated": false
+        "image": "sobremesas-hd",
+        "recreated": true
       },
       {
         "name": "HOT ROLL KIT KAT",
