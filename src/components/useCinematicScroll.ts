@@ -167,6 +167,15 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
           scrollTrigger: { trigger: gallerySection, start: "top 85%", once: true },
         });
       }
+      if (!desktop && gallerySection) {
+        // Mobile keeps native horizontal swiping; cards still fly in once.
+        gsap.from(".gallery-track figure .photo", {
+          x: 85, y: 52, scale: .86, autoAlpha: 0,
+          duration: 1.0, stagger: .055, ease: "power4.out",
+          clearProps: "transform,opacity,visibility",
+          scrollTrigger: { trigger: gallerySection, start: "top 88%", once: true },
+        });
+      }
 
       const menu = page.querySelector<HTMLElement>(".menu-overview");
       if (menu && desktop) {
