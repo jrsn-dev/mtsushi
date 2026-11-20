@@ -513,3 +513,10 @@ main[data-cinematic="desktop"] .gallery-track {
     animation: none !important;
   }
 }
+
+/* As the mobile hero scrolls naturally, keep the revealed mark in the viewport. */
+@media (max-width: 899px) {
+  main[data-cinematic="mobile"] :is(.hero-logo-reveal, .hero-svg-cutout) {
+    top: 58svh;
+  }
+}
