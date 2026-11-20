@@ -20,35 +20,59 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
 
       const desktop = Boolean(context.conditions.desktop);
       page.dataset.cinematic = desktop ? "desktop" : "mobile";
+      if (desktop) gsap.set(".hero-logo-reveal", { opacity: 1 });
+      // Keep scrolling native on desktop as well as touch. ScrollTrigger's scrub
+      // already smooths the scenes; intercepting wheel input adds a second delay
+      // and makes navigation depend on the animation ticker keeping up.
+      // Native wheel and touch remain authoritative. Only the desktop hero,
+      // macro and gallery use short presentation pins; no pinning on phones.
       const pinScene = (selector: string) => desktop ? selector : false;
 
-      const title = SplitText.create("#hero-title", { type: "lines" });
+      const title = SplitText.create("#hero-title", { type: "lines,chars" });
       gsap.from(title.lines, {
-        y: 32, autoAlpha: 0, duration: .65, stagger: .08, ease: "power3.out",
+        y: 96, autoAlpha: 0, rotationX: -18, transformPerspective: 1100,
+        duration: 1.15, stagger: .1, ease: "expo.out",
       });
-
-      const hero = page.querySelector<HTMLElement>(".hero-scene");
-      const pieces = gsap.utils.toArray<HTMLElement>(".hero-piece", page);
-      if (hero && pieces.length) {
-        gsap.set(".hero-assembly", { autoAlpha: 1 });
-        gsap.set(".hero-combo", { opacity: 0 });
-        gsap.set(pieces, { yPercent: -28, opacity: 0 });
-
-        const assembly = gsap.timeline({
-          defaults: { ease: "power2.out" },
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: () => "+=" + Math.round(gsap.utils.clamp(420, 780, window.innerHeight * .85)),
-            pin: hero,
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        });
-        assembly.to(".hero-assembly-hint", { opacity: 0, duration: .14 }, 0)
-          .to(pieces, { yPercent: 0, opacity: 1, duration: .26, stagger: .16 }, 0)
-          .to(".hero-combo", { opacity: 1, duration: .12 })
-          .to(".hero-assembly", { autoAlpha: 0, duration: .12 }, "<");
+      // Objects fly into the frame from opposing sides and settle into the
+      // actual layout. These are entrance tweens, not scroll blockers.
+      gsap.from(".hero-image", {
+        x: () => Math.min(240, window.innerWidth * .22), y: 90,
+        rotationY: -15, scale: .78,
+        transformPerspective: 1200, duration: 1.4, delay: .08,
+        ease: "expo.out", clearProps: "transform",
+      });
+      gsap.from(".eyebrow, .hero-support > *", {
+        x: -90, y: 52, autoAlpha: 0, rotationY: 9,
+        duration: 1.0, stagger: .095, delay: .3,
+        ease: "power4.out", clearProps: "transform,opacity,visibility",
+      });
+      gsap.from(".hero-flight-chip", {
+        x: (index: number) => [190, 145, -110][index] ?? 130,
+        y: (index: number) => [-90, 95, 150][index] ?? 85,
+        rotationY: (index: number) => [24, -19, 16][index] ?? 16,
+        rotationX: -13, scale: .55, autoAlpha: 0,
+        transformPerspective: 1200,
+        duration: 1.45, stagger: .15, delay: .42,
+        ease: "expo.out", clearProps: "transform,opacity,visibility",
+      });
+      // Reserve the hero's scroll space so the next section pushes the revealed
+      // logo upward in normal flow instead of overlaying it.
+      const exit = gsap.timeline({
+        scrollTrigger: { trigger: ".hero", start: "top top", end: desktop ? "+=82%" : "+=42%", pin: pinScene(".hero-scene"), pinSpacing: desktop, scrub: desktop ? .25 : .15, invalidateOnRefresh: true },
+      });
+      exit.to(".hero-support, .eyebrow", { opacity: 0, duration: .3 }, 0)
+        .to(title.chars, { opacity: 0, y: -12, duration: .32, stagger: { amount: .14, from: "start" } }, .16)
+        .fromTo(".hero-image img", { scale: 1 }, { scale: desktop ? 1.1 : 1.03, duration: .6, ease: "sine.inOut" }, .16)
+        .to(".hero-image, .hero-shade", { opacity: 0, duration: .32, ease: "sine.inOut" }, .36)
+        .to(".hero-copy", { opacity: 0, duration: .08 }, .68);
+      if (!desktop) {
+        exit.fromTo(".hero-svg-cutout", { opacity: 0 }, { opacity: 1, duration: .08, ease: "none" }, .34)
+          .fromTo(".hero-logo-reveal", { opacity: 0 }, { opacity: 1, duration: .25, ease: "sine.out" }, .6)
+          .to(".hero-svg-cutout", { opacity: 0, duration: .25, ease: "sine.inOut" }, .68)
+          .to(".hero-logo-reveal", { opacity: 1, duration: .07 }, .93);
+      } else {
+        // Preserve the hero's scroll timing without animating the desktop logo.
+        exit.to({}, { duration: .24 }, .76);
       }
 
       const macro = gsap.timeline({
