@@ -36,9 +36,9 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       // Objects fly into the frame from opposing sides and settle into the
       // actual layout. These are entrance tweens, not scroll blockers.
       gsap.from(".hero-image", {
-        x: () => Math.min(240, window.innerWidth * .22), y: 90,
-        rotationY: -15, scale: .78,
-        transformPerspective: 1200, duration: 1.4, delay: .08,
+        x: 0, y: () => -Math.max(240, Math.min(window.innerHeight * .55, 520)),
+        rotationX: -13, rotationY: 0, scale: .88,
+        transformPerspective: 1200, duration: 1.5, delay: .08,
         ease: "expo.out", clearProps: "transform",
       });
       gsap.from(".eyebrow, .hero-support > *", {
@@ -108,47 +108,25 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
           : 0;
         return Math.max(original, photosBottom);
       };
-      let galleryScroll: ScrollTrigger | undefined;
-      let restoreGallerySpacing: (() => void) | undefined;
-      if (desktop && track && windowElement && gallerySection && galleryScene) {
+      // One scroll owner for the gallery on desktop AND mobile.
+      // The scene pauses vertically while the images travel horizontally.
+      // Pin spacing provides exactly the vertical runway needed to finish.
+      if (track && windowElement && gallerySection && galleryScene) {
         const travel = () => Math.max(0, track.scrollWidth - windowElement.clientWidth);
-        const secondImageProgress = () => {
-          const figures = track.querySelectorAll<HTMLElement>("figure");
-          if (figures.length < 2 || !travel()) return 0;
-          return Math.min(.85, (figures[1].offsetLeft - figures[0].offsetLeft) / travel());
-        };
-        // Bring the next section in at image two, then hold it below the photos
-        // until the gallery's final horizontal frame.
-        const scrollDistance = () => {
-          const original = desktop ? travel() : Math.min(travel() * .5, window.innerHeight);
-          const progress = secondImageProgress();
-          const minimumHold = (window.innerHeight - menuHoldTop() + 120) / (1 - progress);
-          return Math.max(1, minimumHold, Math.min(original, window.innerHeight / (1 - progress)));
-        };
-        const originalPadding = gallerySection.style.paddingBottom;
-        const updateGallerySpacing = () => {
-          const entry = scrollDistance() * secondImageProgress();
-          gallerySection.style.paddingBottom = `${Math.max(0, window.innerHeight + entry - galleryScene.offsetHeight)}px`;
-        };
-        updateGallerySpacing();
-        restoreGallerySpacing = () => { gallerySection.style.paddingBottom = originalPadding; };
-        const galleryAnimation = gsap.to(track, {
-          x: () => -travel(), ease: "none",
+        gsap.to(track, {
+          x: () => -travel(),
+          ease: "none",
+          overwrite: "auto",
           scrollTrigger: {
-            trigger: gallerySection, start: "top top", end: () => `+=${scrollDistance()}`,
-            pin: galleryScene, pinSpacing: false, scrub: .28,
-            invalidateOnRefresh: true, onRefreshInit: updateGallerySpacing,
+            trigger: gallerySection,
+            start: "top top",
+            end: () => `+=${Math.max(travel(), window.innerHeight * .85)}`,
+            pin: galleryScene,
+            pinSpacing: true,
+            anticipatePin: 1,
+            scrub: desktop ? .35 : .22,
+            invalidateOnRefresh: true,
           },
-        });
-        galleryScroll = galleryAnimation.scrollTrigger;
-      }
-
-      if (desktop && menuSection && galleryScroll) {
-        const horizontalScroll = galleryScroll;
-        ScrollTrigger.create({
-          trigger: menuSection, start: () => `top ${menuHoldTop()}px`,
-          end: () => horizontalScroll.end,
-          pin: true, pinSpacing: true, anticipatePin: 1, invalidateOnRefresh: true,
         });
       }
 
@@ -232,7 +210,6 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
 
       return () => {
         delete page.dataset.cinematic;
-        restoreGallerySpacing?.();
         title.revert();
       };
     }, page);
