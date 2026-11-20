@@ -9,22 +9,20 @@ import { SushiCart } from "./SushiCart";
 
 const storageKey = "mt-sushi-cart";
 const itemNames = categories.flatMap(({ items }) => items.map(({ name }) => name));
+const cartNames = new Map(itemNames.map((name) => [name.replace(/ \(\d+ peças\)$/, ""), name]));
+cartNames.set("SUNOMONO ESPECIAL", "SUNOMONO (ESPECIAL)");
+cartNames.set("SASHIMI DE SALMÃO", "SASHIMI (SALMÃO)");
+cartNames.set("HOT ROLL MORANGO COM NUTELLA", "HOT ROLL MORANGO C/ NUTELLA");
 type Cart = Record<string, number>;
 
-const groups = [
-  { slug: "sushis", name: "Sushis", icon: Fish, slugs: ["uramakis", "uramakis-premium", "hossomakis", "hot-rolls", "jyos", "niguiris"], description: "Peças frescas, preparadas com ingredientes selecionados." },
-  { slug: "temakis", name: "Temakis", icon: UtensilsCrossed, slugs: ["temakis"], description: "Temakis preparados na hora, com sabor em cada mordida." },
-  { slug: "combos", name: "Combos", icon: Layers3, slugs: ["combos"], description: "Combinados para compartilhar ou aproveitar sozinho." },
-  { slug: "entradas", name: "Porções", icon: Soup, slugs: ["entradas"], description: "Entradas e acompanhamentos para completar seu pedido." },
-  { slug: "sobremesas", name: "Sobremesas", icon: IceCreamBowl, slugs: ["sobremesas"], description: "Para encerrar o pedido com um toque doce." },
-];
+const categoryIcons: Record<string, typeof Fish> = {
+  entradas: Soup, temakis: UtensilsCrossed, combos: Layers3, domingo: Layers3, sobremesas: IceCreamBowl,
+};
 
 export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp: string }) {
-  const slug = groups.some((entry) => entry.slug === selected) ? selected : (categoryAliases[selected as keyof typeof categoryAliases] ?? selected);
-  const activeCategory = categories.find((entry) => entry.slug === slug);
-  const group = groups.find((entry) => entry.slug === slug || entry.slugs.includes(slug)) ?? groups[0];
-  const visibleCategories = activeCategory ? [activeCategory] : categories.filter((entry) => group.slugs.includes(entry.slug));
-  const items = visibleCategories.flatMap((entry) => entry.items);
+  const slug = categoryAliases[selected as keyof typeof categoryAliases] ?? selected;
+  const group = categories.find((entry) => entry.slug === slug) ?? categories[0];
+  const items = group.items;
   const [cart, setCart] = useState<Cart>({});
   const [quantities, setQuantities] = useState<Cart>({});
   const [ready, setReady] = useState(false);
@@ -33,9 +31,9 @@ export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp
   useEffect(() => {
     try {
       const stored = JSON.parse(localStorage.getItem(storageKey) ?? "{}") as Cart | null;
-      const valid = Object.fromEntries(itemNames.flatMap((name) => {
-        const quantity = stored?.[name];
-        return typeof quantity === "number" && Number.isSafeInteger(quantity) && quantity > 0 && quantity <= 99
+      const valid = Object.fromEntries(Object.entries(stored ?? {}).flatMap(([key, quantity]) => {
+        const name = itemNames.includes(key) ? key : cartNames.get(key.toLocaleUpperCase("pt-BR"));
+        return name && typeof quantity === "number" && Number.isSafeInteger(quantity) && quantity > 0 && quantity <= 99
           ? [[name, quantity]] : [];
       }));
       setCart(valid);
@@ -110,29 +108,21 @@ export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp
       </section>
 
       <nav className="catalog-categories" aria-label="Categorias do cardápio">
-        {groups.map(({ slug: groupSlug, name, icon: Icon }) => (
+        {categories.map(({ slug: groupSlug, name }) => {
+          const Icon = categoryIcons[groupSlug] ?? Fish;
+          return (
           <Link key={groupSlug} href={"/cardapio?categoria=" + groupSlug} scroll={false}
             className="catalog-category" aria-current={group.slug === groupSlug ? "page" : undefined}>
             <Icon aria-hidden="true" strokeWidth={1.65} />
             <span>{name}</span>
           </Link>
-        ))}
+        ); })}
       </nav>
-
-      {group.slug === "sushis" && (
-        <nav className="catalog-subcategories" aria-label="Tipos de sushi">
-          <Link href="/cardapio?categoria=sushis" scroll={false} aria-current={!activeCategory ? "page" : undefined}>Todos os sushis</Link>
-          {categories.filter((entry) => group.slugs.includes(entry.slug)).map((entry) => (
-            <Link key={entry.slug} href={"/cardapio?categoria=" + entry.slug} scroll={false}
-              aria-current={activeCategory?.slug === entry.slug ? "page" : undefined}>{entry.name}</Link>
-          ))}
-        </nav>
-      )}
 
       <section className="catalog-section" aria-labelledby="catalog-category">
         <div className="catalog-section-heading">
-          <h2 id="catalog-category">{activeCategory ? activeCategory.name : group.name}</h2>
-          <p>{group.description}</p>
+          <h2 id="catalog-category">{group.name}</h2>
+          {group.slug === "sobremesas" && <p>Todas as sobremesas são fritas!</p>}
         </div>
         <div className="catalog-items">
           {items.map((item) => {
@@ -142,12 +132,13 @@ export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp
             return (
               <article className="catalog-item" key={item.name}>
                 <div className="catalog-item-photo">
-                  <Image src={"/images/" + item.image + ".webp"} alt={"Foto ilustrativa do tipo de prato: " + item.name}
+                  <Image src={"/images/cardapio/" + item.image + ".webp"} alt={(item.recreated ? "Reconstituição de " : "") + item.name}
                     width={500} height={350} sizes="(max-width: 520px) 120px, (max-width: 860px) 160px, 230px" />
                 </div>
                 <div className="catalog-item-copy">
                   <h3>{item.name}</h3>
                   {item.detail && <p className="catalog-description">{item.detail}</p>}
+                  {item.recreated && <small>Imagem ilustrativa</small>}
                   {item.portion && <p className="catalog-portion">{item.portion}</p>}
                   <strong className="catalog-price">{formatPrice(item.price)}</strong>
                 </div>
@@ -170,9 +161,7 @@ export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp
         </div>
       </section>
       <footer className="catalog-footer">
-        <p>Fotos ilustrativas dos tipos de prato. A apresentação pode variar conforme o item.</p>
         {menuNotes.map((note) => <p key={note}>{note}</p>)}
-        {group.slug === "sobremesas" && <p>Todas as sobremesas são fritas.</p>}
       </footer>
       <p className="visually-hidden" role="status">{lastAdded && (lastAdded + ": " + (cart[lastAdded] ?? 0) + " no pedido")}</p>
     </main>

@@ -1,0 +1,574 @@
+[
+  {
+    "slug": "entradas",
+    "name": "ENTRADAS",
+    "items": [
+      {
+        "name": "SUNOMONO",
+        "price": 1300,
+        "detail": "Leva vinagre de arroz, açúcar e sal",
+        "portion": "",
+        "image": "entradas-1",
+        "recreated": true
+      },
+      {
+        "name": "SUNOMONO (ESPECIAL)",
+        "price": 1600,
+        "detail": "Leva vinagre de arroz, açúcar, sal e kani",
+        "portion": "",
+        "image": "entradas-2",
+        "recreated": true
+      },
+      {
+        "name": "CEVICHE DE SALMÃO",
+        "price": 4500,
+        "detail": "Salmão em cubos, levemente apimentados marinado com limão, sal, pimentão e cebola roxa",
+        "portion": "",
+        "image": "entradas",
+        "recreated": false
+      },
+      {
+        "name": "CEVICHE DE TILÁPIA",
+        "price": 4000,
+        "detail": "Tilápia em cubos, levemente apimentados marinado com limão, sal, pimentão e cebola roxa",
+        "portion": "",
+        "image": "entradas-4",
+        "recreated": true
+      },
+      {
+        "name": "SASHIMI (SALMÃO)",
+        "price": 5000,
+        "detail": "10 fatias do lombo",
+        "portion": "",
+        "image": "entradas-5",
+        "recreated": true
+      },
+      {
+        "name": "CARPACCIO DE SALMÃO",
+        "price": 6000,
+        "detail": "15 fatias temperadas com molho de ostras, limão, cebola roxa e alho poró",
+        "portion": "",
+        "image": "entradas-6",
+        "recreated": true
+      },
+      {
+        "name": "KIT REFEIÇÃO",
+        "price": 2000,
+        "detail": "Gengibre, wasabi, 4 molhos tare sachê, 4 shoyu sachê",
+        "portion": "",
+        "image": "entradas-7",
+        "recreated": true
+      }
+    ]
+  },
+  {
+    "slug": "uramakis",
+    "name": "URAMAKIS",
+    "items": [
+      {
+        "name": "URAMAKI FILADÉLFIA",
+        "price": 2500,
+        "detail": "Salmão e Cream Cheese",
+        "portion": "10 peças",
+        "image": "uramakis-1",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI FILADÉLFIA ESPECIAL",
+        "price": 3000,
+        "detail": "Salmão, Cream Cheese e salmão por cima",
+        "portion": "10 peças",
+        "image": "uramakis",
+        "recreated": false
+      },
+      {
+        "name": "URAMAKI SALMÃO GRELHADO",
+        "price": 2700,
+        "detail": "Salmão grelhado e Cream Cheese",
+        "portion": "10 peças",
+        "image": "uramakis-3",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI SALMÃO GRELHADO ESPECIAL",
+        "price": 3200,
+        "detail": "Salmão grelhado e Cream Cheese, coberto com salmão grelhado",
+        "portion": "10 peças",
+        "image": "uramakis-4",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI SKIN PELE FRITA",
+        "price": 2600,
+        "detail": "Pele frita e Cream Cheese",
+        "portion": "10 peças",
+        "image": "uramakis-5",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI SKIN ESPECIAL",
+        "price": 2900,
+        "detail": "Pele frita e Cream Cheese, coberto com salmão maçaricado",
+        "portion": "10 peças",
+        "image": "uramakis-6",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI KANI",
+        "price": 2200,
+        "detail": "Kani e Cream Cheese",
+        "portion": "10 peças",
+        "image": "uramakis-7",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI KANI CROCANTE",
+        "price": 2500,
+        "detail": "Kani frito e Cream Cheese",
+        "portion": "10 peças",
+        "image": "uramakis-8",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI KANI CROCANTE ESPECIAL",
+        "price": 2900,
+        "detail": "Kani frito e Cream Cheese, coberto com salmão",
+        "portion": "10 peças",
+        "image": "uramakis-9",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI CALIFÓRNIA",
+        "price": 2400,
+        "detail": "Manga, pepino e Kani",
+        "portion": "10 peças",
+        "image": "uramakis-10",
+        "recreated": true
+      }
+    ]
+  },
+  {
+    "slug": "uramakis-premium",
+    "name": "URAMAKIS PREMIUM",
+    "items": [
+      {
+        "name": "URAMAKI CAMARÃO",
+        "price": 2600,
+        "detail": "Camarão e Cream Cheese",
+        "portion": "10 peças",
+        "image": "uramakis-premium-1",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI CAMARÃO ESPECIAL",
+        "price": 3000,
+        "detail": "Camarão e Cream Cheese, coberto com camarão",
+        "portion": "10 peças",
+        "image": "uramakis-premium-2",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI BOLA DE NEVE",
+        "price": 3500,
+        "detail": "Camarão e Cream Cheese, coberto com salmão e camarão",
+        "portion": "10 peças",
+        "image": "uramakis-premium",
+        "recreated": false
+      },
+      {
+        "name": "URAMAKI PEIXE FRITO",
+        "price": 2500,
+        "detail": "Peixe frito do dia e Cream Cheese",
+        "portion": "10 peças",
+        "image": "uramakis-premium-4",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI MAKIMONO",
+        "price": 3000,
+        "detail": "Salmão, Cream Cheese e geléia",
+        "portion": "10 peças",
+        "image": "uramakis-premium-5",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI FILADÉLFIA (CRISPY COUVE)",
+        "price": 2600,
+        "detail": "Salmão, Cream Cheese e crispy couve",
+        "portion": "10 peças",
+        "image": "uramakis-premium-6",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI FILADÉLFIA (BATATA CRISPY)",
+        "price": 2600,
+        "detail": "Salmão, Cream Cheese e batata doce crispy",
+        "portion": "10 peças",
+        "image": "uramakis-premium-7",
+        "recreated": true
+      },
+      {
+        "name": "URAMAKI EBITEN",
+        "price": 2800,
+        "detail": "Camarão, Cream Cheese e cebola crispy",
+        "portion": "10 peças",
+        "image": "uramakis-premium-8",
+        "recreated": true
+      }
+    ]
+  },
+  {
+    "slug": "hot-rolls",
+    "name": "HOT ROLLS",
+    "items": [
+      {
+        "name": "HOT ROLL SALMÃO",
+        "price": 2500,
+        "detail": "Salmão, cebolinha e Cream Cheese",
+        "portion": "10 peças",
+        "image": "hot-roll-salmao",
+        "recreated": false
+      },
+      {
+        "name": "HOT ROLL SALMÃO ESPECIAL",
+        "price": 3000,
+        "detail": "Salmão, Cream Cheese, cebolinha, coberto com salmão picado",
+        "portion": "10 peças",
+        "image": "hot-rolls",
+        "recreated": false
+      },
+      {
+        "name": "BIG HOT ROLL SALMÃO",
+        "price": 3500,
+        "detail": "Versão abrasileirada e gigante do sushi hot roll",
+        "portion": "10 peças",
+        "image": "hot-rolls-3",
+        "recreated": true
+      },
+      {
+        "name": "HOT ROLL KANI",
+        "price": 2100,
+        "detail": "Kani e Cream Cheese",
+        "portion": "10 peças",
+        "image": "hot-rolls-4",
+        "recreated": true
+      }
+    ]
+  },
+  {
+    "slug": "hossomakis",
+    "name": "HOSSOMAKIS",
+    "items": [
+      {
+        "name": "HOSSOMAKI SALMÃO",
+        "price": 2100,
+        "detail": "",
+        "portion": "",
+        "image": "hossomakis-1",
+        "recreated": false
+      },
+      {
+        "name": "HOSSOMAKI PEPINO",
+        "price": 1600,
+        "detail": "",
+        "portion": "",
+        "image": "hossomakis-2",
+        "recreated": false
+      },
+      {
+        "name": "HOSSOMAKI KANI",
+        "price": 1900,
+        "detail": "",
+        "portion": "",
+        "image": "hossomakis-3",
+        "recreated": false
+      },
+      {
+        "name": "HOSSOMAKI CALIFÓRNIA",
+        "price": 2100,
+        "detail": "Manga, pepino e Kani",
+        "portion": "",
+        "image": "hossomakis-4",
+        "recreated": true
+      },
+      {
+        "name": "HOSSOMAKI KANI CROCANTE",
+        "price": 2000,
+        "detail": "Kani frito",
+        "portion": "",
+        "image": "hossomakis-5",
+        "recreated": true
+      }
+    ]
+  },
+  {
+    "slug": "temakis",
+    "name": "TEMAKIS",
+    "items": [
+      {
+        "name": "TEMAKI SALMÃO",
+        "price": 2900,
+        "detail": "Salmão, Cream Cheese, cebolinha e gergelim",
+        "portion": "",
+        "image": "temakis",
+        "recreated": false
+      },
+      {
+        "name": "TEMAKI SALMÃO GRELHADO",
+        "price": 3000,
+        "detail": "Salmão grelhado, Cream Cheese e cebolinha",
+        "portion": "",
+        "image": "temakis-2",
+        "recreated": true
+      },
+      {
+        "name": "TEMAKI CAMARÃO",
+        "price": 3500,
+        "detail": "Camarão, Cream Cheese e cebolinha",
+        "portion": "",
+        "image": "temakis-3",
+        "recreated": true
+      },
+      {
+        "name": "TEMAKI HOT (SALMÃO)",
+        "price": 3200,
+        "detail": "Salmão, Cream Cheese, cebolinha, empanado e frito",
+        "portion": "",
+        "image": "temakis-4",
+        "recreated": true
+      },
+      {
+        "name": "TEMAKI HOT (SALMÃO E CAMARÃO)",
+        "price": 3500,
+        "detail": "Salmão, camarão, Cream Cheese, cebolinha, empanado e frito",
+        "portion": "",
+        "image": "temakis-5",
+        "recreated": true
+      },
+      {
+        "name": "TEMAKI CALIFÓRNIA",
+        "price": 2500,
+        "detail": "Manga, pepino e Kani",
+        "portion": "",
+        "image": "temakis-6",
+        "recreated": true
+      },
+      {
+        "name": "TEMAKI SEM ARROZ (SALMÃO)",
+        "price": 3500,
+        "detail": "",
+        "portion": "",
+        "image": "temakis-7",
+        "recreated": true
+      }
+    ]
+  },
+  {
+    "slug": "jyos",
+    "name": "JYOS",
+    "items": [
+      {
+        "name": "JYO SALMÃO",
+        "price": 1800,
+        "detail": "Salmão e Cream Cheese",
+        "portion": "2 unidades",
+        "image": "jyo-salmao",
+        "recreated": false
+      },
+      {
+        "name": "JYO SALMÃO ESPECIAL",
+        "price": 1900,
+        "detail": "Salmão, Cream Cheese, coberto com salmão",
+        "portion": "2 unidades",
+        "image": "jyos-2",
+        "recreated": true
+      },
+      {
+        "name": "JYO SALMÃO MAÇARICADO",
+        "price": 1900,
+        "detail": "Salmão maçaricado e Cream Cheese",
+        "portion": "2 unidades",
+        "image": "jyos-3",
+        "recreated": true
+      },
+      {
+        "name": "JYO CAMARÃO",
+        "price": 2000,
+        "detail": "Salmão, Cream Cheese e camarão",
+        "portion": "2 unidades",
+        "image": "jyos-4",
+        "recreated": true
+      },
+      {
+        "name": "JYO CAMARÃO MAÇARICADO",
+        "price": 2100,
+        "detail": "Salmão maçaricado, Cream Cheese e camarão",
+        "portion": "2 unidades",
+        "image": "jyos-5",
+        "recreated": true
+      }
+    ]
+  },
+  {
+    "slug": "combos",
+    "name": "COMBINADOS",
+    "items": [
+      {
+        "name": "COMBINADO 1 (40 peças)",
+        "price": 8400,
+        "detail": "10 Uramaki Filadélfia, 10 Uramaki salmão grelhado, 10 Uramaki Kani, 10 Hot Roll",
+        "portion": "",
+        "image": "combos-1",
+        "recreated": true
+      },
+      {
+        "name": "COMBINADO 2 (45 peças)",
+        "price": 9900,
+        "detail": "10 Uramaki Filadélfia, 10 Uramaki Peixe frito, 10 Uramaki Kani crocante, 10 Hossomaki de salmão, 5 Sashimi salmão",
+        "portion": "",
+        "image": "combos-2",
+        "recreated": true
+      },
+      {
+        "name": "COMBINADO 3 (30 peças)",
+        "price": 5800,
+        "detail": "10 Uramaki Filadélfia, 10 Uramaki Kani crocante, 10 Hot Roll",
+        "portion": "",
+        "image": "combos-3",
+        "recreated": true
+      },
+      {
+        "name": "COMBINADO 4",
+        "price": 6800,
+        "detail": "1 Temaki salmão, 10 Uramaki Filadélfia especial, 5 sashimi",
+        "portion": "",
+        "image": "combos-4",
+        "recreated": true
+      },
+      {
+        "name": "COMBINADO 5 (60 peças)",
+        "price": 9800,
+        "detail": "10 Uramaki Filadélfia, 10 Uramaki peixe grelhado, 10 Uramaki Kani crocante, 10 Hot Roll, 10 Hossomaki salmão, 5 Hossomaki Kani, 5 Hossomaki de pepino",
+        "portion": "",
+        "image": "combos-5",
+        "recreated": true
+      },
+      {
+        "name": "COMBINADO 6 (40 peças)",
+        "price": 7500,
+        "detail": "20 Uramaki Filadélfia e 20 Hot Roll",
+        "portion": "",
+        "image": "combos-6",
+        "recreated": true
+      },
+      {
+        "name": "COMBINADO 7 (30 peças)",
+        "price": 5500,
+        "detail": "30 Hot Roll",
+        "portion": "",
+        "image": "combos-7",
+        "recreated": true
+      },
+      {
+        "name": "COMBINADO 8 (50 peças)",
+        "price": 6500,
+        "detail": "10 Uramaki Filadélfia, 10 Uramaki Peixe grelhado, 10 Uramaki Kani, 10 Hot Roll, 10 Hossomaki de pepino",
+        "portion": "",
+        "image": "combos-8",
+        "recreated": true
+      },
+      {
+        "name": "COMBINADO 9 ESPECIAL (50 peças)",
+        "price": 12900,
+        "detail": "10 Uramaki Filadélfia, 10 Uramaki salmão grelhado, 10 Uramaki camarão, 10 Uramaki Kani crocante, 10 Hot Roll",
+        "portion": "",
+        "image": "combos-9",
+        "recreated": true
+      },
+      {
+        "name": "COMBINADO 10 (55 peças)",
+        "price": 13500,
+        "detail": "10 Uramaki Filadélfia especial, 10 Uramaki camarão especial, 10 Hot Roll especial, 10 Hossomaki de Salmão, 5 Niguiri, 5 Jyo, 5 Sashimi",
+        "portion": "",
+        "image": "combos-10",
+        "recreated": true
+      },
+      {
+        "name": "COMBINADO 11 (30 peças)",
+        "price": 8900,
+        "detail": "10 Uramaki Filadélfia especial, 10 Hot Roll especial, 10 Sashimi",
+        "portion": "",
+        "image": "combos-11",
+        "recreated": true
+      },
+      {
+        "name": "COMBINADO 12",
+        "price": 7300,
+        "detail": "10 Uramaki Filadélfia, 5 Niguiri, 5 Jyo, 8 Sashimi",
+        "portion": "",
+        "image": "combos-12",
+        "recreated": true
+      }
+    ]
+  },
+  {
+    "slug": "sobremesas",
+    "name": "SOBREMESAS",
+    "items": [
+      {
+        "name": "HOT ROLL MORANGO C/ NUTELLA",
+        "price": 2800,
+        "detail": "Morango, nutella e leite condensado",
+        "portion": "10 peças",
+        "image": "sobremesas",
+        "recreated": false
+      },
+      {
+        "name": "HOT ROLL KIT KAT",
+        "price": 2500,
+        "detail": "Kit kat, leite condensado",
+        "portion": "10 peças",
+        "image": "sobremesas-2",
+        "recreated": true
+      },
+      {
+        "name": "HOT ROLL ROMEU E JULIETA",
+        "price": 2500,
+        "detail": "Goiabada, Cream Cheese e leite condensado",
+        "portion": "10 peças",
+        "image": "sobremesas-3",
+        "recreated": true
+      },
+      {
+        "name": "SPRING ROLL (BANANA)",
+        "price": 2500,
+        "detail": "Banana frita com leite condensado",
+        "portion": "10 peças",
+        "image": "sobremesas-4",
+        "recreated": true
+      }
+    ]
+  },
+  {
+    "slug": "domingo",
+    "name": "COMBO DE DOMINGO",
+    "items": [
+      {
+        "name": "OPÇÃO 1",
+        "price": 10580,
+        "detail": "10 URAMAKI FILADÉLFIA ESPECIAL, 10 HOSSOMAKI SALMÃO, 10 URAMAKI ESPECIAL DO CHEFE, 10 HOSSOMAKI SALMÃO, 6 SASHIMI",
+        "portion": "",
+        "image": "domingo-1",
+        "recreated": false
+      },
+      {
+        "name": "OPÇÃO 2",
+        "price": 6890,
+        "detail": "10 URAMAKI FILADÉLFIA, 10 URAMAKI SKIN MOLHO DE OSTRA, 10 URAMAKI KANI CROCANTE, 10 HOT HOLL SALMÃO",
+        "portion": "",
+        "image": "domingo-2",
+        "recreated": false
+      }
+    ]
+  }
+]

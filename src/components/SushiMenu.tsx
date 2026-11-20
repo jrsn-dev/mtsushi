@@ -6,23 +6,22 @@ export type OrderLink = (subject: string) => string;
 export function Photo({ image, alt, priority = false, className = "" }: {
   image: string; alt: string; priority?: boolean; className?: string;
 }) {
-  const file = ["hero", "macro", "nigiri", "temaki", "platter", "sashimi", "gunkan", "grilled", "chopsticks"].includes(image)
-    ? `/images/editorial-${image}.webp` : `/images/${image}.webp`;
+  const file = `/images/cardapio/${image}.webp`;
   return <span className={`photo ${className}`}><img src={file} alt={alt} loading={priority ? "eager" : "lazy"}
     fetchPriority={priority ? "high" : "auto"} decoding="async" /></span>;
 }
 
 export const gallery = [
-  { image: "nigiri", name: "Nigiri de salmão" }, { image: "temaki", name: "Temaki de salmão" },
-  { image: "platter", name: "Combinado da casa" }, { image: "sashimi", name: "Sashimi de salmão" },
-  { image: "gunkan", name: "Gunkan" }, { image: "grilled", name: "Salmão maçaricado" },
-  { image: "macro", name: "Uramaki" }, { image: "chopsticks", name: "Sushi artesanal" },
+  { image: "bandeja", name: "Seleção da casa" }, { image: "temakis", name: "Temaki salmão" },
+  { image: "supremo", name: "Combinado supremo" }, { image: "jyo-salmao", name: "Jyo salmão" },
+  { image: "hot-roll-salmao", name: "Hot roll salmão" }, { image: "pecas", name: "Peças da casa" },
+  { image: "uramakis", name: "Uramaki Filadélfia especial" }, { image: "sobremesas", name: "Hot roll morango c/ Nutella" },
 ];
 
 const featured = [
-  { slug: "sushis", name: "Sushis", image: "nigiri" },
-  { slug: "temakis", name: "Temakis", image: "temaki" },
-  { slug: "combos", name: "Combos", image: "platter" },
+  { slug: "uramakis", name: "Uramakis", image: "uramakis" },
+  { slug: "temakis", name: "Temakis", image: "temakis" },
+  { slug: "combos", name: "Combinados", image: "combinados-a" },
 ];
 const more = [
   { slug: "entradas", name: "Entradas" },

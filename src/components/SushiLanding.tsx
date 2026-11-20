@@ -76,7 +76,7 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
               <img src="/images/mt-sushi-logo-stacked.svg" alt="" width="1084" height="600" />
             </div>
             <div className="hero-svg-cutout" aria-hidden="true" />
-            <Photo image="hero" alt="Uramaki de salmão com gergelim sobre prato preto" priority className="hero-image" />
+            <Photo image="bandeja" alt="Bandeja de sushi da MT Sushi Arte" priority className="hero-image" />
             <div className="hero-shade" />
             <div className="hero-flight-layer" aria-hidden="true">
               <div className="hero-flight-chip hero-flight-chip--cut">
@@ -106,7 +106,7 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
 
         <section className="macro" id="experiencia" aria-labelledby="macro-title">
           <div className="macro-scene">
-            <Photo image="macro" alt="Corte de um uramaki com salmão, arroz, nori e gergelim" className="macro-image" />
+            <Photo image="uramakis" alt="Corte de um uramaki com salmão, arroz, nori e gergelim" className="macro-image" />
             <div className="shell macro-inner">
               <div className="macro-title"><h2 id="macro-title">De perto.</h2></div>
               <ul className="callouts">
