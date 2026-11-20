@@ -21,11 +21,7 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       const desktop = Boolean(context.conditions.desktop);
       page.dataset.cinematic = desktop ? "desktop" : "mobile";
       if (desktop) gsap.set(".hero-logo-reveal", { opacity: 1 });
-      // Keep scrolling native on desktop as well as touch. ScrollTrigger's scrub
-      // already smooths the scenes; intercepting wheel input adds a second delay
-      // and makes navigation depend on the animation ticker keeping up.
-      // Native wheel and touch remain authoritative. Only the desktop hero,
-      // macro and gallery use short presentation pins; no pinning on phones.
+      // Hero and macro pin only on desktop. The gallery also pins on touch screens.
       const pinScene = (selector: string) => desktop ? selector : false;
 
       const title = SplitText.create("#hero-title", { type: "lines,chars" });
@@ -97,59 +93,24 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       const gallerySection = page.querySelector<HTMLElement>(".gallery-section");
       const galleryScene = page.querySelector<HTMLElement>(".gallery-scene");
       const menuSection = page.querySelector<HTMLElement>(".menu-section");
-      const menuHoldTop = () => {
-        const header = document.querySelector(".header")?.getBoundingClientRect().height ?? 0;
-        const original = Math.max(header + 12, Math.min(galleryScene?.offsetHeight ?? 0,
-          window.innerHeight - Math.min(180, window.innerHeight * .25)));
-        // Short desktop viewports must keep the menu below every caption,
-        // including the staggered and enlarged gallery cards.
-        const photosBottom = desktop && windowElement && galleryScene
-          ? windowElement.getBoundingClientRect().bottom - galleryScene.getBoundingClientRect().top
-          : 0;
-        return Math.max(original, photosBottom);
-      };
-      let galleryScroll: ScrollTrigger | undefined;
-      let restoreGallerySpacing: (() => void) | undefined;
-      if (desktop && track && windowElement && gallerySection && galleryScene) {
-        const travel = () => Math.max(0, track.scrollWidth - windowElement.clientWidth);
-        const secondImageProgress = () => {
-          const figures = track.querySelectorAll<HTMLElement>("figure");
-          if (figures.length < 2 || !travel()) return 0;
-          return Math.min(.85, (figures[1].offsetLeft - figures[0].offsetLeft) / travel());
-        };
-        // Bring the next section in at image two, then hold it below the photos
-        // until the gallery's final horizontal frame.
-        const scrollDistance = () => {
-          const original = desktop ? travel() : Math.min(travel() * .5, window.innerHeight);
-          const progress = secondImageProgress();
-          const minimumHold = (window.innerHeight - menuHoldTop() + 120) / (1 - progress);
-          return Math.max(1, minimumHold, Math.min(original, window.innerHeight / (1 - progress)));
-        };
-        const originalPadding = gallerySection.style.paddingBottom;
-        const updateGallerySpacing = () => {
-          const entry = scrollDistance() * secondImageProgress();
-          gallerySection.style.paddingBottom = `${Math.max(0, window.innerHeight + entry - galleryScene.offsetHeight)}px`;
-        };
-        updateGallerySpacing();
-        restoreGallerySpacing = () => { gallerySection.style.paddingBottom = originalPadding; };
-        const galleryAnimation = gsap.to(track, {
-          x: () => -travel(), ease: "none",
-          scrollTrigger: {
-            trigger: gallerySection, start: "top top", end: () => `+=${scrollDistance()}`,
-            pin: galleryScene, pinSpacing: false, scrub: .28,
-            invalidateOnRefresh: true, onRefreshInit: updateGallerySpacing,
-          },
-        });
-        galleryScroll = galleryAnimation.scrollTrigger;
-      }
-
-      if (desktop && menuSection && galleryScroll) {
-        const horizontalScroll = galleryScroll;
-        ScrollTrigger.create({
-          trigger: menuSection, start: () => `top ${menuHoldTop()}px`,
-          end: () => horizontalScroll.end,
-          pin: true, pinSpacing: true, anticipatePin: 1, invalidateOnRefresh: true,
-        });
+      if (track && windowElement && gallerySection && galleryScene) {
+        const travel = () => Math.max(0, track.offsetWidth - windowElement.clientWidth);
+        if (travel() > 0) {
+          gallerySection.dataset.scrollControlled = "";
+          gsap.to(track, {
+            x: () => -travel(),
+            ease: "none",
+            scrollTrigger: {
+              trigger: gallerySection,
+              start: "top top",
+              end: () => `+=${Math.max(1, Math.round(travel() * .65))}`,
+              pin: galleryScene,
+              pinSpacing: true,
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          });
+        }
       }
 
       // The cards arrive in perspective while the gallery moves, instead
@@ -168,7 +129,6 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
         });
       }
       if (!desktop && gallerySection) {
-        // Mobile keeps native horizontal swiping; cards still fly in once.
         gsap.from(".gallery-track figure .photo", {
           x: 85, y: 52, scale: .86, autoAlpha: 0,
           duration: 1.0, stagger: .055, ease: "power4.out",
@@ -187,7 +147,7 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
         const align = gsap.timeline({
           scrollTrigger: {
             trigger: menuSection ?? menu,
-            start: "top 96%", end: () => `top ${menuHoldTop()}px`,
+            start: "top 96%", end: "top 25%",
             scrub: .22, invalidateOnRefresh: true,
           },
         });
@@ -232,7 +192,7 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
 
       return () => {
         delete page.dataset.cinematic;
-        restoreGallerySpacing?.();
+        if (gallerySection) delete gallerySection.dataset.scrollControlled;
         title.revert();
       };
     }, page);
