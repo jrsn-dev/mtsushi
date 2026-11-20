@@ -95,7 +95,7 @@ p { line-height: 1.55; color: var(--muted); }
 .gallery-track figure:nth-child(3n + 2) .photo { height: clamp(160px, 33svh, 350px); }
 .gallery-track figcaption { position: absolute; inset: auto 0 0; display: flex; align-items: center; gap: .8rem; padding: .85rem 1rem; background: var(--red); color: #fff; font-size: .8rem; font-weight: 650; text-transform: uppercase; }
 .gallery-track figcaption span { flex: none; }
-main[data-cinematic] .gallery-window { overflow-x: clip; scroll-snap-type: none; }
+main[data-cinematic="desktop"] .gallery-window { overflow-x: clip; scroll-snap-type: none; }
 
 .menu-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .menu-card { display: block; min-width: 0; align-self: start; border: 1px solid var(--edge); overflow: hidden; padding: 0; background: #0b0b0b; text-align: left; }
@@ -346,7 +346,7 @@ main[data-cinematic] .gallery-window { overflow-x: clip; scroll-snap-type: none;
 .hero-support .business-hours { font-size: .85rem; }
 .delivery-copy > .business-hours { font-size: .95rem; line-height: 1.5; font-weight: 400; }
 
-/* Use the same circular camera transition and pinned gallery on touch screens. */
+/* Mobile scenes stay in normal vertical flow; gallery remains swipeable. */
 main[data-cinematic="mobile"] .hero-scene,
 main[data-cinematic="mobile"] .macro-scene { min-height: 100svh; }
 main[data-cinematic="mobile"] .hero-image { inset: 0 0 auto; height: 64svh; max-height: 100%; }
@@ -426,3 +426,90 @@ main[data-cinematic="mobile"] :is(.hero-logo-reveal, .hero-svg-cutout) { top: 29
 }
 
 .site :is(h1, h2, h3) { letter-spacing: 3px; }
+
+
+/* MT Sushi Arte cinematic flight composition — native scrolling, no wheel interception. */
+.site { overflow-x: clip; }
+.hero-scene, .macro-scene, .gallery-scene, .menu-overview, .chef-panel {
+  perspective: 1200px;
+}
+.hero-copy { z-index: 2; }
+.hero-title-wrap { perspective: 1200px; }
+.hero-flight-layer {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  perspective: 1200px;
+}
+.hero-flight-chip {
+  position: absolute;
+  display: grid;
+  align-content: center;
+  gap: .35rem;
+  min-width: 160px;
+  padding: .95rem 1.15rem;
+  border: 1px solid rgb(255 255 255 / .13);
+  border-left: 2px solid var(--red);
+  background: rgb(13 13 14 / .83);
+  color: var(--paper);
+  box-shadow: 0 14px 45px rgb(0 0 0 / .27);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.hero-flight-chip strong {
+  font-family: var(--display);
+  font-size: clamp(.9rem, 1.15vw, 1.12rem);
+  line-height: 1.12;
+  text-transform: uppercase;
+  letter-spacing: -.025em;
+}
+.hero-flight-index {
+  font-family: var(--body);
+  color: #e2a09e;
+  font-size: .61rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+.hero-flight-chip--cut { right: 15%; top: 22%; }
+.hero-flight-chip--craft { right: 4.5%; top: 48%; }
+.hero-flight-chip--taste { right: 27%; bottom: 11%; }
+.gallery-track figure .photo,
+.menu-card,
+.callouts li,
+.chef-panel > .photo {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+main[data-cinematic="desktop"] .gallery-track {
+  perspective: 1400px;
+}
+@media (max-width: 1100px) {
+  .hero-flight-chip--cut { right: 10%; }
+  .hero-flight-chip--taste { right: 20%; }
+}
+@media (max-width: 899px) {
+  .hero-flight-layer { display: none; }
+  main[data-cinematic="mobile"] .gallery-window {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  main[data-cinematic="mobile"] .gallery-window::-webkit-scrollbar { display: none; }
+  main[data-cinematic="mobile"] .gallery-section {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+  main[data-cinematic="mobile"] .gallery-track { padding-right: var(--space); }
+  main[data-cinematic="mobile"] .menu-section { margin-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-flight-chip { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .site :is(.hero-flight-chip, .gallery-track figure .photo, .menu-card) {
+    transition: none !important;
+    animation: none !important;
+  }
+}
