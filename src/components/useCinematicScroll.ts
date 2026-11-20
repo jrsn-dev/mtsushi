@@ -46,6 +46,15 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
         duration: 1.0, stagger: .095, delay: .3,
         ease: "power4.out", clearProps: "transform,opacity,visibility",
       });
+      gsap.from(".hero-flight-chip", {
+        x: (index: number) => [190, 145, -110][index] ?? 130,
+        y: (index: number) => [-90, 95, 150][index] ?? 85,
+        rotationY: (index: number) => [24, -19, 16][index] ?? 16,
+        rotationX: -13, scale: .55, autoAlpha: 0,
+        transformPerspective: 1200,
+        duration: 1.45, stagger: .15, delay: .42,
+        ease: "expo.out", clearProps: "transform,opacity,visibility",
+      });
       // Reserve the hero's scroll space so the next section pushes the revealed
       // logo upward in normal flow instead of overlaying it.
       const exit = gsap.timeline({
