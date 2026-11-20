@@ -78,6 +78,20 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
             <div className="hero-svg-cutout" aria-hidden="true" />
             <Photo image="hero" alt="Uramaki de salmão com gergelim sobre prato preto" priority className="hero-image" />
             <div className="hero-shade" />
+            <div className="hero-flight-layer" aria-hidden="true">
+              <div className="hero-flight-chip hero-flight-chip--cut">
+                <span className="hero-flight-index">01 / FRESCOR</span>
+                <strong>Corte diário.</strong>
+              </div>
+              <div className="hero-flight-chip hero-flight-chip--craft">
+                <span className="hero-flight-index">02 / PREPARO</span>
+                <strong>Feito à mão.</strong>
+              </div>
+              <div className="hero-flight-chip hero-flight-chip--taste">
+                <span className="hero-flight-index">03 / EXPERIÊNCIA</span>
+                <strong>Detalhe em cada peça.</strong>
+              </div>
+            </div>
             <div className="shell hero-copy">
               <p className="mono eyebrow">Jacarezinho, PR <span /> Somente delivery</p>
               <div className="hero-title-wrap"><h1 id="hero-title">Sushi que se vê,<br />se sente,<br />se lembra.</h1></div>
