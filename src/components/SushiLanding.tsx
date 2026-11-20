@@ -72,21 +72,29 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
       <main ref={main} id="inicio">
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-scene">
-            <div className="hero-stage">
-              <Photo image="bandeja" alt="Bandeja de sushi da MT Sushi Arte" priority className="hero-combo" />
-              <div className="hero-assembly" aria-hidden="true">
-                <div className="hero-tray" />
-                <div className="hero-piece hero-piece--rolls" />
-                <div className="hero-piece hero-piece--salmon" />
-                <div className="hero-piece hero-piece--crispy" />
-                <div className="hero-piece hero-piece--sesame" />
-                <div className="hero-piece hero-piece--jyo" />
-                <span className="hero-assembly-hint">Role para montar o combo <ArrowDown /></span>
+            <div className="hero-logo-reveal" aria-hidden="true">
+              <img src="/images/mt-sushi-logo-stacked.svg" alt="" width="1084" height="600" />
+            </div>
+            <div className="hero-svg-cutout" aria-hidden="true" />
+            <Photo image="bandeja" alt="Bandeja de sushi da MT Sushi Arte" priority className="hero-image" />
+            <div className="hero-shade" />
+            <div className="hero-flight-layer" aria-hidden="true">
+              <div className="hero-flight-chip hero-flight-chip--cut">
+                <span className="hero-flight-index">01 / FRESCOR</span>
+                <strong>Corte diário.</strong>
+              </div>
+              <div className="hero-flight-chip hero-flight-chip--craft">
+                <span className="hero-flight-index">02 / PREPARO</span>
+                <strong>Feito à mão.</strong>
+              </div>
+              <div className="hero-flight-chip hero-flight-chip--taste">
+                <span className="hero-flight-index">03 / EXPERIÊNCIA</span>
+                <strong>Detalhe em cada peça.</strong>
               </div>
             </div>
             <div className="shell hero-copy">
               <p className="mono eyebrow">Jacarezinho, PR <span /> Somente delivery</p>
-              <div className="hero-title-wrap"><h1 id="hero-title">Arte em<br />cada peça.</h1></div>
+              <div className="hero-title-wrap"><h1 id="hero-title">Sushi que se vê,<br />se sente,<br />se lembra.</h1></div>
               <div className="hero-support">
                 <p>Sushis, temakis e combinados preparados à mão.</p>
                 <BusinessHours />
