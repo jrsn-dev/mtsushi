@@ -116,14 +116,14 @@ export default function SushiStory() {
         <div className="mt-story-orbit" aria-label="Seis seleções da MT Sushi Arte">
           {pieces.map((item, index) => (
             <figure className={"mt-story-piece mt-story-piece-" + index} key={item.name}>
-              <img src={"/images/cardapio/" + item.image + ".webp"} alt={item.name} loading={index < 3 ? "eager" : "lazy"} />
+              <img src={"/images/cardapio/" + (index === 0 ? pieces[selected].image : item.image) + ".webp"} alt={item.name} loading={index < 3 ? "eager" : "lazy"} />
             </figure>
           ))}
         </div>
         <p className="mt-story-caption"><strong>Seis peças.</strong><br/>Cada detalhe, uma arte.</p>
-        <h2 className="mt-story-detail-title">Salmão</h2>
+        <h2 className="mt-story-detail-title">{pieces[selected].name}</h2>
         <div className="mt-story-details">
-          <div><span className="mt-story-kanji">鮭</span><p>Salmão fresco, corte diário e preparo artesanal.</p></div>
+          <div><span className="mt-story-kanji">{pieces[selected].japanese}</span><p>{pieces[selected].description}</p></div>
           <div className="mt-story-detail-note"><b>MT</b><span>Arte em cada peça</span></div>
         </div>
         <div className="mt-story-controls" aria-label="Explore as peças">
