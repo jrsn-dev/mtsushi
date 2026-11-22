@@ -1,8 +1,9 @@
 import { useLayoutEffect, type RefObject } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
   useLayoutEffect(() => {
@@ -19,6 +20,73 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
 
       const desktop = Boolean(context.conditions.desktop);
       page.dataset.cinematic = desktop ? "desktop" : "mobile";
+      if (desktop) gsap.set(".hero-logo-reveal", { opacity: 1 });
+      // Hero and macro pin only on desktop. The gallery also pins on touch screens.
+      const pinScene = (selector: string) => desktop ? selector : false;
+
+      const title = SplitText.create("#hero-title", { type: "lines,chars" });
+      gsap.from(title.lines, {
+        y: 96, autoAlpha: 0, rotationX: -18, transformPerspective: 1100,
+        duration: 1.15, stagger: .1, ease: "expo.out",
+      });
+      // Objects fly into the frame from opposing sides and settle into the
+      // actual layout. These are entrance tweens, not scroll blockers.
+      gsap.from(".hero-image", {
+        x: () => Math.min(240, window.innerWidth * .22), y: 90,
+        rotationY: -15, scale: .78,
+        transformPerspective: 1200, duration: 1.4, delay: .08,
+        ease: "expo.out", clearProps: "transform",
+      });
+      gsap.from(".eyebrow, .hero-support > *", {
+        x: -90, y: 52, autoAlpha: 0, rotationY: 9,
+        duration: 1.0, stagger: .095, delay: .3,
+        ease: "power4.out", clearProps: "transform,opacity,visibility",
+      });
+      gsap.from(".hero-flight-chip", {
+        x: (index: number) => [190, 145, -110][index] ?? 130,
+        y: (index: number) => [-90, 95, 150][index] ?? 85,
+        rotationY: (index: number) => [24, -19, 16][index] ?? 16,
+        rotationX: -13, scale: .55, autoAlpha: 0,
+        transformPerspective: 1200,
+        duration: 1.45, stagger: .15, delay: .42,
+        ease: "expo.out", clearProps: "transform,opacity,visibility",
+      });
+      // Reserve the hero's scroll space so the next section pushes the revealed
+      // logo upward in normal flow instead of overlaying it.
+      const exit = gsap.timeline({
+        scrollTrigger: { trigger: ".hero", start: "top top", end: desktop ? "+=82%" : "+=42%", pin: pinScene(".hero-scene"), pinSpacing: desktop, scrub: desktop ? .25 : .15, invalidateOnRefresh: true },
+      });
+      exit.to(".hero-support, .eyebrow", { opacity: 0, duration: .3 }, 0)
+        .to(title.chars, { opacity: 0, y: -12, duration: .32, stagger: { amount: .14, from: "start" } }, .16)
+        .fromTo(".hero-image img", { scale: 1 }, { scale: desktop ? 1.1 : 1.03, duration: .6, ease: "sine.inOut" }, .16)
+        .to(".hero-image, .hero-shade", { opacity: 0, duration: .32, ease: "sine.inOut" }, .36)
+        .to(".hero-copy", { opacity: 0, duration: .08 }, .68);
+      if (!desktop) {
+        exit.fromTo(".hero-svg-cutout", { opacity: 0 }, { opacity: 1, duration: .08, ease: "none" }, .34)
+          .fromTo(".hero-logo-reveal", { opacity: 0 }, { opacity: 1, duration: .25, ease: "sine.out" }, .6)
+          .to(".hero-svg-cutout", { opacity: 0, duration: .25, ease: "sine.inOut" }, .68)
+          .to(".hero-logo-reveal", { opacity: 1, duration: .07 }, .93);
+      } else {
+        // Preserve the hero's scroll timing without animating the desktop logo.
+        exit.to({}, { duration: .24 }, .76);
+      }
+
+      const macro = gsap.timeline({
+        scrollTrigger: { trigger: ".macro", start: "top top", end: desktop ? "+=90%" : "+=45%", pin: pinScene(".macro-scene"), pinSpacing: desktop, scrub: desktop ? .28 : .12, invalidateOnRefresh: true },
+      });
+      gsap.from(".macro-image", {
+        x: desktop ? 160 : 60, y: 75, scale: .86, rotationY: -12,
+        transformPerspective: 1200, opacity: .45,
+        duration: 1.15, ease: "power4.out", clearProps: "transform,opacity",
+        scrollTrigger: { trigger: ".macro", start: "top 87%", once: true },
+      });
+      macro.fromTo(".macro-image img", { scale: desktop ? 1.04 : 1 }, { scale: desktop ? 1.22 : 1.045, xPercent: desktop ? -3 : 0, duration: 1, ease: "none" }, 0)
+        .from(".callout-line", { scaleX: 0, stagger: .12, duration: .19, ease: "power3.out" }, .13)
+        .from(".callouts li > span:last-child", {
+          x: (index: number) => (index % 2 ? 105 : -95), y: 55,
+          opacity: 0, rotationY: (index: number) => (index % 2 ? -18 : 18),
+          scale: .8, transformPerspective: 900, stagger: .12, duration: .22,
+        }, .14);
 
       const track = page.querySelector<HTMLElement>(".gallery-track");
       const windowElement = page.querySelector<HTMLElement>(".gallery-window");
@@ -125,7 +193,7 @@ export function useCinematicScroll(scope: RefObject<HTMLElement | null>) {
       return () => {
         delete page.dataset.cinematic;
         if (gallerySection) delete gallerySection.dataset.scrollControlled;
-
+        title.revert();
       };
     }, page);
     return () => media.revert();

@@ -6,7 +6,6 @@ import { motion, useScroll, useMotionValueEvent, useReducedMotion } from "motion
 import { BusinessHours } from "./BusinessHours";
 import { useCinematicScroll } from "./useCinematicScroll";
 import { ChefSpecial } from "./SushiExperiments";
-import SushiStory from "./SushiStory";
 import { SushiDelivery } from "./SushiDelivery";
 import { SushiTestimonials } from "./SushiTestimonials";
 import { SushiMenu, Photo, gallery, type OrderLink } from "./SushiMenu";
@@ -71,7 +70,56 @@ export default function SushiLanding({ whatsapp, facebook }: { whatsapp: string;
       </motion.header>
 
       <main ref={main} id="inicio">
-        <SushiStory />
+        <section className="hero" aria-labelledby="hero-title">
+          <div className="hero-scene">
+            <div className="hero-logo-reveal" aria-hidden="true">
+              <img src="/images/mt-sushi-logo-stacked.svg" alt="" width="1084" height="600" />
+            </div>
+            <div className="hero-svg-cutout" aria-hidden="true" />
+            <Photo image="bandeja" alt="Bandeja de sushi da MT Sushi Arte" priority className="hero-image" />
+            <div className="hero-shade" />
+            <div className="hero-flight-layer" aria-hidden="true">
+              <div className="hero-flight-chip hero-flight-chip--cut">
+                <span className="hero-flight-index">01 / FRESCOR</span>
+                <strong>Corte diário.</strong>
+              </div>
+              <div className="hero-flight-chip hero-flight-chip--craft">
+                <span className="hero-flight-index">02 / PREPARO</span>
+                <strong>Feito à mão.</strong>
+              </div>
+              <div className="hero-flight-chip hero-flight-chip--taste">
+                <span className="hero-flight-index">03 / EXPERIÊNCIA</span>
+                <strong>Detalhe em cada peça.</strong>
+              </div>
+            </div>
+            <div className="shell hero-copy">
+              <p className="mono eyebrow">Jacarezinho, PR <span /> Somente delivery</p>
+              <div className="hero-title-wrap"><h1 id="hero-title">Sushi que se vê,<br />se sente,<br />se lembra.</h1></div>
+              <div className="hero-support">
+                <p>Sushis, temakis e combinados preparados à mão.</p>
+                <BusinessHours />
+                <a className="button button-red" href="/cardapio">Ver cardápio <ArrowDown aria-hidden="true" /></a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="macro" id="experiencia" aria-labelledby="macro-title">
+          <div className="macro-scene">
+            <Photo image="uramakis-hd" alt="Corte de um uramaki com salmão, arroz, nori e gergelim" className="macro-image" />
+            <div className="shell macro-inner">
+              <div className="macro-title"><h2 id="macro-title">De perto.</h2></div>
+              <ul className="callouts">
+                {ingredients.map(([name, detail], index) => (
+                  <li key={name} style={{ "--callout": index } as CSSProperties}>
+                    <span className="callout-line" aria-hidden="true" />
+                    <span>{name}{detail && <small>{detail}</small>}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
 
         <section className="gallery-section" aria-labelledby="gallery-title">
           <div className="gallery-scene">
