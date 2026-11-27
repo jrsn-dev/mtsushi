@@ -403,3 +403,17 @@ body:has(main#site.site) .sushi-piece img { display: block; width: 100%; height:
   body:has(main#site.site) .sushi-rail { --rail-w: 22vw; inset: 0 auto 0 0; opacity: .34; }
   body:has(main#site.site) .sushi-piece { width: calc(var(--size) * .72); }
 }
+
+/* Fail-open home: no animation or loading state can cover/hide the content. */
+body:has(main#site.site) .preloader { display: none !important; visibility: hidden !important; pointer-events: none !important; }
+body:has(main#site.site).is-loading { overflow-y: auto; }
+body:has(main#site.site) .home-navbar-frame,
+body:has(main#site.site) .navbar,
+main#site.site,
+main#site.site .home-content,
+main#site.site .hero-fade,
+main#site.site [data-reveal],
+main#site.site .reveal,
+main#site.site .split-word { opacity: 1 !important; visibility: visible !important; }
+main#site.site .hero__title .line > span { transform: none !important; }
+body:has(main#site.site) .sushi-piece__inner { opacity: 1 !important; }

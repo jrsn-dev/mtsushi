@@ -66,7 +66,6 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
   const money = (n) =>
     n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
-  const preloader = $("#preloader");
   const navbar = $("#navbar");
 
   // Clamp the rotated image, not just its unrotated box, inside the rail.
@@ -100,7 +99,6 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
      ------------------------------------------------------------ */
   if (!window.gsap || !window.ScrollTrigger) {
     doc.classList.remove("js");
-    preloader?.remove();
     body.classList.remove("is-loading");
     fallbackRail();
     window.__mtsushi = {
@@ -113,8 +111,11 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
     return;
   }
 
-  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-  if (!reduced) doc.classList.add("js");
+  // Never hide the server-rendered content while motion initializes.
+  doc.classList.remove("js");
+  body.classList.remove("is-loading");
+  gsap.registerPlugin(ScrollTrigger);
+  if (window.ScrollToPlugin) gsap.registerPlugin(window.ScrollToPlugin);
   ScrollTrigger.config({ ignoreMobileResize: true });
 
   /* ------------------------------------------------------------
@@ -155,176 +156,20 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
     }
   }
 
-  /* ------------------------------------------------------------
-     Preloader + hero intro
-     ------------------------------------------------------------ */
-  let preloaderHidden = false;
-  let introPlayed = false;
+  // Render the full page immediately. Decorative animation must never gate access.
+  gsap.set(navbar, { x: 0, xPercent: 0, y: 0, opacity: 1 });
+  gsap.set(".hero-fade, [data-reveal], .reveal", { opacity: 1, y: 0 });
+  gsap.set(".hero__title .line > span", { y: 0 });
+  gsap.set(".sushi-piece__inner", { opacity: 1, scale: 1 });
 
-  gsap.set(navbar, { x: 0, xPercent: 0, y: -26, opacity: 0 });
-  gsap.set(".sushi-piece__inner", { scale: 0.72 });
-
-  function startIntro() {
-    if (introPlayed) return;
-    introPlayed = true;
-
-    if (reduced) {
-      gsap.set(navbar, { x: 0, xPercent: 0, y: 0, opacity: 1 });
-      gsap.set(".hero-fade", { opacity: 1, y: 0 });
-      gsap.set(".hero__title .line > span", { y: 0 });
-      gsap.set(".sushi-piece__inner", { opacity: 1, scale: 1 });
-      return;
-    }
-
-    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-    tl.to(navbar, { x: 0, xPercent: 0, y: 0, opacity: 1, duration: 1.05 }, 0)
-      .to(
-        ".hero__title .line > span",
-        { y: 0, duration: 1.2, stagger: 0.11 },
-        0.12
-      )
-      .to(
-        ".hero-fade",
-        { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: "power3.out" },
-        0.38
-      )
-      .to(
-        ".sushi-piece__inner",
-        { opacity: 1, scale: 1, duration: 1.15, stagger: 0.06, ease: "power3.out" },
-        0.25
-      );
-
-    // Draw the red ribbon
-    const ribbon = $(".ribbon-core");
-    if (ribbon) {
-      const length = ribbon.getTotalLength();
-      gsap.set(ribbon, { strokeDasharray: length, strokeDashoffset: length });
-      tl.to(ribbon, { strokeDashoffset: 0, duration: 2.2, ease: "power2.inOut" }, 0.2);
-    }
-  }
-
-  function hidePreloader() {
-    if (preloaderHidden) return;
-    preloaderHidden = true;
-
-    const finish = () => {
-      if (finished) return;
-      finished = true;
-      preloader?.remove();
-      body.classList.remove("is-loading");
-      startIntro();
-      ScrollTrigger.refresh();
-    };
-
-    if (!preloader || reduced) {
-      finish();
-      return;
-    }
-
-    gsap
-      .timeline({ onComplete: finish })
-      .to(".preloader__inner", { opacity: 0, y: -14, duration: 0.4, ease: "power2.in" }, 0.1)
-      .to(preloader, { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, 0.45);
-  }
-
-  /* Finaliza sem animação: usado quando o rAF está pausado (aba oculta). */
-  let finished = false;
-  function finishInstant() {
-    if (finished) return;
-    finished = true;
-    preloaderHidden = true;
-    preloader?.remove();
-    body.classList.remove("is-loading");
-    if (!introPlayed) {
-      introPlayed = true;
-      gsap.set(navbar, { x: 0, xPercent: 0, y: 0, opacity: 1 });
-      gsap.set(".hero__title .line > span", { y: 0 });
-      gsap.set(".hero-fade", { opacity: 1, y: 0 });
-      gsap.set(".sushi-piece__inner", { opacity: 1, scale: 1 });
-    }
-    startRail();
-    ScrollTrigger.refresh();
-  }
-
-  let seenBefore = false;
-  try {
-    seenBefore = sessionStorage.getItem("mtsushi-visited") === "1";
-    if (!seenBefore) sessionStorage.setItem("mtsushi-visited", "1");
-  } catch (e) {
-    /* sessionStorage indisponível */
-  }
-
-  if (seenBefore) {
-    // Segunda visita na mesma sessão: entra direto no conteúdo.
-    // Adia um tick: as variáveis da trilha são inicializadas mais abaixo.
-    setTimeout(finishInstant, 0);
-  } else {
-    if (document.readyState === "complete") {
-      setTimeout(hidePreloader, 260);
-    } else {
-      window.addEventListener("load", () => setTimeout(hidePreloader, 260), { once: true });
-    }
-    setTimeout(hidePreloader, 2200);
-    setTimeout(finishInstant, 3200);
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible" && !finished && preloaderHidden) {
-        finishInstant();
-      }
-    });
-  }
-
-  /* ------------------------------------------------------------
-     Split headings + scroll reveals
-     ------------------------------------------------------------ */
-  function initHeadings() {
-    if (typeof window.SplitType !== "function") return;
-    $$("[data-split]").forEach((el) => {
-      const split = new SplitType(el, {
-        types: "lines,words",
-        lineClass: "split-line",
-        wordClass: "split-word",
-      });
-      if (reduced) return;
-      gsap.from(split.words, {
-        yPercent: 118,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.018,
-        ease: "power4.out",
-        scrollTrigger: { trigger: el, start: "top 86%", once: true },
-      });
-    });
-  }
-  if (document.fonts?.ready) {
-    document.fonts.ready.then(initHeadings);
-  } else {
-    initHeadings();
-  }
-
+  /* Non-blocking scroll motion: content remains visible if animation fails. */
   if (!reduced) {
     $$("[data-reveal]").forEach((el) => {
-      gsap.to(el, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: { trigger: el, start: "top 88%", once: true },
+      gsap.from(el, {
+        y: 12, duration: .65, ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 90%", once: true },
       });
     });
-
-    const catGrid = $("[data-reveal-group]");
-    if (catGrid) {
-      gsap.from(catGrid.children, {
-        opacity: 0,
-        y: 24,
-        duration: 0.75,
-        stagger: 0.06,
-        ease: "power3.out",
-        scrollTrigger: { trigger: catGrid, start: "top 86%", once: true },
-      });
-    }
-  } else {
-    gsap.set("[data-reveal], .reveal", { opacity: 1, y: 0 });
   }
 
   /* ------------------------------------------------------------
@@ -577,18 +422,8 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
   }
   makeGarnish();
 
-  // Start the rail after the loader (or right away if already gone)
-  const railTimer = setInterval(() => {
-    if (preloaderHidden) {
-      clearInterval(railTimer);
-      startRail();
-    }
-  }, 120);
-  setTimeout(() => {
-    if (!railStarted) {
-      startRail();
-    }
-  }, 3200);
+  // Start only after rail data is initialized; failure cannot hide the page.
+  startRail();
 
   let resizeTimer;
   window.addEventListener("resize", () => {

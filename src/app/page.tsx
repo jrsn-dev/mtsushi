@@ -10,20 +10,16 @@ import Hero from "@/components/Hero";
 import MobileMenu from "@/components/MobileMenu";
 import Navbar from "@/components/Navbar";
 import Overlays from "@/components/Overlays";
-import Preloader from "@/components/Preloader";
 import SushiRail from "@/components/SushiRail";
 
 export default function Home() {
   return (
     <StoreProvider>
       <link rel="stylesheet" precedence="home" href="/assets/css/style.css?v=2" />
-      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=25" />
-      <noscript><style>{".preloader{display:none!important}"}</style></noscript>
+      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=26" />
       <a className="skip-link" href="#inicio">
         Pular para o conteúdo
       </a>
-
-      <Preloader />
 
       <div className="noise" aria-hidden="true" />
       <div className="page-progress" aria-hidden="true">
@@ -49,7 +45,7 @@ export default function Home() {
       </main>
 
       <Overlays />
-      <Script src="/assets/js/home-motion.js?v=9" strategy="afterInteractive" />
+      <Script src="/assets/js/home-motion.js?v=10" strategy="afterInteractive" />
     </StoreProvider>
   );
 }
