@@ -62,7 +62,7 @@ export default function Footer() {
         </div>
         <div className="footer__bottom">
           <span>© <span id="year">{new Date().getFullYear()}</span> MTSUSHI ARTE. Todos os direitos reservados.</span>
-          <a className="footer__credit" href="https://fluidy.site" target="_blank" rel="noopener noreferrer">Desenvolvido por <strong>Fluidy</strong></a>
+          <a className="footer__credit" href="https://fluidy.site" target="_blank" rel="noopener noreferrer"><span>Desenvolvido por</span><img src="/images/fluidy-navbar.svg" alt="Fluidy" width={82} height={22} decoding="async" loading="lazy" /></a>
         </div>
       </div>
     </footer>
