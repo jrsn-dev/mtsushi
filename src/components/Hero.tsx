@@ -73,7 +73,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      <img className="hero__brand-static" src="/images/mt-sushi-logo-static.svg" alt="MT Sushi Arte" width={1575} height={401} decoding="async" />
+      <img className="hero__brand-static" src="/images/mt-sushi-logo-stacked-static.svg" alt="MT Sushi Arte" width={1084} height={600} decoding="async" />
     </section>
   );
 }
