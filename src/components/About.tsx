@@ -94,7 +94,7 @@ export default function About() {
               <strong>Marcelo Tanaka</strong>
               <span>Fundador &amp; chef executivo</span>
             </div>
-            <a className="link-arrow" href="#menu">
+            <a className="link-arrow" href="/cardapio">
               Conheça as criações <span>→</span>
             </a>
           </div>

@@ -7,7 +7,6 @@ import Contact from "@/components/Contact";
 import Delivery from "@/components/Delivery";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import MenuSection from "@/components/MenuSection";
 import MobileMenu from "@/components/MobileMenu";
 import Navbar from "@/components/Navbar";
 import Overlays from "@/components/Overlays";
@@ -19,7 +18,7 @@ export default function Home() {
   return (
     <StoreProvider>
       <link rel="stylesheet" precedence="home" href="/assets/css/style.css" />
-      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css" />
+      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=3" />
       <noscript><style>{".preloader{display:none!important}"}</style></noscript>
       <a className="skip-link" href="#inicio">
         Pular para o conteúdo
@@ -43,7 +42,7 @@ export default function Home() {
         <Categories />
         <Combos />
         <About />
-        <MenuSection />
+
         <Delivery />
         <Contact />
         <Footer />

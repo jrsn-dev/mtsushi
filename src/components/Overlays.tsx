@@ -37,7 +37,6 @@ export default function Overlays() {
     decrement,
     remove,
     total,
-    setFilter,
     toast,
   } = useStore();
 
@@ -58,17 +57,7 @@ export default function Overlays() {
 
   function selectEntry(entry: SearchEntry) {
     closePanels();
-    setFilter(entry.filter);
-    const target = entry.cat === "Combos" ? "#combos" : "#menu";
-    window.setTimeout(() => {
-      (window as unknown as { __mtsushi?: { scrollTo?: (t: string) => void } })
-        .__mtsushi?.scrollTo?.(target);
-      const card = document.querySelector(`[data-item-id="${entry.id}"]`);
-      if (card) {
-        card.classList.add("is-highlight");
-        window.setTimeout(() => card.classList.remove("is-highlight"), 2200);
-      }
-    }, 120);
+    window.location.assign(`/cardapio?categoria=${encodeURIComponent(entry.filter)}#${encodeURIComponent(entry.id)}`);
   }
 
   return (
@@ -116,16 +105,7 @@ export default function Overlays() {
               </span>
               <h3>Seu carrinho está vazio</h3>
               <p>Escolha suas peças favoritas e monte um pedido à altura.</p>
-              <button
-                className="btn btn--ghost btn--sm"
-                onClick={() => {
-                  closePanels();
-                  (window as unknown as { __mtsushi?: { scrollTo?: (t: string) => void } })
-                    .__mtsushi?.scrollTo?.("#menu");
-                }}
-              >
-                Ver cardápio
-              </button>
+              <a className="btn btn--ghost btn--sm" href="/cardapio">Ver cardápio</a>
             </div>
           ) : (
             <div className="cart-items">

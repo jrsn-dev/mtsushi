@@ -7,11 +7,6 @@ export default function Hero() {
       <div className="hero__glow" aria-hidden="true" />
 
       <div className="hero__inner section__inner">
-        <p className="eyebrow hero-fade">
-          <span className="eyebrow__line" />
-          Culinária japonesa · desde 2014
-        </p>
-
         <h1 className="hero__title">
           <span className="line">
             <span>
@@ -32,7 +27,7 @@ export default function Hero() {
         </p>
 
         <div className="hero__actions hero-fade">
-          <a className="btn btn--red" href="#menu">
+          <a className="btn btn--red" href="/cardapio">
             Explorar o cardápio{" "}
             <span className="btn__arrow" aria-hidden="true">
               →
@@ -134,7 +129,7 @@ export default function Hero() {
               ★★★★★
             </span>
             <span>
-              <strong>4,9</strong> · 1.200+ avaliações
+              <strong>4,9</strong>
             </span>
           </div>
         </div>
@@ -150,7 +145,7 @@ export default function Hero() {
           </defs>
           <text>
             <textPath href="#stampPath" startOffset="0">
-              MTSUSHI ARTE · SUSHI DE AUTOR · DESDE 2014 ·{" "}
+              MTSUSHI ARTE · SUSHI DE AUTOR ·{" "}
             </textPath>
           </text>
         </svg>

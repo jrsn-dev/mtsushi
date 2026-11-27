@@ -125,12 +125,12 @@ export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp
           {group.slug === "sobremesas" && <p>Todas as sobremesas são fritas!</p>}
         </div>
         <div className="catalog-items">
-          {items.map((item) => {
+          {items.map((item, index) => {
             const quantity = quantities[item.name] ?? 1;
             const inCart = cart[item.name] ?? 0;
             const available = 99 - inCart;
             return (
-              <article className="catalog-item" key={item.name}>
+              <article id={`${group.slug}-${index + 1}`} className="catalog-item" key={item.name}>
                 <div className="catalog-item-photo">
                   <Image src={"/images/cardapio/" + item.image + ".webp"} alt={(item.recreated ? "Reconstituição de " : "") + item.name}
                     width={500} height={350} sizes="(max-width: 520px) 120px, (max-width: 860px) 160px, 230px" />
