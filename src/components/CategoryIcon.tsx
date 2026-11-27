@@ -1,7 +1,7 @@
-import { Soup, Fish, Shrimp, Flame, CircleDot, Cone, Shell, Layers3, IceCreamBowl, CookingPot, UtensilsCrossed } from "lucide-react";
+import { Soup, Fish, Sparkles, Flame, CircleDot, Cone, Shell, Layers3, IceCreamBowl, CookingPot, UtensilsCrossed } from "lucide-react";
 
 const byCategory: Record<string, typeof Fish> = {
-  entradas: Soup, uramakis: Fish, "uramakis-premium": Shrimp, "hot-rolls": Flame,
+  entradas: Soup, uramakis: Fish, "uramakis-premium": Sparkles, "hot-rolls": Flame,
   hossomakis: CircleDot, temakis: Cone, jyos: Shell, combos: Layers3,
   sobremesas: IceCreamBowl, domingo: CookingPot,
 };
