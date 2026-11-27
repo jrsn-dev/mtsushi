@@ -218,7 +218,10 @@ main.site { background: transparent; }
    Backgrounds remain viewport-wide; the 10vw left gutter is applied once. */
 body:has(main.site) { --nav-w: min(70vw, 1360px); --section-left: 10vw; }
 body:has(main.site) .navbar {
-  left: var(--section-left);
+  /* Center independently of the content gutter; GSAP controls vertical motion. */
+  left: 0;
+  right: 0;
+  margin-inline: auto;
   width: var(--nav-w);
   transform: none;
 }
