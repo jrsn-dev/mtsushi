@@ -185,7 +185,7 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
         { opacity: 1, scale: 1, duration: 1.15, stagger: 0.06, ease: "power3.out" },
         0.25
       )
-      .from(".hero__kanji", { opacity: 0, duration: 1.6, ease: "power2.out" }, 0.3);
+      .from(".hero__logo-outline", { opacity: 0, duration: 1.6, ease: "power2.out" }, 0.3);
 
     // Draw the red ribbon
     const ribbon = $(".ribbon-core");
@@ -234,7 +234,7 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
       gsap.set(".hero__title .line > span", { y: 0 });
       gsap.set(".hero-fade", { opacity: 1, y: 0 });
       gsap.set(".sushi-piece__inner", { opacity: 1, scale: 1 });
-      gsap.set(".hero__kanji", { opacity: 1 });
+      gsap.set(".hero__logo-outline", { opacity: .18 });
     }
     startRail();
     ScrollTrigger.refresh();
@@ -325,7 +325,7 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
      Parallax
      ------------------------------------------------------------ */
   if (!reduced) {
-    gsap.to(".hero__kanji", {
+    gsap.to(".hero__logo-outline", {
       yPercent: 14,
       ease: "none",
       scrollTrigger: {

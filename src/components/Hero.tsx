@@ -2,9 +2,7 @@ import { Fish, Leaf, ChefHat, ArrowRight } from "lucide-react";
 export default function Hero() {
   return (
     <section className="section hero" id="inicio">
-      <div className="hero__kanji" aria-hidden="true">
-        鮨
-      </div>
+      <img className="hero__logo-outline" src="/images/mt-sushi-logo-outline.svg" alt="" aria-hidden="true" width={1575} height={401} decoding="async" />
       <div className="hero__glow" aria-hidden="true" />
 
       <div className="hero__inner section__inner">
