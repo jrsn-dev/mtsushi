@@ -204,3 +204,12 @@
     width: max(0px, calc((100% - var(--nav-w)) / 2));
   }
 }
+
+body:has(main.site) {
+  background-color: #000;
+  background-image:
+    radial-gradient(ellipse at 96% 10%, rgba(115, 10, 22, .19), transparent 45%),
+    radial-gradient(ellipse at 4% 88%, rgba(118, 14, 24, .13), transparent 38%);
+  background-attachment: fixed;
+}
+main.site { background: transparent; }
