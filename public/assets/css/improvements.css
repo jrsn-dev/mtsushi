@@ -256,18 +256,48 @@ main.site :is(.section-head__note, .combo-feature__desc, .combo-card__body p, .d
 .combos .combo-card__top h3, .site .dish__top h3 { font-size: clamp(.95rem, 1.35vw, 1.35rem); font-weight: 650; line-height: 1.2; }
 .combos .combo-card__body p, .site .dish__body p { font-size: clamp(.8rem, .95vw, .95rem); line-height: 1.5; }
 
-/* Home wrapper: flush to the left edge, with a dedicated right gutter. */
+
+/* Single home content axis: start immediately after the left sushi rail,
+   reserve exactly 100px on the right on desktop. */
+body:has(main#site.site) {
+  --section-left: 10vw;
+  --section-right: 100px;
+  --nav-w: calc(100vw - var(--section-left) - var(--section-right));
+}
 main#site.site {
   box-sizing: border-box;
   width: 100%;
   max-width: none;
   margin-inline: 0;
   padding-left: 0;
-  padding-right: 100px;
+  padding-right: var(--section-right);
 }
 main#site.site :is(.section__inner, .ticker__window) {
-  width: min(var(--nav-w), calc(100% - var(--section-left, 10vw)));
+  width: calc(100% - var(--section-left));
+  max-width: none;
+  margin-inline: var(--section-left) 0;
+  padding-inline: 0;
+}
+/* Fixed full-width positioning shell; only its inner bar is animated. */
+body:has(main#site.site) .home-navbar-frame {
+  position: fixed;
+  inset: 0 0 auto;
+  width: 100%;
+  z-index: 100;
+  pointer-events: none;
+}
+body:has(main#site.site) .home-navbar-frame > .navbar {
+  position: relative;
+  left: auto;
+  right: auto;
+  width: calc(100% - var(--section-left) - var(--section-right));
+  max-width: none;
+  margin-inline: var(--section-left) var(--section-right);
+  pointer-events: auto;
 }
 @media (max-width: 1100px) {
-  main#site.site { padding-right: min(100px, 10vw); }
+  body:has(main#site.site) { --section-right: min(100px, 10vw); }
+}
+@media (max-width: 900px) {
+  body:has(main#site.site) { --section-left: 0px; }
 }

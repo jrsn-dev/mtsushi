@@ -8,6 +8,7 @@ export default function Navbar() {
   const { count, panel, openPanel, togglePanel } = useStore();
 
   return (
+    <div className="home-navbar-frame">
     <header className="navbar" id="navbar">
       <a className="brand" href="#inicio" aria-label="MTSUSHI ARTE — início">
         <span className="brand__seal">
@@ -102,5 +103,6 @@ export default function Navbar() {
         </button>
       </div>
     </header>
+    </div>
   );
 }
