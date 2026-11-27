@@ -3,18 +3,12 @@
   isolation: isolate;
   overflow: hidden;
   width: 100%;
-  background: #000;
+  background: transparent;
   padding-block: clamp(48px, 7vw, 120px) 0;
-}
-.pattern {
-  position: absolute; inset: 0; z-index: -2; pointer-events: none;
-  background: url("/assets/img/waves.png") repeat;
-  background-size: 150px 75px;
-  opacity: .12;
 }
 .ribbon {
   position: absolute; z-index: -1; pointer-events: none;
-  width: 100%; height: 45%; left: 0; bottom: 4%;
+  width: 100vw; height: 45%; left: 50%; transform: translateX(-50%); bottom: 4%;
   filter: drop-shadow(0 0 9px #f10d3266);
 }
 .card.card {
@@ -52,13 +46,6 @@
   position: relative; width: 100%; min-width: 0; height: 100%; min-height: clamp(450px, 45vw, 760px);
   align-self: stretch; margin: 0; padding: 0; z-index: 2; overflow: visible;
 }
-.halo {
-  position: absolute; width: 116%; aspect-ratio: 1; top: -3%; left: -4%; border-radius: 50%;
-  border: 2px solid #8c0718;
-  border-right-color: #f51632;
-  background: radial-gradient(circle at 65% 40%, #68071199, #19000666 60%, transparent 78%);
-  box-shadow: inset -8px 0 36px #db092137, 4px 0 18px #e3092433;
-}
 .turn {
   position: absolute; width: 135%; left: 110%; top: 13%;
   transform-origin: top left; transform: rotate(90deg);
@@ -81,7 +68,6 @@
   .copy.copy { padding-block: 10px 12px; }
   .copy.copy h2 { font-size: clamp(2.6rem, 8.8vw, 5rem); }
   .art.art { width: min(100%, 420px); justify-self: center; height: clamp(340px, 85vw, 520px); min-height: 0; }
-  .halo { width: 100%; top: 1%; left: 0; }
   .turn { left: 100%; width: 125%; top: 10%; }
   .ribbon { bottom: 6%; height: 30%; }
 }

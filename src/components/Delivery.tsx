@@ -5,7 +5,6 @@ import { site, whatsappLink } from "@/lib/site";
 export default function Delivery() {
   return (
     <section className={`section delivery ${styles.section}`} id="delivery" aria-labelledby="delivery-title">
-      <div className={styles.pattern} aria-hidden="true" />
       <svg className={styles.ribbon} viewBox="0 0 1600 300" preserveAspectRatio="none" aria-hidden="true">
         <defs>
           <linearGradient id="delivery-ribbon" x1="0" y1="0" x2="1" y2=".5">
@@ -42,7 +41,6 @@ export default function Delivery() {
             <p className="delivery__note">Segunda a sexta, das 18h às 23h</p>
           </div>
           <div className={`delivery__art ${styles.art}`} aria-hidden="true">
-            <div className={styles.halo} />
             <div className={styles.turn}>
               <img className="delivery__rai" src="/assets/img/sushiraxi.webp" width={1000} height={800} alt="" loading="lazy" decoding="async" />
             </div>
