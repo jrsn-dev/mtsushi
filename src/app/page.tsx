@@ -45,7 +45,7 @@ export default function Home() {
       </main>
 
       <Overlays />
-      <Script src="/assets/js/home-safe.js?v=2" strategy="afterInteractive" />
+      <Script src="/assets/js/home-safe.js?v=3" strategy="afterInteractive" />
     </StoreProvider>
   );
 }
