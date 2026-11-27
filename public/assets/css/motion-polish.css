@@ -1,0 +1,72 @@
+
+/* Motion refinements based on Emil Kowalski's design-engineering standards.
+   Static-first: the page is never hidden pending animation. */
+:root {
+  --ease-out: cubic-bezier(.23,1,.32,1);
+  --ease-drawer: cubic-bezier(.32,.72,0,1);
+  --motion-press: 160ms;
+  --motion-hover: 150ms;
+  --motion-panel: 280ms;
+}
+body:has(main#site.site) { scroll-padding-top: 110px; }
+body:has(main#site.site) .navbar { transition: background 150ms ease, border-color 150ms ease; }
+body:has(main#site.site) .navbar.is-scrolled { top: 22px; height: 76px; }
+body:has(main#site.site) .navbar .brand--original,
+body:has(main#site.site) .navbar .navbar__logo,
+main#site.site .hero__brand-static { animation: none; transition: none; }
+body:has(main#site.site) :is(.btn,.icon-btn,.cart-btn,.menu-toggle,.round-add,.filter,.dish__add,.cart-qty button,.cart-item__remove,.socials a) {
+  transition: transform var(--motion-press) var(--ease-out), color var(--motion-hover) ease, background-color var(--motion-hover) ease, border-color var(--motion-hover) ease;
+}
+body:has(main#site.site) :is(.btn,.icon-btn,.cart-btn,.menu-toggle,.round-add,.filter,.dish__add,.cart-qty button,.cart-item__remove,.socials a):active:not(:disabled):not([aria-disabled="true"]) { transform: scale(.97); }
+body:has(main#site.site) :is(.btn__arrow,.link-arrow span,.cat-card__icon,.cat-card__arrow) {
+  transition: transform var(--motion-press) var(--ease-out), opacity var(--motion-hover) ease, color var(--motion-hover) ease;
+}
+body:has(main#site.site) .nav-link { transition: color var(--motion-hover) ease; }
+body:has(main#site.site) .nav-link::after { opacity: 0; transform: translateX(-50%) scale(.95); transition: opacity var(--motion-hover) ease, transform var(--motion-press) var(--ease-out); }
+body:has(main#site.site) .nav-link.is-active::after { opacity: 1; transform: translateX(-50%) scale(1); }
+body:has(main#site.site) .cart-count { opacity: 0; transform: scale(.95); transition: opacity 160ms ease, transform 160ms var(--ease-out); }
+body:has(main#site.site) .cart-count.has-items { opacity: 1; transform: scale(1); }
+main#site.site :is(.cat-card,.combo-card,.dish,.info-card) {
+  transition: border-color var(--motion-hover) ease, transform var(--motion-press) var(--ease-out), background-color var(--motion-hover) ease;
+}
+main#site.site :is(.combo-card__media img,.dish__media img) { transition: transform 220ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  main#site.site :is(.cat-card,.combo-card,.dish,.info-card):hover { transform: translateY(-2px); }
+  main#site.site .combo-card:hover .combo-card__media img,
+  main#site.site .dish:hover .dish__media img { transform: scale(1.035); }
+  body:has(main#site.site) .round-add:hover { transform: none; }
+}
+@media (hover: none), (pointer: coarse) {
+  main#site.site :is(.cat-card,.combo-card,.dish,.info-card):hover,
+  main#site.site .combo-card:hover .combo-card__media img,
+  main#site.site .dish:hover .dish__media img,
+  body:has(main#site.site) :is(.round-add,.btn--red,.btn--ghost):hover,
+  body:has(main#site.site) .btn--red:hover .btn__arrow,
+  body:has(main#site.site) .link-arrow:hover span,
+  main#site.site .cat-card:hover :is(.cat-card__icon,.cat-card__arrow) { transform: none; }
+  body:has(main#site.site) :is(.btn,.icon-btn,.cart-btn,.round-add):active:not(:disabled) { transform: scale(.97); }
+}
+body:has(main#site.site) .mobile-menu__links a,
+body:has(main#site.site) .footer__col a { transition: color 150ms ease; }
+body:has(main#site.site) .mobile-menu__links a:hover { padding-left: 0; }
+body:has(main#site.site) .footer__col a:hover { padding-left: 0; }
+/* Keep closed overlays truly inert; animate only on user-initiated opening.
+   Do not use blur on large full-screen surfaces. */
+body:has(main#site.site) .overlay { backdrop-filter: none; transition: opacity 200ms ease, visibility 200ms; }
+body:has(main#site.site) .search-panel { backdrop-filter: none; transition: opacity 200ms var(--ease-out), visibility 200ms; }
+body:has(main#site.site) .cart-drawer { transition: transform var(--motion-panel) var(--ease-drawer); }
+body:has(main#site.site) .mobile-menu { transition: clip-path var(--motion-panel) var(--ease-out), visibility var(--motion-panel); }
+body:has(main#site.site) .toast { transition: opacity 400ms ease, transform 400ms ease; }
+body:has(main#site.site) .sushi-piece { will-change: auto; }
+@media (prefers-reduced-motion: reduce) {
+  body:has(main#site.site) :is(.btn,.icon-btn,.cart-btn,.menu-toggle,.round-add,.filter,.dish__add,.cart-qty button,.socials a,.cat-card,.combo-card,.dish,.info-card,.nav-link,.nav-link::after,.cart-count,.btn__arrow,.link-arrow span,.cat-card__icon,.cat-card__arrow,.combo-card__media img,.dish__media img) {
+    transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+    animation: none !important;
+    transform: none !important;
+  }
+  body:has(main#site.site) :is(.cart-drawer,.mobile-menu,.search-panel,.overlay,.toast) { transition: opacity 150ms ease, visibility 150ms; }
+  body:has(main#site.site) .sushi-piece__inner { animation: none !important; }
+}
+@media (max-width: 900px) {
+  body:has(main#site.site) .navbar.is-scrolled { height: var(--mobile-nav-height, 64px); }
+}
