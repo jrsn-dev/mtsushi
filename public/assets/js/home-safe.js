@@ -9,7 +9,7 @@
   const progress = document.querySelector(".page-progress__bar");
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const pieces = stage ? Array.from(stage.querySelectorAll(".sushi-piece")).map(el => ({
-    el, x: Number(el.dataset.x || 50), start: Number(el.dataset.start || 0),
+    el, lane: Math.random(), gap: 18 + Math.random() * 90,
     rot: Number(el.dataset.rot || 0)
   })) : [];
   const activeLinks = Array.from(document.querySelectorAll(".nav-link"));
@@ -18,13 +18,20 @@
   function measure() {
     width = stage?.clientWidth || 0;
     height = window.innerHeight;
-    let max = 0;
+    const oldTravel = travel;
+    let cursor = 0;
     for (const piece of pieces) {
       piece.w = piece.el.offsetWidth;
       piece.h = piece.el.offsetHeight;
-      max = Math.max(max, Math.hypot(piece.w, piece.h));
+      const r = piece.rot * Math.PI / 180;
+      piece.halfX = (Math.abs(Math.cos(r)) * piece.w + Math.abs(Math.sin(r)) * piece.h) / 2;
+      piece.halfY = (Math.abs(Math.sin(r)) * piece.w + Math.abs(Math.cos(r)) * piece.h) / 2;
+      // Individual visual heights and random gaps, rather than equal slots.
+      piece.centerY = cursor + piece.halfY;
+      cursor += piece.halfY * 2 + piece.gap;
     }
-    travel = Math.max(1, height + max, pieces.length * (max + 8));
+    travel = Math.max(1, height + 64, cursor);
+    offset = oldTravel > 1 ? offset * travel / oldTravel : -Math.min(60, pieces[0]?.halfY || 0);
   }
   function updateNavigation() {
     const scroll = window.scrollY;
@@ -39,12 +46,14 @@
     if (!reduced) offset = (offset + (scroll - lastScroll) * .31 + .13) % travel;
     lastScroll = scroll;
     for (const p of pieces) {
-      const center = width * p.x / 100;
-      const r = p.rot * Math.PI / 180;
-      const half = (Math.abs(Math.cos(r)) * p.w + Math.abs(Math.sin(r)) * p.h) / 2;
-      const edge = Math.min(width / 2, half + 4);
-      const x = Math.max(edge, Math.min(width - edge, center)) - p.w / 2;
-      const y = ((p.start * travel + offset) % travel + travel) % travel - (travel - height) / 2 - p.h / 2;
+      // Clamp the actual rotated right edge. Oversized pieces may bleed
+      // out to the left, never into the content or against the right clip.
+      const right = width - 8 - p.halfX;
+      const left = Math.min(p.halfX + 8, right);
+      const center = left + (right - left) * p.lane;
+      const inset = Math.min(18, width * .06) * p.lane;
+      const x = center - inset - p.w / 2;
+      const y = ((p.centerY + offset + p.halfY) % travel + travel) % travel - p.halfY * 2;
       p.el.style.transform = "translate3d(" + x + "px," + y + "px,0) rotate(" + p.rot + "deg)";
     }
     if (!reduced) frame = requestAnimationFrame(render);

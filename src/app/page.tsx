@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <StoreProvider>
       <link rel="stylesheet" precedence="home" href="/assets/css/style.css?v=3" />
-      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=27" />
+      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=28" />
       <a className="skip-link" href="#inicio">
         Pular para o conteúdo
       </a>
@@ -45,7 +45,7 @@ export default function Home() {
       </main>
 
       <Overlays />
-      <Script src="/assets/js/home-safe.js?v=1" strategy="afterInteractive" />
+      <Script src="/assets/js/home-safe.js?v=2" strategy="afterInteractive" />
     </StoreProvider>
   );
 }

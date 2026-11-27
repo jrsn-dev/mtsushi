@@ -388,8 +388,8 @@ body:has(main#site.site) .navbar .navbar__logo {
   body:has(main#site.site) .navbar .navbar__logo { width: clamp(88px, 27vw, 120px); }
 }
 
-/* Keep the animated pieces completely inside the dedicated left strip. */
-body:has(main#site.site) .sushi-rail { --rail-w: 14vw; width: var(--rail-w); overflow: hidden; }
+/* Reserve the left gutter for sushi; the right edge stays clear of the content. */
+body:has(main#site.site) .sushi-rail { --rail-w: 20vw; width: var(--rail-w); overflow: hidden; }
 body:has(main#site.site) .sushi-piece {
   width: var(--size);
   transform-origin: center;
