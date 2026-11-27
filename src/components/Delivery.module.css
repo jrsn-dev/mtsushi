@@ -8,7 +8,7 @@
 }
 .ribbon {
   position: absolute; z-index: -1; pointer-events: none;
-  width: 100vw; height: 45%; left: 0; bottom: 4%;
+  width: 100vw; height: 45%; left: calc(0px - var(--home-content-start, 0px)); bottom: 4%;
   filter: drop-shadow(0 0 9px #f10d3266);
 }
 .card.card {
@@ -90,4 +90,10 @@
 .actions :global(.btn) { font-family: var(--font-display); font-weight: 650; letter-spacing: .025em; }
 @media (max-width: 900px) {
   .copy.copy h2 { font-size: clamp(2.35rem, 7.5vw, 4.8rem); }
+}
+
+@media (min-width: 1101px) {
+  .copy.copy h2 { font-size: clamp(2.4rem, 3.65vw, 4.8rem); }
+  .card.card { min-height: clamp(420px, 38vw, 650px); }
+  .art.art { min-height: clamp(400px, 36vw, 620px); }
 }

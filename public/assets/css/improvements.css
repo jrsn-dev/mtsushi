@@ -179,31 +179,6 @@
   .hero .feature strong { letter-spacing: .025em; }
 }
 
-/* Use the navbar's responsive measure for content and the page for backgrounds. */
-.site {
-  width: 100%;
-  margin-inline: 0;
-}
-.site .section__inner,
-.site .ticker__window {
-  width: var(--nav-w);
-  max-width: none;
-  margin-inline: 10vw auto;
-  padding-inline: 0;
-}
-.site .ticker__window {
-  overflow: hidden;
-}
-.site .footer {
-  width: 100%;
-  background-color: #0b0b0e;
-}
-@media (min-width: 901px) {
-  .sushi-rail {
-    width: 10vw;
-  }
-}
-
 body:has(main.site) {
   background-color: #000;
   background-image:
@@ -214,26 +189,6 @@ body:has(main.site) {
 main.site { background: transparent; }
 
 
-/* A single horizontal measure for the home navbar and every content section.
-   Backgrounds remain viewport-wide; the 10vw left gutter is applied once. */
-body:has(main.site) { --nav-w: min(70vw, 1360px); --section-left: 10vw; }
-body:has(main.site) .navbar {
-  /* Center independently of the content gutter; GSAP controls vertical motion. */
-  left: calc((100% - var(--nav-w)) / 2);
-  right: auto;
-  margin-inline: 0;
-  width: var(--nav-w);
-}
-.site .section__inner, .site .ticker__window {
-  width: var(--nav-w);
-  margin-inline: var(--section-left, 10vw) auto;
-  box-sizing: border-box;
-  padding-inline: 0;
-}
-main.site { overflow-x: clip; }
-@media (max-width: 1100px) {
-  body:has(main.site) { --nav-w: 80vw; }
-}
 @media (max-width: 480px) {
   body:has(main.site) .navbar { gap: 5px; padding-inline: 7px; }
   body:has(main.site) .navbar .nav-actions { gap: 4px; }
@@ -257,28 +212,41 @@ main.site :is(.section-head__note, .combo-feature__desc, .combo-card__body p, .d
 .combos .combo-card__body p, .site .dish__body p { font-size: clamp(.8rem, .95vw, .95rem); line-height: 1.5; }
 
 
-/* Single home content axis: start immediately after the left sushi rail,
-   reserve exactly 100px on the right on desktop. */
+
+/* Home: one centered 70vw grid, with 20% empty and 80% for all sections. */
 body:has(main#site.site) {
-  --section-left: 10vw;
-  --section-right: 100px;
-  --nav-w: calc(100vw - var(--section-left) - var(--section-right));
+  --home-w: 70vw;
+  --home-empty: 14vw;
+  --home-content-start: 29vw;
+  --nav-w: var(--home-w);
 }
 main#site.site {
-  box-sizing: border-box;
+  position: relative;
+  display: grid;
+  grid-template-columns: 20% minmax(0, 80%);
+  width: var(--home-w);
+  max-width: none;
+  margin-inline: auto;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+}
+.home-spacer { grid-column: 1; min-width: 0; pointer-events: none; }
+.home-content { grid-column: 2; min-width: 0; width: 100%; }
+main#site.site :is(.section__inner, .ticker__window) {
   width: 100%;
   max-width: none;
   margin-inline: 0;
-  padding-left: 0;
-  padding-right: var(--section-right);
-}
-main#site.site :is(.section__inner, .ticker__window) {
-  width: calc(100% - var(--section-left));
-  max-width: none;
-  margin-inline: var(--section-left) 0;
   padding-inline: 0;
+  box-sizing: border-box;
 }
-/* Fixed full-width positioning shell; only its inner bar is animated. */
+main#site.site .ticker__window { overflow: hidden; }
+main#site.site .footer {
+  width: 100%;
+  background-color: #0b0b0e;
+  box-shadow: 0 0 0 100vmax #0b0b0e;
+  clip-path: inset(0 -100vmax);
+}
 body:has(main#site.site) .home-navbar-frame {
   position: fixed;
   inset: 0 0 auto;
@@ -290,14 +258,25 @@ body:has(main#site.site) .home-navbar-frame > .navbar {
   position: relative;
   left: auto;
   right: auto;
-  width: calc(100% - var(--section-left) - var(--section-right));
+  width: var(--home-w);
   max-width: none;
-  margin-inline: var(--section-left) var(--section-right);
+  margin-inline: auto;
   pointer-events: auto;
 }
-@media (max-width: 1100px) {
-  body:has(main#site.site) { --section-right: min(100px, 10vw); }
+@media (min-width: 1101px) {
+  .sushi-rail { width: 14vw; }
+  main#site.site .hero__title { font-size: clamp(3rem, 4.8vw, 5.8rem); }
+  main#site.site .hero__stamp { width: clamp(75px, 6vw, 120px); }
+  main#site.site .footer__top { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
 }
-@media (max-width: 900px) {
-  body:has(main#site.site) { --section-left: 0px; }
+@media (max-width: 1100px) {
+  body:has(main#site.site) { --home-w: 90vw; --home-empty: 0px; --home-content-start: 5vw; }
+  main#site.site { grid-template-columns: minmax(0,1fr); }
+  .home-spacer { display: none; }
+  .home-content { grid-column: 1; }
+}
+@media (min-width: 1101px) and (max-width: 1450px) {
+  main#site.site .combo-feature { grid-template-columns: minmax(0,1fr); }
+  main#site.site .combo-feature__media { min-height: 280px; }
+  main#site.site .contact__grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }

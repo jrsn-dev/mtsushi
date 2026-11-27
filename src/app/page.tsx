@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <StoreProvider>
       <link rel="stylesheet" precedence="home" href="/assets/css/style.css?v=2" />
-      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=12" />
+      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=13" />
       <noscript><style>{".preloader{display:none!important}"}</style></noscript>
       <a className="skip-link" href="#inicio">
         Pular para o conteúdo
@@ -37,15 +37,17 @@ export default function Home() {
       <SushiRail />
 
       <main className="site" id="site">
-        <Hero />
-        <Ticker />
-        <Categories />
-        <Combos />
-        <About />
-
-        <Delivery />
-        <Contact />
-        <Footer />
+        <div className="home-spacer" aria-hidden="true" />
+        <div className="home-content">
+          <Hero />
+          <Ticker />
+          <Categories />
+          <Combos />
+          <About />
+          <Delivery />
+          <Contact />
+          <Footer />
+        </div>
       </main>
 
       <Overlays />
