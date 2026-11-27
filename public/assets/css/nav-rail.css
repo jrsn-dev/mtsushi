@@ -272,20 +272,33 @@
 .mobile-menu {
   position: fixed;
   inset: 0;
-  z-index: 150;
+  z-index: 220;
   display: none;
   flex-direction: column;
   padding: 24px 6vw 36px;
   background:
     radial-gradient(700px 500px at 80% 0%, rgba(225, 29, 46, 0.16), transparent 60%),
     #08080a;
-  clip-path: inset(0 0 100% 0);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  color: var(--cream, #f4ecdf);
+  opacity: 0;
   visibility: hidden;
-  transition: clip-path 0.75s var(--ease), visibility 0.75s;
+  pointer-events: none;
+  transition: opacity .22s ease, visibility .22s;
 }
 .mobile-menu.is-open {
-  clip-path: inset(0 0 0 0);
+  display: flex;
+  opacity: 1;
   visibility: visible;
+  pointer-events: auto;
+  clip-path: none;
+  filter: none;
+  backdrop-filter: none;
+}
+.mobile-menu__links a { color: var(--cream, #f4ecdf); }
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu { transition: none; }
 }
 .mobile-menu__top {
   display: flex;

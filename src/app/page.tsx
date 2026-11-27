@@ -15,7 +15,7 @@ import SushiRail from "@/components/SushiRail";
 export default function Home() {
   return (
     <StoreProvider>
-      <link rel="stylesheet" precedence="home" href="/assets/css/style.css?v=3" />
+      <link rel="stylesheet" precedence="home" href="/assets/css/style.css?v=4" />
       <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=28" />
       <a className="skip-link" href="#inicio">
         Pular para o conteúdo

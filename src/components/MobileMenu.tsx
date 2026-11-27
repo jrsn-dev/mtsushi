@@ -63,7 +63,7 @@ export default function MobileMenu() {
         <a href="#inicio" onClick={closePanels}>
           <span>01</span>Início
         </a>
-        <a href="#cardapio" onClick={closePanels}>
+        <a href="/cardapio" onClick={closePanels}>
           <span>02</span>Cardápio
         </a>
         <a href="#combos" onClick={closePanels}>

@@ -65,7 +65,7 @@ export default function Overlays() {
   return (
     <>
       <div
-        className={`overlay${panel ? " is-open" : ""}`}
+        className={`overlay${cartOpen || searchOpen ? " is-open" : ""}`}
         id="overlay"
         aria-hidden="true"
         onClick={closePanels}
