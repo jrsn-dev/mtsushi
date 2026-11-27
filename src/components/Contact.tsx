@@ -1,3 +1,4 @@
+import { MapPin, Clock3, Phone, ArrowRight } from "lucide-react";
 import OpenStatus from "@/components/OpenStatus";
 import { site } from "@/lib/site";
 
@@ -23,14 +24,7 @@ export default function Contact() {
         <div className="contact__grid">
           <article className="info-card" data-reveal>
             <span className="info-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path
-                  d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                />
-                <circle cx="12" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.5" />
-              </svg>
+              <MapPin aria-hidden="true" />
             </span>
             <h3>Endereço</h3>
             <p>
@@ -39,21 +33,13 @@ export default function Contact() {
               {site.address.city}, {site.address.state}
             </p>
             <a className="info-card__link" href={site.mapsUrl} target="_blank" rel="noopener">
-              Abrir no mapa →
+              Abrir no mapa <ArrowRight aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} />
             </a>
           </article>
 
           <article className="info-card" data-reveal>
             <span className="info-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.5" />
-                <path
-                  d="M12 7.5V12l3 2"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <Clock3 aria-hidden="true" />
             </span>
             <h3>Horários</h3>
             <p>
@@ -64,14 +50,7 @@ export default function Contact() {
 
           <article className="info-card" data-reveal>
             <span className="info-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path
-                  d="M6.5 4.5h3l1.3 4-2 1.4a12 12 0 0 0 5.3 5.3l1.4-2 4 1.3v3c0 1.1-.9 2-2 2C10.4 19.5 4.5 13.6 4.5 6.5c0-1.1.9-2 2-2Z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <Phone aria-hidden="true" />
             </span>
             <h3>Contato</h3>
             <p>
@@ -85,7 +64,7 @@ export default function Contact() {
               target="_blank"
               rel="noopener"
             >
-              Falar no WhatsApp →
+              Falar no WhatsApp <ArrowRight aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} />
             </a>
           </article>
         </div>
@@ -105,7 +84,7 @@ export default function Contact() {
           >
             Pedir pelo WhatsApp{" "}
             <span className="btn__arrow" aria-hidden="true">
-              →
+              <ArrowRight aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} />
             </span>
           </a>
         </div>

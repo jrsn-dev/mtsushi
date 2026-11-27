@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import styles from "./Delivery.module.css";
 import { site, whatsappLink } from "@/lib/site";
 
@@ -37,7 +38,7 @@ export default function Delivery() {
               >
                 Pedir no WhatsApp{" "}
                 <span className="btn__arrow" aria-hidden="true">
-                  →
+                  <ArrowRight aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} />
                 </span>
               </a>
               <span className="delivery__time">

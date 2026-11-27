@@ -3,7 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Fish, IceCreamBowl, Layers3, Minus, Plus, Soup, UtensilsCrossed, Menu as MenuIcon, Instagram, ArrowUpRight, ShoppingCart } from "lucide-react";
+import { CategoryIcon } from "./CategoryIcon";
+import { Minus, Plus, Menu as MenuIcon, Instagram, ArrowUpRight, ShoppingCart } from "lucide-react";
 import { categories, categoryAliases, formatPrice, menuNotes } from "./cardapio.js";
 import { SushiCart } from "./SushiCart";
 
@@ -15,9 +16,6 @@ cartNames.set("SASHIMI DE SALMÃO", "SASHIMI (SALMÃO)");
 cartNames.set("HOT ROLL MORANGO COM NUTELLA", "HOT ROLL MORANGO C/ NUTELLA");
 type Cart = Record<string, number>;
 
-const categoryIcons: Record<string, typeof Fish> = {
-  entradas: Soup, temakis: UtensilsCrossed, combos: Layers3, domingo: Layers3, sobremesas: IceCreamBowl,
-};
 
 export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp: string }) {
   const slug = categoryAliases[selected as keyof typeof categoryAliases] ?? selected;
@@ -109,11 +107,11 @@ export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp
 
       <nav className="catalog-categories" aria-label="Categorias do cardápio">
         {categories.map(({ slug: groupSlug, name }) => {
-          const Icon = categoryIcons[groupSlug] ?? Fish;
+
           return (
           <Link key={groupSlug} href={"/cardapio?categoria=" + groupSlug} scroll={false}
             className="catalog-category" aria-current={group.slug === groupSlug ? "page" : undefined}>
-            <Icon aria-hidden="true" strokeWidth={1.65} />
+            <CategoryIcon slug={groupSlug} />
             <span>{name}</span>
           </Link>
         ); })}

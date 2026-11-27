@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import styles from "./About.module.css";
 
 export default function About() {
@@ -11,10 +12,10 @@ export default function About() {
         <blockquote>“Cada peça nasce das mãos, não da pressa.”</blockquote>
         <dl className={styles.stats}>
           {[
-            ["40", "+", "Criações autorais"], ["100", "%", "Preparado na hora"], ["4,9", "★", "Avaliação dos clientes"],
+            ["40", "+", "Criações autorais"], ["100", "%", "Preparado na hora"],
           ].map(([value, unit, label]) => <div key={label}><dt>{label}</dt><dd>{value}<sup>{unit}</sup></dd></div>)}
         </dl>
-        <a className={styles.cta} href="/cardapio">Conheça as criações <span aria-hidden="true">→</span></a>
+        <a className={styles.cta} href="/cardapio">Conheça as criações <span aria-hidden="true"><ArrowRight aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} /></span></a>
       </div>
     </section>
   );

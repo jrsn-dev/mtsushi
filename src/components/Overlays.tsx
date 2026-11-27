@@ -1,5 +1,7 @@
 "use client";
 
+import { X, ShoppingBag, Trash2, Search, Check, Minus, Plus, ArrowRight, ArrowUpRight } from "lucide-react";
+
 import { useMemo, useRef, useState } from "react";
 import { useStore } from "@/components/StoreProvider";
 import { useFocusTrap } from "@/lib/useFocusTrap";
@@ -87,9 +89,7 @@ export default function Overlays() {
             </h2>
           </div>
           <button className="icon-btn" onClick={closePanels} aria-label="Fechar carrinho">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
+            <X aria-hidden="true" />
           </button>
         </div>
 
@@ -97,11 +97,7 @@ export default function Overlays() {
           {cart.length === 0 ? (
             <div className="cart-empty">
               <span className="cart-empty__icon">
-                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                  <path d="M12 17h24l-2 20H14l-2-20Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-                  <path d="M18 17v-3a6 6 0 0 1 12 0v3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                  <path d="M20 26c2.5 2.2 5.5 2.2 8 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity=".5" />
-                </svg>
+                <ShoppingBag aria-hidden="true" />
               </span>
               <h3>Seu carrinho está vazio</h3>
               <p>Escolha suas peças favoritas e monte um pedido à altura.</p>
@@ -123,7 +119,7 @@ export default function Overlays() {
                         onClick={() => decrement(item.id)}
                         aria-label={`Diminuir quantidade de ${item.name}`}
                       >
-                        −
+                        <Minus aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} />
                       </button>
                       <span>{item.qty}</span>
                       <button
@@ -131,7 +127,7 @@ export default function Overlays() {
                         onClick={() => increment(item.id)}
                         aria-label={`Aumentar quantidade de ${item.name}`}
                       >
-                        +
+                        <Plus aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} />
                       </button>
                     </div>
                   </div>
@@ -140,14 +136,7 @@ export default function Overlays() {
                     onClick={() => remove(item.id)}
                     aria-label={`Remover ${item.name}`}
                   >
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path
-                        d="M5 7h14M9.5 7V5.5h5V7M7.5 7l.8 12h7.4l.8-12M10.5 10.5v5M13.5 10.5v5"
-                        stroke="currentColor"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                      />
-                    </svg>
+                    <Trash2 aria-hidden="true" />
                   </button>
                 </div>
               ))}
@@ -171,7 +160,7 @@ export default function Overlays() {
               if (!ready) event.preventDefault();
             }}
           >
-            Finalizar no WhatsApp <span className="btn__arrow" aria-hidden="true">→</span>
+            Finalizar no WhatsApp <span className="btn__arrow" aria-hidden="true"><ArrowRight aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} /></span>
           </a>
           <p className="cart-note">Pagamento na entrega · Pix, cartão ou dinheiro</p>
         </div>
@@ -191,16 +180,11 @@ export default function Overlays() {
           <div className="search-panel__top">
             <span className="search-panel__label">Buscar no cardápio</span>
             <button className="icon-btn" onClick={closePanels} aria-label="Fechar busca">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-              </svg>
+              <X aria-hidden="true" />
             </button>
           </div>
           <div className="search-field">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="1.6" />
-              <path d="m16 16 4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
+            <Search aria-hidden="true" />
             <input
               id="searchInput"
               type="search"
@@ -250,7 +234,7 @@ export default function Overlays() {
                     <span>{entry.cat}</span>
                   </span>
                   <span className="search-result__price">{money(entry.price)}</span>
-                  <span className="search-result__arrow">↗</span>
+                  <span className="search-result__arrow"><ArrowUpRight aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} /></span>
                 </button>
               ))
             )}
@@ -272,15 +256,7 @@ export default function Overlays() {
         aria-live="polite"
       >
         <span className="toast__icon">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="m5 12.5 4.5 4.5L19 7.5"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <Check aria-hidden="true" />
         </span>
         <span className="toast__text">{toast ?? "Adicionado ao carrinho"}</span>
       </div>

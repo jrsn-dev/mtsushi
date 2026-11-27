@@ -1,3 +1,4 @@
+import { Fish, Leaf, ChefHat, ArrowRight } from "lucide-react";
 export default function Hero() {
   return (
     <section className="section hero" id="inicio">
@@ -30,7 +31,7 @@ export default function Hero() {
           <a className="btn btn--red" href="/cardapio">
             Explorar o cardápio{" "}
             <span className="btn__arrow" aria-hidden="true">
-              →
+              <ArrowRight aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} />
             </span>
           </a>
           <a className="btn btn--ghost" href="#contato">
@@ -41,27 +42,7 @@ export default function Hero() {
         <div className="hero__features hero-fade">
           <div className="feature">
             <span className="feature__icon">
-              <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                <path
-                  d="M6 18.5c3.8-4.2 9.6-6 15.8-4.6 2.7.6 4.7 2.2 4.2 4.3-.5 2.2-3.3 3-6.1 2.4-5.6-1.2-10.1-3.4-13.9-2.1Z"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M6 18.5c-1.8-.7-2.9-2.3-2.2-3.8.6-1.4 2.5-1.8 4.4-1"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M21.6 14.2c1.3-1.6 2.9-2.2 4.4-2.1M12 19.4c.8 1.4 1 2.9.6 4.2"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                  strokeLinecap="round"
-                />
-                <circle cx="23.3" cy="17.6" r=".9" fill="currentColor" />
-              </svg>
+              <Fish aria-hidden="true" />
             </span>
             <div>
               <strong>Peixes frescos</strong>
@@ -70,21 +51,7 @@ export default function Hero() {
           </div>
           <div className="feature">
             <span className="feature__icon">
-              <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                <path
-                  d="M26 6C14.5 6.5 7 12.2 7 20.2c0 2.1.7 3.8 1.8 5.1C12 17 17.5 12.3 24 10.2c-5.7 3.4-9.6 8.1-11.4 15.2"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M8.8 25.3C16 26.4 25 22.7 26 6"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <Leaf aria-hidden="true" />
             </span>
             <div>
               <strong>Ingredientes premium</strong>
@@ -93,24 +60,7 @@ export default function Hero() {
           </div>
           <div className="feature">
             <span className="feature__icon">
-              <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                <path
-                  d="M9.5 14.5c0-4 2.9-7 6.5-7s6.5 3 6.5 7"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                />
-                <path
-                  d="M7 17.5c0-1.4 1.1-2.5 2.5-2.5h13c1.4 0 2.5 1.1 2.5 2.5v2.2c0 2.9-2.4 5.3-5.3 5.3h-7.4C9.4 25 7 22.6 7 19.7v-2.2Z"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                />
-                <path
-                  d="M13 18.5v3.2M19 18.5v3.2"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <ChefHat aria-hidden="true" />
             </span>
             <div>
               <strong>Chefs especializados</strong>
@@ -123,14 +73,6 @@ export default function Hero() {
           <div className="hero__scroll">
             <span className="scroll-line" />
             role para descobrir
-          </div>
-          <div className="hero__rating">
-            <span className="stars" aria-hidden="true">
-              ★★★★★
-            </span>
-            <span>
-              <strong>4,9</strong>
-            </span>
           </div>
         </div>
       </div>

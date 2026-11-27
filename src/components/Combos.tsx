@@ -1,3 +1,4 @@
+import { ArrowRight, Plus } from "lucide-react";
 import AddButton from "@/components/AddButton";
 import { brl, combos, featuredCombo } from "@/lib/menu";
 
@@ -7,16 +8,12 @@ export default function Combos() {
       <div className="section__inner">
         <div className="section-head" data-reveal>
           <div>
-            <p className="eyebrow">
-              <span className="eyebrow__line" />
-              Seleção do chef
-            </p>
             <h2 data-split>
               Combos <em>especiais</em>
             </h2>
           </div>
           <a className="link-arrow" href="/cardapio">
-            Ver cardápio completo <span>→</span>
+            Ver cardápio completo <span><ArrowRight aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} /></span>
           </a>
         </div>
 
@@ -63,7 +60,7 @@ export default function Combos() {
               >
                 Adicionar ao pedido{" "}
                 <span className="btn__arrow" aria-hidden="true">
-                  +
+                  <Plus aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} />
                 </span>
               </AddButton>
             </div>
@@ -109,7 +106,7 @@ export default function Combos() {
                       cat: "Combos",
                     }}
                   >
-                    +
+                    <Plus aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} />
                   </AddButton>
                 </div>
               </div>

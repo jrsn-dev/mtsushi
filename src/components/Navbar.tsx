@@ -1,5 +1,7 @@
 "use client";
 
+import { Search, ShoppingBag, X, Menu, ArrowRight } from "lucide-react";
+
 import { useStore } from "@/components/StoreProvider";
 
 export default function Navbar() {
@@ -70,10 +72,7 @@ export default function Navbar() {
           aria-controls="searchPanel"
           onClick={() => togglePanel("search")}
         >
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="1.6" />
-            <path d="m16 16 4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-          </svg>
+          <Search aria-hidden="true" />
         </button>
         <button
           className="cart-btn"
@@ -83,26 +82,13 @@ export default function Navbar() {
           aria-controls="cartDrawer"
           onClick={() => openPanel("cart")}
         >
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M5.5 8.5h13l-1 11h-11l-1-11Z"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M9 8.5V7a3 3 0 0 1 6 0v1.5"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-          </svg>
+          <ShoppingBag aria-hidden="true" />
           <span className="cart-count" data-cart-count>
             {count}
           </span>
         </button>
         <a className="btn btn--red btn--sm nav-cta" href="#delivery">
-          Pedir agora <span className="btn__arrow" aria-hidden="true">→</span>
+          Pedir agora <span className="btn__arrow" aria-hidden="true"><ArrowRight aria-hidden="true" size="1em" style={{ display: "inline-block", verticalAlign: "-0.1em" }} /></span>
         </a>
         <button
           className="menu-toggle"
@@ -112,8 +98,7 @@ export default function Navbar() {
           aria-controls="mobileMenu"
           onClick={() => togglePanel("menu")}
         >
-          <span />
-          <span />
+          {panel === "menu" ? <X aria-hidden="true" /> : <Menu aria-hidden="true" /> }
         </button>
       </div>
     </header>
