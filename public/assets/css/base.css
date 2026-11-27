@@ -38,8 +38,8 @@
   --pink: #ff8fa3;
   --line: rgba(244, 236, 223, 0.09);
   --line-strong: rgba(244, 236, 223, 0.16);
-  --font-display: "Playfair Display", "Yu Mincho", "Hiragino Mincho ProN", Georgia, serif;
-  --font-sans: "Manrope", "Segoe UI", sans-serif;
+  --font-display: "Roboto Variable", Roboto, sans-serif;
+  --font-sans: "Noto Sans Variable", "Noto Sans", sans-serif;
   --font-jp: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --nav-w: min(70vw, 1360px);

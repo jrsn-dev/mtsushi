@@ -90,3 +90,18 @@
   .actions :global(.btn) { width: 100%; padding-inline: .6rem; }
   .location { border-left: 0; padding-left: 0; }
 }
+
+/* Keep the reference composition, with the site's sans-serif type system. */
+.copy.copy h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.65rem, 4.55vw, 5.7rem);
+  font-weight: 600;
+  letter-spacing: -.045em;
+  line-height: 1.06;
+}
+.copy.copy h2 em { font-family: var(--font-sans); font-style: italic; font-weight: 650; }
+.copy.copy > p:not(:global(.eyebrow)):not(:global(.delivery__note)) { font-family: var(--font-sans); font-size: clamp(.9rem, 1.05vw, 1.15rem); }
+.actions :global(.btn) { font-family: var(--font-display); font-weight: 650; letter-spacing: .025em; }
+@media (max-width: 900px) {
+  .copy.copy h2 { font-size: clamp(2.35rem, 7.5vw, 4.8rem); }
+}
