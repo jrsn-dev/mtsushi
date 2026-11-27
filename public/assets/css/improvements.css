@@ -213,17 +213,17 @@ main.site :is(.section-head__note, .combo-feature__desc, .combo-card__body p, .d
 
 
 
-/* Home: one centered 70vw grid, with 20% empty and 80% for all sections. */
+/* Home: one centered 70vw grid, with 10% empty and 90% for all sections. */
 body:has(main#site.site) {
   --home-w: 70vw;
-  --home-empty: 14vw;
-  --home-content-start: 29vw;
+  --home-empty: 7vw;
+  --home-content-start: 22vw;
   --nav-w: var(--home-w);
 }
 main#site.site {
   position: relative;
   display: grid;
-  grid-template-columns: 20% minmax(0, 80%);
+  grid-template-columns: 10% minmax(0, 90%);
   width: var(--home-w);
   max-width: none;
   margin-inline: auto;
