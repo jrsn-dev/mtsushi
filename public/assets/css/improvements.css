@@ -255,3 +255,19 @@ main.site :is(.section-head__note, .combo-feature__desc, .combo-card__body p, .d
 .combos .combo-feature__body h3 { font-size: clamp(1.45rem, 2.4vw, 2.4rem); }
 .combos .combo-card__top h3, .site .dish__top h3 { font-size: clamp(.95rem, 1.35vw, 1.35rem); font-weight: 650; line-height: 1.2; }
 .combos .combo-card__body p, .site .dish__body p { font-size: clamp(.8rem, .95vw, .95rem); line-height: 1.5; }
+
+/* Home wrapper: flush to the left edge, with a dedicated right gutter. */
+main#site.site {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-left: 0;
+  padding-right: 100px;
+}
+main#site.site :is(.section__inner, .ticker__window) {
+  width: min(var(--nav-w), calc(100% - var(--section-left, 10vw)));
+}
+@media (max-width: 1100px) {
+  main#site.site { padding-right: min(100px, 10vw); }
+}

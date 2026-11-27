@@ -1,14 +1,14 @@
 .section.section {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
   background: transparent;
   padding-block: clamp(48px, 7vw, 120px) 0;
 }
 .ribbon {
   position: absolute; z-index: -1; pointer-events: none;
-  width: 100vw; height: 45%; left: 50%; transform: translateX(-50%); bottom: 4%;
+  width: 100vw; height: 45%; left: 0; bottom: 4%;
   filter: drop-shadow(0 0 9px #f10d3266);
 }
 .card.card {
