@@ -7,8 +7,7 @@
   const navbar = document.getElementById("navbar");
   const stage = document.getElementById("sushiStage");
   const progress = document.querySelector(".page-progress__bar");
-  const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
-  let reduced = preference.matches;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const pieces = stage ? Array.from(stage.querySelectorAll(".sushi-piece")).map(el => ({
     el, x: Number(el.dataset.x || 50), start: Number(el.dataset.start || 0),
     rot: Number(el.dataset.rot || 0)
@@ -37,7 +36,7 @@
   }
   function render() {
     const scroll = window.scrollY;
-    if (!reduced) offset = (offset + (scroll - lastScroll) * .31) % travel;
+    if (!reduced) offset = (offset + (scroll - lastScroll) * .31 + .13) % travel;
     lastScroll = scroll;
     for (const p of pieces) {
       const center = width * p.x / 100;
@@ -48,7 +47,7 @@
       const y = ((p.start * travel + offset) % travel + travel) % travel - (travel - height) / 2 - p.h / 2;
       p.el.style.transform = "translate3d(" + x + "px," + y + "px,0) rotate(" + p.rot + "deg)";
     }
-    frame = 0;
+    if (!reduced) frame = requestAnimationFrame(render);
   }
   window.__mtsushi = {
     scrollTo(target) {
@@ -57,14 +56,8 @@
     },
     lock() {}
   };
-  // Batch scroll events into one frame. No JS loop when idle.
-  function schedule() {
-    if (frame) return;
-    frame = requestAnimationFrame(() => { updateNavigation(); render(); });
-  }
-  window.addEventListener("scroll", schedule, {passive: true});
-  window.addEventListener("resize", () => { measure(); schedule(); }, {passive: true});
-  preference.addEventListener?.("change", event => { reduced = event.matches; lastScroll = window.scrollY; schedule(); });
-  window.addEventListener("pageshow", () => { measure(); schedule(); });
+  window.addEventListener("scroll", updateNavigation, {passive: true});
+  window.addEventListener("resize", () => { measure(); if (reduced) render(); updateNavigation(); }, {passive: true});
   measure(); updateNavigation(); render();
+  window.addEventListener("pagehide", () => cancelAnimationFrame(frame), {once:true});
 })();
