@@ -106,6 +106,7 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
   }
 
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+  if (!reduced) doc.classList.add("js");
   ScrollTrigger.config({ ignoreMobileResize: true });
 
   /* ------------------------------------------------------------

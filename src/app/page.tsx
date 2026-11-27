@@ -1,3 +1,4 @@
+import Script from "next/script";
 import { StoreProvider } from "@/components/StoreProvider";
 import About from "@/components/About";
 import Categories from "@/components/Categories";
@@ -17,8 +18,8 @@ import Ticker from "@/components/Ticker";
 export default function Home() {
   return (
     <StoreProvider>
-      <link rel="stylesheet" href="/assets/css/style.css" />
-      <link rel="stylesheet" href="/assets/css/improvements.css" />
+      <link rel="stylesheet" precedence="home" href="/assets/css/style.css" />
+      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css" />
       <noscript><style>{".preloader{display:none!important}"}</style></noscript>
       <a className="skip-link" href="#inicio">
         Pular para o conteúdo
@@ -49,7 +50,7 @@ export default function Home() {
       </main>
 
       <Overlays />
-      <script src="/assets/js/home-motion.js" defer />
+      <Script src="/assets/js/home-motion.js?v=2" strategy="afterInteractive" />
     </StoreProvider>
   );
 }
