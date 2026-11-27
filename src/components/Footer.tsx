@@ -1,39 +1,18 @@
 import { Instagram, Facebook, MessageCircle } from "lucide-react";
-
-import NewsletterForm from "@/components/NewsletterForm";
 import { site } from "@/lib/site";
 
 const socials = [
-  {
-    label: "Instagram",
-    href: site.social.instagram,
-    icon: (
-      <Instagram aria-hidden="true" />
-    ),
-  },
-  {
-    label: "Facebook",
-    href: site.social.facebook,
-    icon: (
-      <Facebook aria-hidden="true" />
-    ),
-  },
-  {
-    label: "WhatsApp",
-    href: `https://wa.me/${site.whatsapp}`,
-    icon: (
-      <MessageCircle aria-hidden="true" />
-    ),
-  },
+  { label: "Instagram", href: site.social.instagram, Icon: Instagram },
+  { label: "Facebook", href: site.social.facebook, Icon: Facebook },
+  { label: "WhatsApp", href: `https://wa.me/${site.whatsapp}`, Icon: MessageCircle },
 ].filter((social) => social.href);
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer footer--minimal">
       <div className="section__inner">
-        <div className="footer__top">
-          <div className="footer__brand">
-            <a className="brand" href="#inicio" aria-label="MTSUSHI ARTE — início">
+        <div className="footer__main">
+          <a className="brand" href="#inicio" aria-label="MTSUSHI ARTE — início">
               <span className="brand__seal">
                 <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
                   <path
@@ -68,62 +47,23 @@ export default function Footer() {
                 <span>ARTE</span>
               </span>
             </a>
-            <p>
-              Gastronomia japonesa de alta qualidade, onde tradição e exclusividade se
-              encontram.
-            </p>
-            <div className="socials">
-              {socials.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
-                  target="_blank"
-                  rel="noopener"
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="footer__col">
-            <h4>Explorar</h4>
-            <a href="#inicio">Início</a>
+          <nav className="footer__links" aria-label="Navegação do rodapé">
             <a href="/cardapio">Cardápio</a>
-            <a href="#combos">Combos</a>
-            <a href="#arte">Nossa arte</a>
-          </div>
-
-          <div className="footer__col">
-            <h4>A casa</h4>
-            <a href="#contato">Contato</a>
             <a href="#delivery">Delivery</a>
-            <a href={site.social.instagram}>Instagram</a>
-          </div>
-
-          <div className="footer__news">
-            <h4>Receba nossas criações</h4>
-            <p>
-              Novidades do balcão, edições limitadas e convites para experiências.
-            </p>
-            <NewsletterForm />
+            <a href="#contato">Contato</a>
+          </nav>
+          <div className="socials" aria-label="Redes sociais">
+            {socials.map(({ label, href, Icon }) => (
+              <a key={label} href={href} aria-label={label} target="_blank" rel="noopener noreferrer">
+                <Icon aria-hidden="true" />
+              </a>
+            ))}
           </div>
         </div>
-
         <div className="footer__bottom">
-          <span>
-            © <span id="year">{new Date().getFullYear()}</span> MTSUSHI ARTE. Todos os
-            direitos reservados.
-          </span>
-          <span className="footer__made">Feito com precisão e um toque de ousadia.</span>
-          <div className="footer__legal">
-            <a href="https://fluidy.site">Fluidy</a>
-          </div>
+          <span>© <span id="year">{new Date().getFullYear()}</span> MTSUSHI ARTE. Todos os direitos reservados.</span>
+          <a className="footer__credit" href="https://fluidy.site" target="_blank" rel="noopener noreferrer">Desenvolvido por <strong>Fluidy</strong></a>
         </div>
-      </div>
-      <div className="footer__kanji" aria-hidden="true">
-        鮨
       </div>
     </footer>
   );
