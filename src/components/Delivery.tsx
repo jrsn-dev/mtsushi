@@ -1,3 +1,4 @@
+import styles from "./Delivery.module.css";
 import { site, whatsappLink } from "@/lib/site";
 
 export default function Delivery() {
@@ -48,16 +49,18 @@ export default function Delivery() {
               Segunda a sexta, das 18h às 23h
             </p>
           </div>
-          <div className="delivery__art" aria-hidden="true">
-            <img
-              className="delivery__rai"
-              src="/assets/img/sushiraxi.webp"
-              width={1000}
-              height={800}
-              alt=""
-              loading="lazy"
-              decoding="async"
-            />
+          <div className={`delivery__art ${styles.art}`} aria-hidden="true">
+            <div className={styles.turn}>
+              <img
+                className="delivery__rai"
+                src="/assets/img/sushiraxi.webp"
+                width={1000}
+                height={800}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
           </div>
         </div>
         <p className="sr-only">
