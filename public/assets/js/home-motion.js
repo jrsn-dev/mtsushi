@@ -153,7 +153,7 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
   let preloaderHidden = false;
   let introPlayed = false;
 
-  gsap.set(navbar, { y: -26, opacity: 0 });
+  gsap.set(navbar, { x: 0, xPercent: 0, y: -26, opacity: 0 });
   gsap.set(".sushi-piece__inner", { scale: 0.72 });
 
   function startIntro() {
@@ -161,7 +161,7 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
     introPlayed = true;
 
     if (reduced) {
-      gsap.set(navbar, { y: 0, opacity: 1 });
+      gsap.set(navbar, { x: 0, xPercent: 0, y: 0, opacity: 1 });
       gsap.set(".hero-fade", { opacity: 1, y: 0 });
       gsap.set(".hero__title .line > span", { y: 0 });
       gsap.set(".sushi-piece__inner", { opacity: 1, scale: 1 });
@@ -169,7 +169,7 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
     }
 
     const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-    tl.to(navbar, { y: 0, opacity: 1, duration: 1.05 }, 0)
+    tl.to(navbar, { x: 0, xPercent: 0, y: 0, opacity: 1, duration: 1.05 }, 0)
       .to(
         ".hero__title .line > span",
         { y: 0, duration: 1.2, stagger: 0.11 },
@@ -230,7 +230,7 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
     body.classList.remove("is-loading");
     if (!introPlayed) {
       introPlayed = true;
-      gsap.set(navbar, { y: 0, opacity: 1 });
+      gsap.set(navbar, { x: 0, xPercent: 0, y: 0, opacity: 1 });
       gsap.set(".hero__title .line > span", { y: 0 });
       gsap.set(".hero-fade", { opacity: 1, y: 0 });
       gsap.set(".sushi-piece__inner", { opacity: 1, scale: 1 });

@@ -219,11 +219,10 @@ main.site { background: transparent; }
 body:has(main.site) { --nav-w: min(70vw, 1360px); --section-left: 10vw; }
 body:has(main.site) .navbar {
   /* Center independently of the content gutter; GSAP controls vertical motion. */
-  left: 0;
-  right: 0;
-  margin-inline: auto;
+  left: calc((100% - var(--nav-w)) / 2);
+  right: auto;
+  margin-inline: 0;
   width: var(--nav-w);
-  transform: none;
 }
 .site .section__inner, .site .ticker__window {
   width: var(--nav-w);

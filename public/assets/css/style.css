@@ -3,6 +3,6 @@
    Split into modules for maintainability.
    ============================================================ */
 @import url("base.css");
-@import url("nav-rail.css");
+@import url("nav-rail.css?v=2");
 @import url("sections.css");
 @import url("overlays.css");
