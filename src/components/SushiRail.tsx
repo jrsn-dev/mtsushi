@@ -39,8 +39,6 @@ export default function SushiRail() {
             data-rot={piece.rot}
             style={{
               "--size": `${piece.size}px`,
-              "--rail-piece-width": `${piece.size / 320 * 78}%`,
-              "--height-bound": `${11 * piece.width / piece.height}vh`,
               aspectRatio: `${piece.width} / ${piece.height}`,
               zIndex: piece.z,
               transform: `translate(calc(var(--rail-w) * ${piece.x / 100} - 50%), calc(${piece.start * 100}vh - 50%)) rotate(${piece.rot}deg)`,

@@ -391,7 +391,7 @@ body:has(main#site.site) .navbar .navbar__logo {
 /* Keep the animated pieces completely inside the dedicated left strip. */
 body:has(main#site.site) .sushi-rail { --rail-w: 14vw; width: var(--rail-w); overflow: hidden; }
 body:has(main#site.site) .sushi-piece {
-  width: min(var(--size), var(--rail-piece-width, 70%), var(--height-bound, 11vh));
+  width: var(--size);
   transform-origin: center;
 }
 body:has(main#site.site) .sushi-piece__inner { height: 100%; filter: drop-shadow(0 8px 12px #0007); }
@@ -401,4 +401,5 @@ body:has(main#site.site) .sushi-piece img { display: block; width: 100%; height:
 }
 @media (max-width: 900px) {
   body:has(main#site.site) .sushi-rail { --rail-w: 22vw; inset: 0 auto 0 0; opacity: .34; }
+  body:has(main#site.site) .sushi-piece { width: calc(var(--size) * .72); }
 }
