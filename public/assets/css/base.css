@@ -433,21 +433,8 @@ p {
   transform-origin: top;
 }
 
-/* ---------- Initial JS states ---------- */
-.js .hero-fade {
-  opacity: 0;
-  transform: translateY(24px);
-}
-.js .hero__title .line > span {
-  transform: translateY(112%);
-}
-.js [data-reveal] {
-  opacity: 0;
-  transform: translateY(28px);
-}
-body.is-loading {
-  overflow: hidden;
-}
+/* Content stays visible independently of animation scripts. */
+body.is-loading { overflow-y: auto; }
 .split-line {
   display: block;
   overflow: hidden;

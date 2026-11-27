@@ -417,3 +417,13 @@ main#site.site .reveal,
 main#site.site .split-word { opacity: 1 !important; visibility: visible !important; }
 main#site.site .hero__title .line > span { transform: none !important; }
 body:has(main#site.site) .sushi-piece__inner { opacity: 1 !important; }
+
+/* The home is static-first: no overlay or transition may cover an inactive page. */
+main#site.site { display: grid; min-height: 100vh; color: #f4ecdf; }
+main#site.site .home-content { display: block; min-width: 0; }
+main#site.site .hero__inner { visibility: visible; opacity: 1; transform: none; }
+main#site.site .hero__title .line > span { display: inline-block; transform: none !important; }
+body:has(main#site.site) .home-navbar-frame > .navbar { transform: none !important; }
+body:has(main#site.site) :is(.overlay,.mobile-menu,.search-panel,.cart-drawer):not(.is-open) { visibility: hidden !important; pointer-events: none !important; opacity: 0 !important; }
+body:has(main#site.site) .noise { display: none; }
+body:has(main#site.site) .sushi-rail { z-index: 1; }
