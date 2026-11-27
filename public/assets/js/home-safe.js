@@ -35,12 +35,12 @@
       piece.halfY = (Math.abs(Math.sin(r)) * piece.w + Math.abs(Math.cos(r)) * piece.h) / 2;
       maxHalf = Math.max(maxHalf, Math.hypot(piece.w, piece.h) / 2);
     }
-    // Compact, irregular clusters with lightly overlapping silhouettes.
+    // Irregular spacing with more breathing room between silhouettes.
     let cursor = 0;
     pieces.forEach((piece, index) => {
       piece.centerY = cursor;
       const next = pieces[(index + 1) % pieces.length];
-      cursor += Math.max(42, (piece.halfY + next.halfY) * (.45 + piece.spacing * .33));
+      cursor += Math.max(42, (piece.halfY + next.halfY) * (.78 + piece.spacing * .30));
     });
     overscan = maxHalf + 30;
     travel = Math.max(1, height + overscan * 2, cursor);
