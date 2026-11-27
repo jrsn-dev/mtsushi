@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <StoreProvider>
       <link rel="stylesheet" precedence="home" href="/assets/css/style.css?v=2" />
-      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=22" />
+      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=23" />
       <noscript><style>{".preloader{display:none!important}"}</style></noscript>
       <a className="skip-link" href="#inicio">
         Pular para o conteúdo
@@ -49,7 +49,7 @@ export default function Home() {
       </main>
 
       <Overlays />
-      <Script src="/assets/js/home-motion.js?v=6" strategy="afterInteractive" />
+      <Script src="/assets/js/home-motion.js?v=7" strategy="afterInteractive" />
     </StoreProvider>
   );
 }

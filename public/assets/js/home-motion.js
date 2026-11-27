@@ -69,19 +69,27 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
   const preloader = $("#preloader");
   const navbar = $("#navbar");
 
+  // Clamp the rotated image, not just its unrotated box, inside the rail.
+  function boundedRailX(width, w, h, angle, center) {
+    const radians = angle * Math.PI / 180;
+    const half = (Math.abs(Math.cos(radians)) * w + Math.abs(Math.sin(radians)) * h) / 2;
+    const edge = Math.min(width / 2, half + 4);
+    return Math.min(width - edge, Math.max(edge, center)) - w / 2;
+  }
+
   function fallbackRail() {
     const st = $("#sushiStage");
     if (!st) return;
     const railWidth = st.clientWidth;
     const viewport = window.innerHeight;
-    const factor = window.innerWidth <= 900 ? 1.7 : 1;
-    $$(".sushi-piece", st).forEach((el) => {
+    $(".sushi-piece", st).forEach((el) => {
       const size = el.offsetWidth;
       const height = el.offsetHeight;
-      const xPct = parseFloat(el.dataset.x || "10");
+      const xPct = parseFloat(el.dataset.x || "50");
       const start = parseFloat(el.dataset.start || "0");
       const rot = parseFloat(el.dataset.rot || "0");
-      el.style.transform = `translate3d(${railWidth * (xPct * factor) / 100 - size / 2}px, ${start * viewport - height / 2}px, 0) rotate(${rot}deg)`;
+      const x = boundedRailX(railWidth, size, height, rot, railWidth * xPct / 100);
+      el.style.transform = `translate3d(${x}px, ${start * viewport - height / 2}px, 0) rotate(${rot}deg)`;
       const inner = $(".sushi-piece__inner", el);
       if (inner) inner.style.opacity = "1";
     });
@@ -414,6 +422,9 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
   let railW = 0;
   let vh = window.innerHeight;
   let railStarted = false;
+  let railTrack = 1;
+  let railOffset = 0;
+  let railOverscan = 0;
   let lastScroll = window.scrollY;
   let mouseX = 0;
   let mouseY = 0;
@@ -445,29 +456,28 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
     });
   }
 
-  function mobileXFactor() {
-    return window.innerWidth <= 900 ? 1.7 : 1;
-  }
-
   function measureRail(reset) {
     if (!stage) return;
     railW = stage.clientWidth;
     vh = window.innerHeight;
+    const previousTrack = railTrack;
+    let maxDiameter = 0;
     pieces.forEach((p) => {
       p.w = p.el.offsetWidth;
       p.h = p.el.offsetHeight;
-      p.x = railW * ((p.xPct * mobileXFactor()) / 100) - p.w / 2;
-      if (!p.placed || reset) {
-        p.y = p.start * vh - p.h / 2;
-        p.placed = true;
-      }
+      p.x = railW * p.xPct / 100;
+      maxDiameter = Math.max(maxDiameter, Math.hypot(p.w, p.h));
     });
+    railTrack = Math.max(1, vh + maxDiameter + 16, pieces.length * (maxDiameter + 12));
+    railOverscan = (railTrack - vh) / 2;
+    railOffset = reset ? 0 : railOffset * railTrack / previousTrack;
   }
 
   function placePiece(p, t) {
-    const sway = Math.sin(t * 0.55 + p.phase) * 9;
-    const x = p.x + sway + mouseX * 28 * p.depth;
-    const y = p.y + mouseY * 18 * p.depth;
+    const sway = reduced ? 0 : Math.sin(t * 0.55 + p.phase) * Math.min(5, railW * .025);
+    const x = boundedRailX(railW, p.w, p.h, p.rot, p.x + sway + mouseX * Math.min(8, railW * .04));
+    const centerY = ((p.start * railTrack + railOffset) % railTrack + railTrack) % railTrack - railOverscan;
+    const y = centerY - p.h / 2;
     p.el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) rotate(${p.rot.toFixed(2)}deg)`;
   }
 
@@ -526,18 +536,10 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
       mouseX += (targetMouseX - mouseX) * 0.045 * dt;
       mouseY += (targetMouseY - mouseY) * 0.045 * dt;
 
+      // Move all pieces on the same spaced loop so none can bunch together.
+      railOffset = (railOffset + delta * .31 + .14 * dt) % railTrack;
       pieces.forEach((p) => {
-        p.y += delta * p.speed * 0.46 * dt + p.drift * dt;
-        p.rot += p.spin * dt + delta * p.speed * 0.0055 * dt;
-
-        if (p.y > vh + p.h * 0.65) {
-          p.y = -p.h - 40 - Math.random() * 220;
-          p.x = railW * ((6 + Math.random() * 52) * mobileXFactor() / 100) - p.w / 2;
-          p.rot = p.baseRot + (Math.random() - 0.5) * 26;
-        } else if (p.y < -p.h - 360) {
-          p.y = vh + 60;
-        }
-
+        p.rot = p.baseRot + Math.sin(time * .45 + p.phase) * 5;
         placePiece(p, time);
       });
     });
@@ -605,12 +607,8 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
       if (railStarted) {
-        const oldVh = vh;
         measureRail(false);
-        const ratio = window.innerHeight / oldVh;
-        pieces.forEach((p) => {
-          p.y *= ratio;
-        });
+        pieces.forEach((p) => placePiece(p, time));
       }
       ScrollTrigger.refresh();
     }, 180);
