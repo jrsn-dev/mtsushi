@@ -351,22 +351,22 @@ main#site.site .hero__original-logo {
   main#site.site .hero__original-logo { position: relative; margin: 20px 0 0 auto; bottom: auto; right: auto; width: 130px; }
 }
 
-/* Original logo geometry as a discreet outline watermark behind the hero. */
-main#site.site .hero__logo-outline {
+/* Original filled logo, compact and discreet behind the hero. */
+main#site.site .hero__logo-background {
   position: absolute;
   top: 17%;
   right: 0;
   z-index: 0;
   display: block;
-  width: 100%;
-  max-width: none;
+  width: clamp(160px, 38%, 340px);
+  max-width: 100%;
   height: auto;
-  opacity: .18;
+  opacity: .32;
   pointer-events: none;
   user-select: none;
 }
 @media (max-width: 720px) {
-  main#site.site .hero__logo-outline { top: 22%; width: 100%; }
+  main#site.site .hero__logo-background { top: 14%; width: min(42%, 220px); }
 }
 
 /* Right-align all hero content within the existing home grid. */
