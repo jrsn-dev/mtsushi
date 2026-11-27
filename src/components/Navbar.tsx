@@ -10,40 +10,8 @@ export default function Navbar() {
   return (
     <div className="home-navbar-frame">
     <header className="navbar" id="navbar">
-      <a className="brand" href="#inicio" aria-label="MTSUSHI ARTE — início">
-        <span className="brand__seal">
-          <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            <path
-              d="M7 12.8c5.8-1.7 12.1-2.5 17-2.5s11.2.8 17 2.5"
-              stroke="currentColor"
-              strokeWidth="3.1"
-              strokeLinecap="round"
-            />
-            <path
-              d="M10.4 18.7c4.6-.9 9.4-1.4 13.6-1.4s9 .5 13.6 1.4"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            />
-            <path
-              d="M14.2 19.6 15.7 38M33.8 19.6 32.3 38"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-            />
-            <path
-              d="M21.2 20.4v8.4M26.8 20.4v8.4"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              opacity=".8"
-            />
-          </svg>
-        </span>
-        <span className="brand__type">
-          <strong>MTSUSHI</strong>
-          <span>ARTE</span>
-        </span>
+      <a className="brand brand--original" href="#inicio" aria-label="MTSUSHI ARTE — início">
+        <img className="navbar__logo" src="/images/mt-sushi-logo-static.svg" width={1575} height={401} alt="MTSUSHI ARTE" decoding="async" />
       </a>
 
       <nav className="nav-links" aria-label="Navegação principal">

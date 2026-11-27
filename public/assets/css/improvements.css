@@ -385,3 +385,18 @@ main#site.site .hero__scroll { flex-direction: row-reverse; }
   main#site.site .hero__features .feature { flex-direction: column; align-items: flex-end; }
   main#site.site .hero__features .feature > div { text-align: right; }
 }
+
+/* Original navbar artwork: static, no filters, glow, scaling or hover effects. */
+body:has(main#site.site) .navbar .brand--original {
+  flex: 0 0 auto; display: inline-flex; align-items: center;
+  padding: 0; background: transparent; box-shadow: none;
+  animation: none; transition: none; transform: none;
+}
+body:has(main#site.site) .navbar .navbar__logo {
+  display: block; width: clamp(110px, 10vw, 168px); height: auto;
+  max-width: 100%; object-fit: contain; opacity: 1;
+  filter: none; animation: none; transition: none; transform: none;
+}
+@media (max-width: 480px) {
+  body:has(main#site.site) .navbar .navbar__logo { width: clamp(88px, 27vw, 120px); }
+}
