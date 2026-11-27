@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <StoreProvider>
       <link rel="stylesheet" precedence="home" href="/assets/css/style.css" />
-      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=6" />
+      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=7" />
       <noscript><style>{".preloader{display:none!important}"}</style></noscript>
       <a className="skip-link" href="#inicio">
         Pular para o conteúdo

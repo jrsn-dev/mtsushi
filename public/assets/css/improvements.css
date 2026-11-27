@@ -213,6 +213,32 @@ body:has(main.site) {
 }
 main.site { background: transparent; }
 
+
+/* A single horizontal measure for the home navbar and every content section.
+   Backgrounds remain viewport-wide; the 10vw left gutter is applied once. */
+body:has(main.site) { --nav-w: min(70vw, 1360px); --section-left: 10vw; }
+body:has(main.site) .navbar {
+  left: var(--section-left);
+  width: var(--nav-w);
+  transform: none;
+}
+.site .section__inner, .site .ticker__window {
+  width: var(--nav-w);
+  margin-inline: var(--section-left, 10vw) auto;
+  box-sizing: border-box;
+  padding-inline: 0;
+}
+main.site { overflow-x: clip; }
 @media (max-width: 1100px) {
-  body:has(main.site) { --nav-w: 88vw; }
+  body:has(main.site) { --nav-w: 80vw; }
+}
+@media (max-width: 480px) {
+  body:has(main.site) .navbar { gap: 5px; padding-inline: 7px; }
+  body:has(main.site) .navbar .nav-actions { gap: 4px; }
+  body:has(main.site) .navbar .brand { min-width: 0; gap: 4px; }
+  body:has(main.site) .navbar .brand__type strong { font-size: 12px; }
+  body:has(main.site) .navbar .brand__seal { width: 29px; height: 29px; }
+  body:has(main.site) .navbar .icon-btn,
+  body:has(main.site) .navbar .cart-btn,
+  body:has(main.site) .navbar .menu-toggle { width: 36px; min-width: 36px; padding-inline: 0; }
 }
