@@ -19,14 +19,9 @@ export default function Combos() {
 
         <article className="combo-feature" data-reveal data-item-id={featuredCombo.id}>
           <div className="combo-feature__media">
-            <span className="tag tag--floating">
-              <i />
-              Escolha do chef
-            </span>
-            <div className="combo-feature__halo" />
             <img
               className="parallax-img"
-              src="/assets/img/combo-platter.webp"
+              src={featuredCombo.img}
               width={featuredCombo.width}
               height={featuredCombo.height}
               alt={featuredCombo.alt}
@@ -77,7 +72,7 @@ export default function Combos() {
                     : "combo-card__media"
                 }
               >
-                <span className={combo.tone ? "tag tag--gold" : "tag"}>{combo.badge}</span>
+                {combo.badge && <span className={combo.tone ? "tag tag--gold" : "tag"}>{combo.badge}</span>}
                 <img
                   src={combo.img}
                   width={combo.width}

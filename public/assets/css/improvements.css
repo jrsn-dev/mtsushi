@@ -305,3 +305,35 @@ main#site.site .footer--minimal { margin-top: 0; padding: 24px 0 26px; overflow:
   .footer--minimal .footer__links { order: 3; flex: 1 1 100%; justify-content: center; }
   .footer--minimal .footer__bottom { justify-content: center; text-align: center; }
 }
+
+/* Refined category typography and wider editorial copy. */
+main#site.site .categories .section-head h2 {
+  font-size: clamp(1.6rem, 2.35vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+main#site.site .categories .section-head h2 em { font-weight: 400; }
+main#site.site .categories .cat-card__title {
+  font-size: clamp(.78rem, 1.02vw, 1rem);
+  font-weight: 400;
+}
+main#site.site #arte > .section__inner { padding-inline: 10%; }
+/* Each combo shows the corresponding catalog asset, not a generic sushi image. */
+main#site.site .combo-feature__media,
+main#site.site .combo-card__media {
+  padding: 0;
+  background: #0b0b0e;
+}
+main#site.site .combo-feature__media img {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: contain;
+  filter: none;
+}
+main#site.site .combo-card__media { height: auto; aspect-ratio: 4/3; }
+main#site.site .combo-card__media img {
+  width: 100%; height: 100%; max-height: none;
+  object-fit: contain; filter: none;
+}
+main#site.site .combo-card:hover .combo-card__media img { transform: scale(1.035); }

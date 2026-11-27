@@ -12,13 +12,12 @@ import Navbar from "@/components/Navbar";
 import Overlays from "@/components/Overlays";
 import Preloader from "@/components/Preloader";
 import SushiRail from "@/components/SushiRail";
-import Ticker from "@/components/Ticker";
 
 export default function Home() {
   return (
     <StoreProvider>
       <link rel="stylesheet" precedence="home" href="/assets/css/style.css?v=2" />
-      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=15" />
+      <link rel="stylesheet" precedence="home" href="/assets/css/improvements.css?v=16" />
       <noscript><style>{".preloader{display:none!important}"}</style></noscript>
       <a className="skip-link" href="#inicio">
         Pular para o conteúdo
@@ -40,7 +39,6 @@ export default function Home() {
         <div className="home-spacer" aria-hidden="true" />
         <div className="home-content">
           <Hero />
-          <Ticker />
           <Categories />
           <Combos />
           <About />
