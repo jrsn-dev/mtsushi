@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/noto-sans";
 import "@fontsource-variable/noto-sans/wght-italic.css";
 import "@fontsource-variable/roboto/standard.css";
-import "./globals.css";
+
 
 export const metadata: Metadata = {
   title: "MT Sushi Arte | Sushi artesanal",

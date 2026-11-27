@@ -1,0 +1,162 @@
+/* ============================================================
+   Melhorias incrementais (carregado depois de style.css)
+   ============================================================ */
+
+/* Filtro do cardápio controlado pelo React */
+.dish.is-filtered-out {
+  display: none;
+}
+
+/* Busca: resultado selecionado pelo teclado */
+.search-result.is-active {
+  background: rgba(225, 29, 46, 0.14);
+  border-color: rgba(255, 53, 69, 0.45);
+}
+
+/* Carrinho: aviso de pedido mínimo */
+.cart-min {
+  margin: 0 0 10px;
+  color: #ffb3ba;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.cart-min strong {
+  color: #fff;
+}
+
+.cart-checkout[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+}
+.cart-checkout[aria-disabled="true"]:hover {
+  transform: none;
+}
+
+/* Status aberto/fechado */
+.info-card__status.is-closed i {
+  background: var(--muted-2);
+  box-shadow: none;
+}
+.info-card__status.is-closed {
+  color: var(--muted);
+}
+
+/* Feedback da newsletter */
+.news-note {
+  min-height: 16px;
+  margin-top: 8px;
+  color: var(--cream-soft);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+.news-note[data-tone="error"] {
+  color: #ff9aa3;
+}
+
+/* Foco visível dentro dos painéis */
+.cart-drawer :focus-visible,
+.search-panel :focus-visible,
+.mobile-menu :focus-visible {
+  outline: 2px solid var(--red-bright);
+  outline-offset: 3px;
+}
+
+/* Páginas legais */
+.legal {
+  padding: clamp(72px, 10vw, 128px) 0;
+}
+.legal .section__inner {
+  display: block;
+  max-width: 780px;
+}
+.legal h1 {
+  margin-bottom: 18px;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 50px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.04;
+}
+.legal h2 {
+  margin: 34px 0 8px;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+}
+.legal p {
+  margin-bottom: 12px;
+  color: var(--cream-soft);
+  font-size: 14px;
+  line-height: 1.75;
+}
+.legal a {
+  color: var(--red-bright);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.legal code {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(244, 236, 223, 0.08);
+  font-size: 0.9em;
+}
+.legal .link-arrow {
+  margin-top: 30px;
+}
+
+/* Respeita quem prefere menos movimento: desliga loops decorativos */
+@media (prefers-reduced-motion: reduce) {
+  .petal,
+  .sesame,
+  .chive,
+  .ticker__track {
+    animation: none !important;
+  }
+  .petal,
+  .sesame,
+  .chive {
+    display: none;
+  }
+  .page-progress__bar {
+    transform: scaleY(1);
+  }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Not found / erro */
+.status-page {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: 48px 24px;
+  text-align: center;
+}
+.status-page__mark {
+  font-family: var(--font-display);
+  font-size: 72px;
+  line-height: 1;
+  color: var(--red-bright);
+}
+.status-page h1 {
+  margin: 18px 0 10px;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 500;
+}
+.status-page p {
+  max-width: 460px;
+  margin: 0 auto 26px;
+  color: var(--muted);
+}
+
+.cat-grid { grid-template-columns: repeat(auto-fit,minmax(min(100%,155px),1fr)); }
+.cat-card { height: auto; aspect-ratio: auto; }
+.cat-card__title { font-size: 1rem; }
+.category-photo { width: 100%; height: 95px; object-fit: cover; }
+.home-contacts,.home-credit { display: flex; align-items: center; gap: 1rem; margin-top: 1.25rem; }
+.brand img { width: clamp(100px,12vw,150px); height: auto; }

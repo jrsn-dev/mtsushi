@@ -84,17 +84,17 @@ export function DigitalMenu({ selected, whatsapp }: { selected: string; whatsapp
         <details className="catalog-menu">
           <summary aria-label="Abrir menu"><MenuIcon aria-hidden="true" /></summary>
           <nav className="catalog-menu-links" aria-label="Navegação principal">
-            <Link href="/">Página inicial</Link>
-            <Link href="/#cardapio">Conheça o cardápio</Link>
-            <Link href="/#delivery">Entrega</Link>
+            <a href="/">Página inicial</a>
+            <a href="/#cardapio">Conheça o cardápio</a>
+            <a href="/#delivery">Entrega</a>
             <a href="https://www.instagram.com/mtsushiarte/" target="_blank" rel="noreferrer">
               <Instagram aria-hidden="true" /> Instagram <ArrowUpRight aria-hidden="true" />
             </a>
           </nav>
         </details>
-        <Link className="catalog-brand" href="/" aria-label="MT Sushi Arte - página inicial">
+        <a className="catalog-brand" href="/" aria-label="MT Sushi Arte - página inicial">
           <img src="/images/mt-sushi-logo-stacked.svg" width="320" height="230" alt="MT Sushi Arte" />
-        </Link>
+        </a>
         <SushiCart cart={cart} change={change} whatsapp={whatsapp} />
       </header>
 

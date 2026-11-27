@@ -1,0 +1,8 @@
+/* ============================================================
+   MTSUSHI ARTE — main stylesheet
+   Split into modules for maintainability.
+   ============================================================ */
+@import url("base.css");
+@import url("nav-rail.css");
+@import url("sections.css");
+@import url("overlays.css");

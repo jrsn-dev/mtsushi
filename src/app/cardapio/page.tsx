@@ -1,3 +1,4 @@
+import "../globals.css";
 import "./catalog.css";
 import type { Metadata } from "next";
 import { DigitalMenu } from "../../components/DigitalMenu";
