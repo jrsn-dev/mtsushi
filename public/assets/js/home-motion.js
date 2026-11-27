@@ -192,8 +192,7 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
         ".sushi-piece__inner",
         { opacity: 1, scale: 1, duration: 1.15, stagger: 0.06, ease: "power3.out" },
         0.25
-      )
-      .from(".hero__logo-background", { opacity: 0, duration: 1.6, ease: "power2.out" }, 0.3);
+      );
 
     // Draw the red ribbon
     const ribbon = $(".ribbon-core");
@@ -242,7 +241,6 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
       gsap.set(".hero__title .line > span", { y: 0 });
       gsap.set(".hero-fade", { opacity: 1, y: 0 });
       gsap.set(".sushi-piece__inner", { opacity: 1, scale: 1 });
-      gsap.set(".hero__logo-background", { opacity: .32 });
     }
     startRail();
     ScrollTrigger.refresh();
@@ -333,16 +331,6 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
      Parallax
      ------------------------------------------------------------ */
   if (!reduced) {
-    gsap.to(".hero__logo-background", {
-      yPercent: 14,
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#inicio",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
 
     $$(".parallax-img").forEach((img) => {
       const scope = img.closest("section") || img.parentElement;

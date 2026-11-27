@@ -341,49 +341,36 @@ main#site.site .combo-card:hover .combo-card__media img { transform: scale(1.035
 .footer--minimal .footer__credit { display: inline-flex; align-items: center; gap: 9px; white-space: nowrap; }
 .footer--minimal .footer__credit img { display: block; width: 82px; height: auto; flex: none; }
 
-/* Replace the decorative circular seal with the original artwork. */
-main#site.site .hero__original-logo {
-  position: absolute; right: 0; bottom: clamp(28px, 5vh, 58px);
-  z-index: 3; display: block; width: clamp(100px, 12vw, 195px); height: auto;
-  object-fit: contain; pointer-events: none;
+/* Two-column hero: left-aligned copy and static original brand on the right. */
+main#site.site .hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(16px, 2vw, 36px);
 }
-@media (max-width: 1100px) {
-  main#site.site .hero__original-logo { position: relative; margin: 20px 0 0 auto; bottom: auto; right: auto; width: 130px; }
+main#site.site .hero__inner { min-width: 0; text-align: left; margin-inline: 0; }
+main#site.site .hero__lead { margin-inline: 0 auto; }
+main#site.site .hero__actions { justify-content: flex-start; }
+main#site.site .hero__features { justify-items: start; }
+main#site.site .hero__features .feature { justify-content: flex-start; flex-direction: row; text-align: left; }
+main#site.site .hero__meta { justify-content: flex-start; margin-inline: 0 auto; }
+main#site.site .hero__scroll { flex-direction: row; }
+main#site.site .hero__brand-static {
+  position: relative; z-index: 2; display: block; width: min(100%, 340px);
+  height: auto; justify-self: end; align-self: center;
+  opacity: 1; filter: none; animation: none; transition: none; transform: none;
 }
-
-/* Original filled logo, compact and discreet behind the hero. */
-main#site.site .hero__logo-background {
-  position: absolute;
-  top: 17%;
-  right: 0;
-  z-index: 0;
-  display: block;
-  width: clamp(160px, 38%, 340px);
-  max-width: 100%;
-  height: auto;
-  opacity: .32;
-  pointer-events: none;
-  user-select: none;
+@media (min-width: 901px) {
+  main#site.site .hero__title { font-size: clamp(2.65rem, 3.6vw, 4.8rem); }
+  main#site.site .hero__features { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
-@media (max-width: 720px) {
-  main#site.site .hero__logo-background { top: 14%; width: min(42%, 220px); }
-}
-
-/* Right-align all hero content within the existing home grid. */
-main#site.site .hero { justify-content: flex-end; }
-main#site.site .hero__inner { text-align: right; margin-left: auto; margin-right: 0; }
-main#site.site .hero__lead { margin-left: auto; margin-right: 0; }
-main#site.site .hero__actions { justify-content: flex-end; }
-main#site.site .hero__features { margin-left: auto; margin-right: 0; justify-items: end; }
-main#site.site .hero__features .feature { justify-content: flex-end; flex-direction: row-reverse; text-align: right; }
-main#site.site .hero__meta { margin-left: auto; margin-right: 0; justify-content: flex-end; }
-main#site.site .hero__scroll { flex-direction: row-reverse; }
-@media (max-width: 1100px) {
-  main#site.site .hero { flex-direction: column; align-items: flex-end; justify-content: center; }
+@media (max-width: 900px) {
+  main#site.site .hero { grid-template-columns: minmax(0,1fr); align-content: center; }
+  main#site.site .hero__brand-static { grid-row: 1; width: min(44%, 220px); margin-bottom: 12px; }
 }
 @media (max-width: 600px) {
-  main#site.site .hero__features .feature { flex-direction: column; align-items: flex-end; }
-  main#site.site .hero__features .feature > div { text-align: right; }
+  main#site.site .hero__features .feature { flex-direction: column; align-items: flex-start; }
+  main#site.site .hero__features .feature > div { text-align: left; }
 }
 
 /* Original navbar artwork: static, no filters, glow, scaling or hover effects. */
