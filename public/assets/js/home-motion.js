@@ -354,16 +354,6 @@ var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t
       );
     });
 
-    gsap.to(".delivery__rai", {
-      yPercent: -3,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".delivery__card",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1,
-      },
-    });
   }
 
   gsap.to(".page-progress__bar", {

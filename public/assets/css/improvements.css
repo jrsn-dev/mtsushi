@@ -340,3 +340,13 @@ main#site.site .combo-card:hover .combo-card__media img { transform: scale(1.035
 
 .footer--minimal .footer__credit { display: inline-flex; align-items: center; gap: 9px; white-space: nowrap; }
 .footer--minimal .footer__credit img { display: block; width: 82px; height: auto; flex: none; }
+
+/* Replace the decorative circular seal with the original artwork. */
+main#site.site .hero__original-logo {
+  position: absolute; right: 0; bottom: clamp(28px, 5vh, 58px);
+  z-index: 3; display: block; width: clamp(100px, 12vw, 195px); height: auto;
+  object-fit: contain; pointer-events: none;
+}
+@media (max-width: 1100px) {
+  main#site.site .hero__original-logo { position: relative; margin: 20px 0 0 auto; bottom: auto; right: auto; width: 130px; }
+}

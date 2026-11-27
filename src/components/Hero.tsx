@@ -77,22 +77,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hero__stamp" aria-hidden="true">
-        <svg viewBox="0 0 140 140">
-          <defs>
-            <path
-              id="stampPath"
-              d="M70,70 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0"
-            />
-          </defs>
-          <text>
-            <textPath href="#stampPath" startOffset="0">
-              MTSUSHI ARTE · SUSHI DE AUTOR ·{" "}
-            </textPath>
-          </text>
-        </svg>
-        <span className="hero__stamp-core">鮨</span>
-      </div>
+      <img className="hero__original-logo" src="/images/mt-sushi-logo.svg" alt="MT Sushi Arte" width={315} height={80} decoding="async" />
     </section>
   );
 }
